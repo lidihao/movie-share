@@ -207,11 +207,30 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, .4);
   }
   .uploader-example .uploader-btn {
-    margin-right: 4px;
-    background-color: #00a1d6;
-    margin-top: 20px;
-    color: #ffffff;
+    display: inline-block;
+    margin-bottom: 0;
+    margin-top: 5px;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    line-height: 1.5;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    padding: 5px 15px 6px;
+    font-size: 12px;
+    border-radius: 4px;
+    transition: color .2s linear,background-color .2s linear,border .2s linear,box-shadow .2s linear;
+    color: white;
+    background-color: #57A3F3;
   }
+
   uploader-example .uploader-list {
     max-height: 440px;
     overflow: auto;
@@ -223,7 +242,7 @@
   .video-base-info{
     margin: 40px auto 0px;
     border-top-style: outset;
-    border-top-color: gray;
+    border-top-color: #57A3F3;
   }
 
   .video-base-info h2{

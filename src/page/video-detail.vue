@@ -1,6 +1,6 @@
 <template>
     <div>
-      <div>
+      <div class="video-main">
         <div class="">
           <h1 class="video-title"><span>西瓜视频</span></h1>
           <div class="video-data">
@@ -14,6 +14,7 @@
         </div><!--视频题目-->
         <div class="video-content">
           <VideoPlay></VideoPlay>
+          <div>点赞</div>
         </div><!--播放页面-->
         <div class="video-introduce">
           <h1 class="video-title">题目</h1>
@@ -30,19 +31,30 @@
             <i-button icon="ios-plus-empty" type="dashed" size="small" @click="count += 1">添加标签</i-button>
           </div>
         </div><!--视频简介-->
-        <div>
-
+        <div class="video-comment-box">
+          <Comment></Comment>
         </div><!--评论区-->
       </div>
-      <div>
-        <div></div><!--视频上传人-->
-        <div></div><!--相关视频-->
+      <div class="recommend-main">
+        <div>
+
+        </div><!--视频上传人-->
+        <div class="video-episode-display">
+          <EpisodeDisplay></EpisodeDisplay>
+        </div> <!--视频集数-->
+        <div>
+          <PlayList></PlayList>
+        </div><!--相关视频-->
       </div>
     </div>
 </template>
 
 <script>
   import VideoPlay from '@/components/video-play'
+  import Comment from '@/components/comment'
+  import UploadBox from './detail-sidebar/uploader-box'
+  import EpisodeDisplay from "./detail-sidebar/episode-display";
+  import PlayList from '@/components/video/play-list/play-list-box'
   export default {
     name: "video-detail",
     data () {
@@ -50,7 +62,7 @@
         count: 3
       }
     },
-    components: {VideoPlay}
+    components: {EpisodeDisplay, UploadBox, VideoPlay,Comment ,PlayList}
   }
 </script>
 
@@ -86,5 +98,24 @@
   }
   .video-introduce{
     margin-top: 20px;
+  }
+
+  .video-comment-box{
+
+  }
+  .video-main{
+    width: 60%;
+    display: inline-block;
+  }
+  .recommend-main {
+    float: right;
+    width: 27%;
+    position: fixed;
+    top: 10%;
+    left: 70%;
+  }
+  .video-episode-display{
+    height: 200px;
+    overflow: hidden;
   }
 </style>

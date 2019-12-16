@@ -45,12 +45,7 @@
     width: 100%;
     box-shadow: 1px 1px 10px;
   }
-  .avator{
-    width: 45px;
-    height: 45px;
-    border-radius: 50%;
-    margin-top: 10px;
-  }
+
   .search{
     margin-top: 10px;
   }

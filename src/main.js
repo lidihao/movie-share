@@ -7,6 +7,7 @@ import iView from 'iview'
 import 'iview/dist/styles/iview.css'
 // 文件上传组件
 import Uploader from 'vue-simple-uploader'
+import './style/common.css'
 
 Vue.config.productionTip = false
 Vue.use(Uploader)
