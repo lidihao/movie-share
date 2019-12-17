@@ -4,7 +4,7 @@
         <h2>选集</h2>
       </div>
       <div class="episode-display-content scroll-up">
-        <div v-for="item in 3" class="episode">
+        <div v-for="item in 300" class="episode">
           <i-button>Default</i-button>
         </div>
       </div>
@@ -37,10 +37,7 @@
   }
   .scroll-up {
     overflow-y: scroll;
-    max-height: 487px;
+    max-height: 400px;
     overflow-x: hidden;
-  }
-  .scroll-up::-webkit-scrollbar {
-    width: 2px;
   }
 </style>

@@ -5,6 +5,7 @@ import VideoManager from "../page/VideoManager";
 import Upload from "../page/video-manager/upload-item"
 import Home from "../page/Home"
 import VideoDetail from '../page/video-detail'
+import CategoryDetail from '../page/Category-detail'
 
 Vue.use(Router)
 
@@ -38,6 +39,11 @@ export default new Router({
           path: '/video/videoPlay',
           name: 'video-detail',
           component: VideoDetail
+        },
+        {
+          path: '/video/category-detail',
+          name: 'category-detail',
+          component:CategoryDetail
         }
       ]
     }

@@ -4,12 +4,8 @@
       <img src="../../assets/1.png" alt="" class="uploader-img">
     </a>
     <div class="uploader-detail">
-      <h1>李帝豪</h1>
-      <p>一个风骚的男人
-        一个风骚的男人一个风骚的男人一个风骚的男人
-        一个风骚的男人一个风骚的男人
-        一个风骚的男人一个风骚的男人一个风骚的男人
-        一个风骚的男人一个风骚的男人
+      <h2>李帝豪</h2>
+      <p>一
       </p>
       <div class="add-button">
         <i-button type="primary">
@@ -31,20 +27,21 @@
   .uploader-main{
     margin: 20px auto;
     background-color: rgb(247, 247, 247);
-    padding: 20px;
+    padding: 10px;
   }
   .uploader-img {
-    width: 100px;
-    height: 100px;
+    width: 60px;
+    height: 60px;
     border-radius: 50px;
     margin: 0 auto;
     float: left;
   }
   p{
-    margin: 20px auto;
+    margin: 10px auto;
+    min-height: 40px;
   }
   .uploader-detail{
-    margin: 20px 20px 20px 120px;
+    margin: 10px 10px 10px 120px;
   }
   .add-button{
     width: 100%;

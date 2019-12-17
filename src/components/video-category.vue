@@ -6,7 +6,7 @@
             <h2>类别</h2>
           </i-col>
           <i-col span="2" offset="17">
-            <i-button type="primary" class="pull-right">更多</i-button>
+            <a href="#/video/category-detail"><i-button type="primary" class="pull-right">更多</i-button></a>
           </i-col>
         </Row>
       </div>

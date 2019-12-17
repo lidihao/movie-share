@@ -37,12 +37,12 @@
       </div>
       <div class="recommend-main">
         <div>
-
+          <UploadBox></UploadBox>
         </div><!--视频上传人-->
         <div class="video-episode-display">
           <EpisodeDisplay></EpisodeDisplay>
         </div> <!--视频集数-->
-        <div>
+        <div class="play-list">
           <PlayList></PlayList>
         </div><!--相关视频-->
       </div>
@@ -111,11 +111,14 @@
     float: right;
     width: 27%;
     position: fixed;
-    top: 10%;
+    top: 5%;
     left: 70%;
   }
   .video-episode-display{
     height: 200px;
     overflow: hidden;
+  }
+  .play-list{
+    margin-top: 20px;
   }
 </style>

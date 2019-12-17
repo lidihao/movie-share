@@ -4,7 +4,7 @@
       <h2>相关推荐</h2>
     </div>
     <div class="play-list-content scroll-up">
-      <div v-for="item in 1">
+      <div v-for="item in 100">
         <PlayListItem></PlayListItem>
       </div>
     </div>
@@ -24,13 +24,19 @@
 
 <style scoped>
   .play-list-main{
+    background-color: rgb(247, 247, 247);
     overflow: hidden;
     height: 400px;
-    border: solid;
   }
   .scroll-up {
-    overflow-y: scroll;
-    max-height: 100px;
+    overflow-y: auto;
+    max-height: 300px;
     overflow-x: hidden;
+  }
+  .play-list-top{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    border-bottom: 1px solid #57A3F3;
   }
 </style>
