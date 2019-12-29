@@ -10,20 +10,18 @@
                   <i-button slot="append" icon="ios-search" type="primary"></i-button>
                 </i-input>
               </i-col>
-              <i-col span="5" offset="5">
+              <i-col span="6" offset="4">
                 <Menu-item name="index" to="/">
-                  <Icon type="settings"></Icon>
                   首页
                 </Menu-item>
-                <Menu-item name="upload" to="/VideoManager/upload">
-                  <Icon type="settings"></Icon>
-                 上传
+                <Menu-item name="upload">
+                 <Button type="primary" @click="clickUpload">上传</Button>
                 </Menu-item>
                 <Menu-item name="login" v-if="!isLogin">
                   <Button type="primary" @click="showLoginModal">登录</Button>
                   <Login :showLogin="showLogin" @cancel="showLoginModalCancel" @success="loginSuccess"></Login>
                 </Menu-item>
-                <Menu-item name="register">
+                <Menu-item name="register" v-if="!isLogin">
                   <Button type="primary" @click="showRegisterModal">注册</Button>
                   <Register :show-register="showRegister" @cancel="showRegisterModalCancel" @success="registerSuccess"></Register>
                 </Menu-item>
@@ -55,6 +53,13 @@
       ])
     },
     methods:{
+      clickUpload(){
+        if (this.$store.getters.isLogin){
+          this.$router.push({path:'/VideoManager/upload'})
+        }else {
+          this.showLoginModal()
+        }
+      },
       showLoginModal(){
         this.showLogin=true
       },

@@ -1,16 +1,16 @@
 <template>
   <aside class="side-menu">
     <Menu active-name="1" theme="dark" width="auto">
-      <div class="headSculpture">
+      <div class="headSculpture" v-if="isLogin">
         <img :src="user.avatar ? baseApi + '/avatar/' + user.avatar : Avatar" alt="">
         <p>昵称：{{user.userName}}</p>
       </div>
       <Menu-item name="1" to="/home">
         <span class="layout-text">首页</span>
       </Menu-item>
-      <SidebarItem  v-for="item in menu" :is-nest="true" :item="item"></SidebarItem>
+      <SidebarItem  v-for="item in menuTree" :is-nest="true" :item="item"></SidebarItem>
       <Menu-item name="logout" v-if="isLogin">
-        <span class="layout-text" >退出登录</span>
+        <Button type="primary" @click="logout" >退出登录</Button>
       </Menu-item>
     </Menu>
   </aside>
@@ -82,9 +82,18 @@
       }
     },
     computed:{
-      ...mapGetters(['user','isLogin'])
+      ...mapGetters(['user','isLogin','menuTree'])
     },
     methods:{
+      logout(){
+        this.$store.dispatch('LogOut').then(() => {
+          this.$router.push({
+            path: '/home'
+          })
+        }).then(()=>{
+          location.reload()
+        })
+      }
     }
   }
 </script>

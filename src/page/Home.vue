@@ -42,7 +42,7 @@
 <style scoped>
   .home-content{
     overflow: auto;
-    margin-right: 5;
+    margin-right: 5px;
   }
   .fix-side-bar{
     position: fixed;

@@ -25,5 +25,11 @@ export default {
   },
   getInfo(){
     return service.get(`/auth/userInfo`)
+  },
+  getMenuInfo(){
+    return service.get(`/auth/menuTree`)
+  },
+  logout(){
+    return service.post(`/auth/logout`,[],jsonConfig)
   }
 }

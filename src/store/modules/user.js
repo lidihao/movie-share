@@ -7,6 +7,7 @@ const user = {
     token: getToken(),
     isLogin: false,
     user: {},
+    isLoadMenu:false,
     menus: []
   },
 
@@ -22,6 +23,9 @@ const user = {
     },
     SET_LOGIN: (state, isLogin) => {
       state.isLogin = isLogin
+    },
+    SET_ISLOADMENU: (state,isLoadMenu) => {
+      state.isLoadMenu = isLoadMenu
     }
   },
 
@@ -38,9 +42,7 @@ const user = {
         }
         LoginAction.loginSys(authUser).then(res => {
           if (res.code === 200){
-            debugger
             setToken(res.result.token, rememberMe)
-            console.log(getToken())
             commit('SET_TOKEN', res.result.user)
             setUserInfo(res.result.user, commit)
             resolve(res)
@@ -63,14 +65,51 @@ const user = {
           }else{
             reject(res)
           }
+        })
+      })
+    },
+    //菜单信息
+    GetMenuTreeInfo({commit}){
+      return new Promise(((resolve, reject) => {
+        LoginAction.getMenuInfo().then(res=>{
+          console.log(res)
+          if (res.code===200){
+            setMenuTreeInfo(res.result,commit)
+          }else{
+            reject(res)
+          }
+        })
+      }))
+    },
+    // 登出
+    LogOut({ commit }) {
+      return new Promise((resolve, reject) => {
+        LoginAction.logout().then(res => {
+          logOut(commit)
+          resolve()
         }).catch(error => {
+          logOut(commit)
           reject(error)
         })
       })
-    }
+    },
   }
 }
 
+//退出登录
+export const logOut = (commit) => {
+  commit('SET_TOKEN', '')
+  commit('SET_LOGIN',false)
+  commit('SET_USER', [])
+  commit('SET_MENUS',[])
+  commit('SET_ISLOADMENU',false)
+  removeToken()
+}
+
+export const setMenuTreeInfo = (res,commit)=>{
+  commit('SET_MENUS',res)
+  commit('SET_ISLOADMENU',true)
+}
 
 export const setUserInfo = (res, commit) => {
   let user = {
@@ -78,9 +117,8 @@ export const setUserInfo = (res, commit) => {
     avatarUrl:res.avatarUrl,
     email:res.email
   }
-  let menus = res.menus
+  setMenuTreeInfo(res.menus,commit)
   commit('SET_LOGIN',true)
-  commit('SET_MENUS', menus)
   commit('SET_USER', user)
 }
 

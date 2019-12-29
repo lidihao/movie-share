@@ -10,7 +10,7 @@
         {{item.menuName}}
       </template>
       <sidebar-item
-        v-for="child in item.children"
+        v-for="child in item.menuVoList"
         :key="child.path"
         :is-nest="true"
         :item="child"

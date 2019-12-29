@@ -14,7 +14,6 @@ import './style/common.css'
 Vue.config.productionTip = false
 Vue.use(Uploader)
 Vue.use(iView)
-
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
