@@ -7,20 +7,25 @@
               </i-col>
               <i-col span="8" >
                 <i-input class="search" placeholder="输入关键字搜索">
-                  <i-button slot="append" icon="ios-search"></i-button>
+                  <i-button slot="append" icon="ios-search" type="primary"></i-button>
                 </i-input>
               </i-col>
               <i-col span="5" offset="5">
-                <Menu-item name="1" to="/">
+                <Menu-item name="index" to="/">
                   <Icon type="settings"></Icon>
                   首页
                 </Menu-item>
-                <Menu-item name="2" to="/VideoManager/upload">
+                <Menu-item name="upload" to="/VideoManager/upload">
                   <Icon type="settings"></Icon>
                  上传
                 </Menu-item>
-                <Menu-item to="/VideoManager/upload">
-                  <i-button type="primary">Primary</i-button>
+                <Menu-item name="login" v-if="!isLogin">
+                  <Button type="primary" @click="showLoginModal">登录</Button>
+                  <Login :showLogin="showLogin" @cancel="showLoginModalCancel" @success="loginSuccess"></Login>
+                </Menu-item>
+                <Menu-item name="register">
+                  <Button type="primary" @click="showRegisterModal">注册</Button>
+                  <Register :show-register="showRegister" @cancel="showRegisterModalCancel" @success="registerSuccess"></Register>
                 </Menu-item>
               </i-col>
             </Row>
@@ -29,8 +34,46 @@
 </template>
 
 <script>
+  import Login from '../form/login'
+  import Register from '../form/register'
+  import {mapGetters} from 'vuex'
+
   export default {
-    name: "Home"
+    name: "Home",
+    components:{
+      Login,Register
+    },
+    data(){
+      return{
+        showLogin:false,
+        showRegister:false
+      }
+    },
+    computed:{
+      ...mapGetters([
+        'isLogin'
+      ])
+    },
+    methods:{
+      showLoginModal(){
+        this.showLogin=true
+      },
+      showLoginModalCancel(){
+        this.showLogin=false
+      },
+      showRegisterModal(){
+        this.showRegister=true
+      },
+      showRegisterModalCancel(){
+        this.showRegister=false
+      },
+      registerSuccess(){
+        this.showRegister=false
+      },
+      loginSuccess(){
+        this.showLogin=false
+      }
+    }
   }
 </script>
 

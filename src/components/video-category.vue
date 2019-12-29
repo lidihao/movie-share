@@ -43,7 +43,7 @@
 <style scoped>
   .main{
     margin: 50px 50px 100px;
-    box-shadow: 1px 1px 10px;
+    width: 85%;
   }
   .video-category-header{
     padding-top: 20px;
@@ -52,6 +52,5 @@
     padding-right: 30px;
   }
   .video-category-content{
-
   }
 </style>

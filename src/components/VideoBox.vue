@@ -1,7 +1,7 @@
 <template>
-  <div style="width: 350px;">
+  <div class="video-box-main">
     <div class="movie-item-contents gradient">
-      <img src="../assets/t3.jpg" alt="">
+      <img src="../assets/abcde.jpg" alt="">
       <div class="movie-item-content">
         <div class="movie-item-content-center">
           <a href="#/video/videoPlay"><strong><Icon type="ios-play" size="70"></Icon></strong></a>
@@ -30,13 +30,16 @@
 
 <script>
   export default {
-    name: "VideoBox"
+    name: "VideoBox",
   }
 </script>
 
 <style scoped>
+  .video-box-main{
+  }
   .movie-item-contents {
     position: relative;
+    max-height: 300px;
   }
   .gradient{
     position: relative;
@@ -83,10 +86,10 @@
 
   .movie-item-title > a {
     color: #fff;
-    font-size: 25px;
+    font-size: 15px;
     display: inline-block;
     font-weight: bold;
-    line-height: 28px;
+    line-height: 18px;
     text-transform: capitalize;
   }
   .pull-right{
@@ -136,21 +139,21 @@
     padding-top: 16px;
   }
   .comment-count{
-    padding: 7px 14px;
+    padding: 3px 3px;
     color: #fff;
     font-weight: bold;
     margin-top: 0;
     display: inline-block;
   }
   .view-people-count{
-    padding: 7px 14px;
+    padding: 3px 3px;
     color: #fff;
     font-weight: bold;
     margin-top: 0;
     display: inline-block;
   }
   .view-movie {
-    padding: 7px 14px;
+    padding: 3px 3px;
     color: #fff;
     font-weight: bold;
     margin-top: 0;

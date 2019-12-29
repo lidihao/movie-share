@@ -37,7 +37,7 @@
       </div>
       <div class="recommend-main">
         <div>
-          <UploadBox></UploadBox>
+          <UserCard></UserCard>
         </div><!--视频上传人-->
         <div class="video-episode-display">
           <EpisodeDisplay></EpisodeDisplay>
@@ -52,8 +52,8 @@
 <script>
   import VideoPlay from '@/components/video-play'
   import Comment from '@/components/comment'
-  import UploadBox from './detail-sidebar/uploader-box'
-  import EpisodeDisplay from "./detail-sidebar/episode-display";
+  import UserCard from '@/components/user/user-card'
+  import EpisodeDisplay from "./episode-display";
   import PlayList from '@/components/video/play-list/play-list-box'
   export default {
     name: "video-detail",
@@ -62,7 +62,7 @@
         count: 3
       }
     },
-    components: {EpisodeDisplay, UploadBox, VideoPlay,Comment ,PlayList}
+    components: {EpisodeDisplay, UserCard, VideoPlay,Comment ,PlayList}
   }
 </script>
 

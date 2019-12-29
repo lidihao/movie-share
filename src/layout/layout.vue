@@ -2,7 +2,9 @@
   <div class="home">
     <HeadTop></HeadTop>
     <SideBar></SideBar>
-    <router-view class="container-router"></router-view>
+    <div class="container-router">
+      <router-view></router-view>
+    </div>
   </div>
 </template>
 
@@ -27,5 +29,12 @@
     height: 100%;
     margin-left: 240px;
     overflow: auto;
+  }
+  .guide{
+    background-color: rgb(247, 247, 247);
+    padding: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+
   }
 </style>

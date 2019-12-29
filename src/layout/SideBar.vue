@@ -1,29 +1,91 @@
 <template>
   <aside class="side-menu">
-    <Menu active-key="1" theme="dark" width="auto">
+    <Menu active-name="1" theme="dark" width="auto">
       <div class="headSculpture">
-        <img src="../assets/1.png" alt="">
-        <p>昵称：李帝豪</p>
+        <img :src="user.avatar ? baseApi + '/avatar/' + user.avatar : Avatar" alt="">
+        <p>昵称：{{user.userName}}</p>
       </div>
-      <Menu-item key="1">
-        <Icon type="ios-navigate" :size="iconSize"></Icon>
-        <span class="layout-text">选项 1</span>
+      <Menu-item name="1" to="/home">
+        <span class="layout-text">首页</span>
       </Menu-item>
-      <Menu-item key="2">
-        <Icon type="ios-keypad" :size="iconSize"></Icon>
-        <span class="layout-text">选项 2</span>
-      </Menu-item>
-      <Menu-item key="3">
-        <Icon type="ios-analytics" :size="iconSize"></Icon>
-        <span class="layout-text">选项 3</span>
+      <SidebarItem  v-for="item in menu" :is-nest="true" :item="item"></SidebarItem>
+      <Menu-item name="logout" v-if="isLogin">
+        <span class="layout-text" >退出登录</span>
       </Menu-item>
     </Menu>
   </aside>
 </template>
 
 <script>
+  import {mapGetters} from 'vuex'
+  import Avatar from '@/assets/1.png'
+  import SidebarItem from "./SidebarItem";
   export default {
-    name: "SideBar"
+    name: "SideBar",
+    components:{
+      SidebarItem
+    },
+    data(){
+      return{
+        Avatar: Avatar,
+        menu:
+          [
+            {
+              menuName:"视频类型",
+              menuEng:'video-type',
+              menuUrl:'',
+              hasChild:true,
+              children: [
+                {
+                  menuName:"动漫",
+                  menuEng:'video-type-animate',
+                  menuUrl:'/video/category-detail?type=animate',
+                  hasChild:false
+                },
+                {
+                  menuName:"科技",
+                  menuEng:'video-type-science',
+                  menuUrl:'/video/category-detail',
+                  hasChild:false
+                }
+              ]
+            },
+            {
+              menuName:"视频管理",
+              menuEng:'video-manager',
+              menuUrl:'',
+              hasChild:true,
+              children:[
+                {
+                  menuName:"视频上传",
+                  menuEng:'video-manager-upload',
+                  menuUrl:'/VideoManager/upload',
+                  hasChild:false
+                }
+              ]
+            },
+            {
+              menuName:"个人中心",
+              menuEng:'person-center',
+              menuUrl:'',
+              hasChild:true,
+              children:[
+                {
+                  menuName:"个人空间",
+                  menuEng:'person-space',
+                  menuUrl:'/user/person-space',
+                  hasChild:false
+                }
+              ]
+            }
+          ]
+      }
+    },
+    computed:{
+      ...mapGetters(['user','isLogin'])
+    },
+    methods:{
+    }
   }
 </script>
 
