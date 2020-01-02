@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import axios from 'axios'
-import { getToken } from '@/utils/auth'
+import { getToken,removeToken } from '@/utils/auth'
 
 axios.defaults.withCredentials = true
 
@@ -43,6 +43,10 @@ function responseInterceptors (response) {
 
 // 响应失败拦截器
 function onReject (error) {
+  if(error.response&&error.response.status===401){
+    removeToken()
+    return Promise.reject(error)
+  }
   if (error.response && error.response.status === 601) {
     return Promise.reject(error)
   }
