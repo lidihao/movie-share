@@ -8,6 +8,7 @@ import VideoDetail from '../page/detail-sidebar/video-detail'
 import CategoryDetail from '../page/Category-detail'
 import PersonSpace from '../page/user/user-space'
 import EmailValidate from '../page/user/email-validate'
+import VideoApply from '../page/system/video-apply'
 
 const originalPush = Router.prototype.push
 Router.prototype.push = function push(location) {
@@ -32,6 +33,16 @@ export default new Router({
             {
               path: '/VideoManager/upload',
               name: 'upload',
+              component: Upload
+            },
+            {
+              path: '/VideoManager/process',
+              name: 'process',
+              component: Upload
+            },
+            {
+              path: '/VideoManager/pass',
+              name: 'pass',
               component: Upload
             }
           ],
@@ -61,6 +72,11 @@ export default new Router({
           path:'/user/active',
           name: 'active-user',
           component: EmailValidate
+        },
+        {
+          path:'/system/video-apply',
+          name:'video-apply',
+          component: VideoApply
         }
       ]
     }

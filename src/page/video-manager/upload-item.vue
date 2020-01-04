@@ -1,5 +1,5 @@
 <template>
-  <div class="uploader-main">
+  <div class="uploader-main" v-if="show">
     <div class="uploader-content">
       <h2 class="uploader-header">上传文件</h2>
       <uploader :options="options" class="uploader-example"
@@ -14,7 +14,7 @@
             选择文件
           </uploader-btn>
         </uploader-drop>
-        <uploader-list class="uploader-list"></uploader-list>
+        <uploader-list class="uploader-list" ref="videoFileList"></uploader-list>
       </uploader>
     </div>
     <div class="video-base-info">
@@ -22,7 +22,7 @@
       <!--图片上传div-->
       <div class="base-info-item">
         <h3 class="item-header">上传封面图片</h3>
-        <PictureUpload @picUploadSuccess="picUploadSuccess"></PictureUpload>
+        <PictureUpload @picUploadSuccess="picUploadSuccess" ref="picUpload"></PictureUpload>
       </div>
     </div>
     <!--其他信息-->
@@ -74,6 +74,7 @@
     data () {
       return {
         data:[],
+        show:true,
         //pic
         postPic:{},
         //video
@@ -110,7 +111,7 @@
         },
         ruleValidate: {
           category: [
-            { required: true, message: '类型为空', trigger: 'blur' }
+            { required:true,message:'类型不能为空'}
           ],
           title: [
             { required: true, message: '视频题目不能为空', trigger: 'blur' }
@@ -145,7 +146,7 @@
           VideoUpload.mergeVideoFile(videoFile)
               .then((res)=>{
                 if (res.code===200){
-                  this.videoFileList.push(res.result)
+                  this.videoFileList.push({videoFileId:res.result.videoFileId,id:file.id})
                 }else{
                   this.$Message.error("合并文件出错")
                 }
@@ -176,9 +177,42 @@
         })
       },
       handleSubmit(name){
+        if (this.videoFileList.length===0||!this.postPic){
+          this.$Message.warning("没有上传视频或者封面图片")
+          return
+        }
         this.$refs[name].validate((valid) => {
           if (valid) {
-            this.$Message.success('Success!');
+            let videoFileIds=[]
+            let sortVideoFileList = this.$refs.videoFileList.fileList
+            let successFileList = this.videoFileList;
+            if (successFileList.length!==sortVideoFileList.length){
+              this.$Message.warning("视频还没有上传完")
+              return
+            }
+            for(let i=0;i<sortVideoFileList.length;i++){
+              for (let j=0;j<successFileList.length;j++){
+                if (successFileList[j].id===sortVideoFileList[i].id){
+                  videoFileIds.push(successFileList[j].videoFileId)
+                }
+              }
+            }
+            let videoMeta={
+              title:this.formData.title,
+              introduce:this.formData.introduce,
+              categoryId:this.formData.category,
+              tagList:this.formData.tagList,
+              videoFileId:videoFileIds,
+              pictureId:this.postPic.pictureId
+            }
+            VideoUpload.addVideoMeta(videoMeta).then((res)=>{
+              if (res.code===200) {
+                this.$Message.success('提交成功!')
+                location.reload()
+              }else {
+                this.$Message.error(res.message)
+              }
+            })
           } else {
             this.$Message.error('请完善信息');
           }
@@ -211,7 +245,6 @@
     width: 880px;
     margin: 40px auto 0;
     font-size: 15px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, .4);
   }
   .uploader-example .uploader-btn {
     display: inline-block;
@@ -258,7 +291,6 @@
   }
   .base-info-item{
     width: 880px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, .4);
     margin: 40px auto 0;
     padding-left: 10px;
     padding-top: 30px;
