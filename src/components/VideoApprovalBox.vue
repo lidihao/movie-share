@@ -17,7 +17,7 @@
           <strong>上传时间:{{videoApply.createdTime}}</strong>
         </div>
         <div class="apply">
-          <Button type="primary">审批</Button>
+          <Button type="primary" @click="handleClick">审批</Button>
         </div>
         <div></div>
       </div>
@@ -31,6 +31,16 @@
       videoApply:{
         required:true,
         default:{}
+      }
+    },
+    methods:{
+      handleClick(){
+        this.$router.push({
+          path:'/system/apply-detail',
+          query:{
+            videoApprovalId:this.videoApply.videoApprovalId
+          }
+        })
       }
     }
   }

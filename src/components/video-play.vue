@@ -16,7 +16,7 @@
       initVideo() {
         let player = new Player({
           id: "mse",
-          url: "//localhost:8089/video/ff31ed6b05084332ab78fb63c411a30b1304372226328085749.mp4",
+          url: "//localhost:8089/video/1fb203eca13348fc99523afd576d5cab85856210027671214.mp4",
           playsinline: true,
           width: 708,
           height: 337.5,

@@ -9,6 +9,7 @@ import CategoryDetail from '../page/Category-detail'
 import PersonSpace from '../page/user/user-space'
 import EmailValidate from '../page/user/email-validate'
 import VideoApply from '../page/system/video-apply'
+import ApplyDetail from '../page/system/apply-detail'
 
 const originalPush = Router.prototype.push
 Router.prototype.push = function push(location) {
@@ -77,6 +78,11 @@ export default new Router({
           path:'/system/video-apply',
           name:'video-apply',
           component: VideoApply
+        },
+        {
+          path:'/system/apply-detail',
+          name:'apply-detail',
+          component: ApplyDetail
         }
       ]
     }
