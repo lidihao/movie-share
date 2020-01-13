@@ -4,12 +4,12 @@
         <template v-if="item.status === 'finished'">
           <img :src="item.url" alt="">
           <div class="img-upload-list-cover">
-            <Icon type="ios-eye-outline" @click="handleView(item.name)"></Icon>
-            <Icon type="ios-trash-outline" @click="handleRemove(item)"></Icon>
+            <Icon type="ios-eye-outline" @click="handleView(item.name)"/>
+            <Icon type="ios-trash-outline" @click="handleRemove(item)"/>
           </div>
         </template>
         <template v-else>
-          <Progress v-if="item.showProgress" :percent="item.percentage" hide-info></Progress>
+          <Progress v-if="item.showProgress" :percent="item.percentage" hide-info/>
         </template>
       </div>
       <Upload
@@ -28,7 +28,7 @@
         action="//localhost:8089/picUpload"
         style="display: inline-block;width:200px;" v-if="showUpload">
         <div class="img-uploader">
-          <Icon type="ios-camera" size="40"></Icon>
+          <Icon type="ios-camera" size="40"/>
         </div>
       </Upload>
       <Modal :title="viewPicTitle" v-model="visible">

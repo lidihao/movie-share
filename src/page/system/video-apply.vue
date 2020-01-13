@@ -76,9 +76,9 @@
     text-align: center;
   }
   .apply-content{
-    padding: 50px 200px;
+    padding: 50px 100px;
   }
   .box-item{
-    margin: 40px 0;
+    margin: 30px 0;
   }
 </style>

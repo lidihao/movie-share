@@ -5,12 +5,12 @@
               <i-col span="5" offset="1">
                 <img src="../assets/logo.png"/>
               </i-col>
-              <i-col span="8" >
+              <i-col span="6" >
                 <i-input class="search" placeholder="输入关键字搜索">
                   <i-button slot="append" icon="ios-search" type="primary"></i-button>
                 </i-input>
               </i-col>
-              <i-col span="6" offset="4">
+              <i-col span="8" offset="3">
                 <Menu-item name="index" to="/">
                   首页
                 </Menu-item>

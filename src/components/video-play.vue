@@ -9,6 +9,14 @@
     data() {
       return {};
     },
+    props:{
+      url:{
+        required:true
+      },
+      poster:{
+        default:''
+      }
+    },
     mounted() {
       this.initVideo();
     },
@@ -16,25 +24,18 @@
       initVideo() {
         let player = new Player({
           id: "mse",
-          url: "//localhost:8089/video/1fb203eca13348fc99523afd576d5cab85856210027671214.mp4",
+          url: '//localhost:8089'+this.url,
           playsinline: true,
-          width: 708,
+          width: 629,
           height: 337.5,
           whitelist: [
             ""
           ],
+          poster: '//localhost:8089'+this.poster,
           playbackRate: [
             0.5, 0.75, 1, 1.5, 2
           ],
           volume: 0.1,
-          thumbnail: {
-            pic_num: 44,
-            width: 500,
-            height: 300,
-            col: 10,
-            row: 10,
-            urls: ['./xgplayer-demo-thumbnail-1.jpg','./xgplayer-demo-thumbnail-2.jpg'],
-          },
           playNext: {
             urlList: [
               '//vjs.zencdn.net/v/oceans.mp4',
@@ -44,7 +45,6 @@
           },
           download: true
         })
-        player.emit('resourceReady', [{name: '高清', url: 'url1'}, {name: '超清', url: 'url2'}]);
       }
     }
   }

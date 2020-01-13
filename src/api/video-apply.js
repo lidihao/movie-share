@@ -14,5 +14,11 @@ let service = new Service(config)
 export default {
   listVideoApply(params){
     return service.get(`/videoApply/list`,params)
+  },
+  getVideoApplyDetail(videoApprovalId){
+    return service.get(`/videoApply/applyDetail/${videoApprovalId}`)
+  },
+  listVideoFileDetail(params){
+    return service.get(`/videoApply/applyDetail/videoFileList`,params)
   }
 }

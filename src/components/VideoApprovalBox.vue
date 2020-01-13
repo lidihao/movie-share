@@ -80,9 +80,8 @@
   }
 
   .movie-item-content{
-    min-width: 700px;
-    float: left;
-    margin-left: 20px;
+    min-width: 600px;
+    margin-left: 200px;
     position: relative;
   }
   .video-box-main{

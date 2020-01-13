@@ -9,10 +9,10 @@
             <Divider></Divider>
             <div class="video-list">
               <div>
-                <ApplyDetail class="video-item" v-for="item in 12"></ApplyDetail>
+                <ApplyDetail class="video-item" v-for="item in videoFileList" :item="item"/>
               </div>
               <div class="page">
-                <Page :total="100" show-sizer />
+                <Page :total="totalVideoFile" @on-change="handlePageNumChange" @on-page-size-change="handlePageSizeChange"/>
               </div>
             </div>
           </div>
@@ -21,7 +21,7 @@
           <h2>上传的图片</h2>
           <Divider></Divider>
           <div class="upload-img">
-            <img src="../../assets/abcde.jpg" alt="">
+            <img :src="picUrl" alt="">
             <div class="img-upload-cover">
               <Icon type="ios-eye-outline" @click="handleView" size="30"></Icon>
             </div>
@@ -35,23 +35,23 @@
           <Divider></Divider>
           <Form :model="formData" label-position="top" ref="formData">
             <Form-item label="视频分类" prop="category">
-              <i-select v-model="formData.category" style="width:260px" disabled="true">
+              <i-select v-model="formData.category" style="width:260px" :disabled="true">
                 <i-option v-for="item in categoryList" :value="item.categoryId" :key="item.categoryId">{{ item.categoryName }}</i-option>
               </i-select>
             </Form-item>
             <Form-item label="视频标题" prop="title">
               <label>
-                <Input v-model="formData.title" disabled="true"></Input>
+                <Input v-model="formData.title" :disabled="true"></Input>
               </label>
             </Form-item>
             <Form-item label="视频标签" prop="tagList">
-              <i-select v-model="formData.tagList" multiple style="width:260px" disabled="true">
+              <i-select v-model="formData.tagList" multiple style="width:260px" :disabled="true">
                 <i-option v-for="item in tagList" :value="item.tagId" :key="item.tagId">{{ item.tagName }}</i-option>
               </i-select>
             </Form-item>
             <Form-item label="简介" prop="introduce">
               <label>
-                <Input v-model="formData.introduce" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="简介信息" disabled="true"></Input>
+                <Input v-model="formData.introduce" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="简介信息" :disabled="true"></Input>
               </label>
             </Form-item>
           </Form>
@@ -64,6 +64,10 @@
 
 <script>
   import ApplyDetail from '@/components/apply-detail-box'
+  import TagApi from '@/api/tag'
+  import CategoryApi from '@/api/category'
+  import VideoApplyApi from '@/api/video-apply'
+
   export default {
     name: "apply-detail",
     components:{ApplyDetail},
@@ -72,22 +76,86 @@
         viewPicTitle:'',
         visible:false,
         picUrl:'',
+        totalVideoFile:0,
+        videoApprovalId:-1,
+        categoryList:[],
+        tagList:[],
+        curPageSize:9,
+        curPageNum:1,
         formData: {
           category: '',
           title: '',
           tagList: [],
           introduce:''
-        }
+        },
+        videoFileList:[]
       }
     },
     methods:{
       back(){
         this.$router.back()
       },
+      getAllCategory(){
+        CategoryApi.getAllCategory().then((res)=>{
+          if (res.code===200){
+            this.categoryList=res.result
+          }
+        })
+      },
+      getAllTag(){
+        TagApi.getAllTag().then((res)=>{
+          if (res.code===200){
+            this.tagList=res.result
+          }
+        })
+      },
+      getVideoApplyVo(){
+        VideoApplyApi.getVideoApplyDetail(this.videoApprovalId).then((res)=>{
+          if(res.code===200){
+            let data = res.result
+            this.formData.category=data.categoryId
+            this.formData.title=data.title
+            this.formData.introduce=data.introduce
+            this.formData.tagList=data.tagIdList
+            this.picUrl='//localhost:8089'+data.posterUrl
+          }
+        })
+      },
       handleView () {
         this.visible=true
-        this.picUrl="../../assets/abcde.jpg"
       },
+      init(){
+        this.videoApprovalId=this.$route.query.videoApprovalId
+      },
+      handlePageSizeChange(size){
+        this.curPageSize=size
+        this.getVideoFileDetail()
+      },
+      handlePageNumChange(num){
+        this.curPageNum=num
+        this.getVideoFileDetail()
+      },
+      getVideoFileDetail(){
+        let params = {
+          videoApprovalId:this.videoApprovalId,
+          pageNum: this.curPageNum,
+          pageSize:this.curPageSize
+        }
+        VideoApplyApi.listVideoFileDetail(params).then((res)=>{
+          if (res.code===200){
+            let data = res.result
+            this.totalVideoFile=data.pageInfo.total
+            this.videoFileList=data.result
+          }
+        })
+      }
+    },
+    created() {
+      this.init()
+      this.getAllCategory()
+      this.getAllTag()
+      this.getVideoApplyVo()
+      this.getVideoFileDetail()
     }
   }
 </script>

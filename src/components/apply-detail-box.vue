@@ -1,21 +1,43 @@
 <template>
     <div>
       <div class="img-style">
-        <img src="../assets/abcde.jpg" alt="">
+        <img :src="`//localhost:8089${item.posterUrl}`" alt="">
         <div class="img-cover">
-          <Icon type="md-arrow-dropright-circle" size="45"/>
+          <Icon type="md-arrow-dropright-circle" size="45" @click="playVideo"/>
         </div>
       </div>
       <div class="info">
-        <h3 class="title">测试hidf ikdjhif dj </h3>
-        <span class="apply-status">审批结果：<strong>不通过</strong></span>
+        <h3 class="title">{{item.fileName}}</h3>
+        <span class="apply-status">审批结果：<strong>{{item.approvalType}}</strong></span>
       </div>
+      <Modal
+        v-model="visible"
+        :title="item.fileName" width="700">
+        <VideoPlay :url="item.url" v-if="visible" :poster="item.posterUrl"/>
+      </Modal>
     </div>
 </template>
 
 <script>
+  import VideoPlay from './video-play'
   export default {
-    name: "apply-detail-box"
+    name: "apply-detail-box",
+    components: {VideoPlay},
+    data(){
+      return{
+        visible:false
+      }
+    },
+    props:{
+      item:{
+        require: true
+      }
+    },
+    methods:{
+      playVideo(){
+        this.visible=true
+      }
+    }
   }
 </script>
 
