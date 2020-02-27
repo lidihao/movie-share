@@ -55,8 +55,9 @@
               </label>
             </Form-item>
           </Form>
-          <Button type="primary">通过</Button>
-          <Button type="warning">拒绝</Button>
+          <Input v-model="remark" type="textarea" placeholder="审核意见" style="margin-bottom: 50px"/>
+          <Button type="primary" @click="handlePass">通过</Button>
+          <Button type="warning" @click="handleReject">拒绝</Button>
         </div>
       </div>
     </div>
@@ -82,6 +83,7 @@
         tagList:[],
         curPageSize:9,
         curPageNum:1,
+        remark:'',
         formData: {
           category: '',
           title: '',
@@ -146,6 +148,34 @@
             let data = res.result
             this.totalVideoFile=data.pageInfo.total
             this.videoFileList=data.result
+          }
+        })
+      },
+      handlePass(){
+        let params={
+          videoApprovalId:this.videoApprovalId,
+          applystatus:1,
+          remark:this.remark
+        }
+        VideoApplyApi.doApplyVideo(params).then((res)=>{
+          if (res.code===200){
+            this.$Message.success("success")
+          }else{
+            this.$Message.error(res.message)
+          }
+        })
+      },
+      handleReject(){
+        let params={
+          videoApprovalId:this.videoApprovalId,
+          applystatus:2,
+          remark:this.remark
+        }
+        VideoApplyApi.doApplyVideo(params).then((res)=>{
+          if (res.code===200){
+            this.$Message.success("success")
+          }else{
+            this.$Message.error(res.message)
           }
         })
       }
