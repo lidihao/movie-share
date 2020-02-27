@@ -1,11 +1,12 @@
 <template>
   <div class="uploader-main">
     <a>
-      <img src="../../assets/1.png" alt="" class="uploader-img">
+      <img :src="`http://localhost:8089${userVo.avatarUrl}`" alt="" class="uploader-img">
     </a>
     <div class="uploader-detail">
-      <h2>李帝豪</h2>
-      <p>一
+      <h2>{{userVo.userName}}</h2>
+      <p>
+        {{userVo.introduce}}
       </p>
       <div class="add-button">
         <i-button type="primary">
@@ -19,7 +20,13 @@
 
 <script>
   export default {
-    name: "uploader-box"
+    name: "uploader-box",
+    props:{
+      userVo:{
+        default:{},
+        required:true
+      }
+    }
   }
 </script>
 

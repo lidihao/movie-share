@@ -10,38 +10,39 @@
       return {};
     },
     props:{
-      url:{
+      episode:{
         required:true
       },
-      poster:{
-        default:''
+      nextPlayList:{
+        required:false
       }
     },
     mounted() {
       this.initVideo();
     },
+    watch:{
+      episode(){
+        this.initVideo()
+      }
+    },
     methods: {
       initVideo() {
         let player = new Player({
           id: "mse",
-          url: '//localhost:8089'+this.url,
+          url: '//localhost:8089'+this.episode.episodeUrl,
           playsinline: true,
           width: 629,
           height: 337.5,
           whitelist: [
             ""
           ],
-          poster: '//localhost:8089'+this.poster,
+          poster: '//localhost:8089'+this.episode.posterUrl,
           playbackRate: [
             0.5, 0.75, 1, 1.5, 2
           ],
           volume: 0.1,
           playNext: {
-            urlList: [
-              '//vjs.zencdn.net/v/oceans.mp4',
-              '//s1.pstatp.com/cdn/expire-1-M/byted-player-videos/1.0.0/xgplayer-demo.mp4',
-              '//s1.pstatp.com/cdn/expire-1-M/byted-player-videos/1.0.0/xgplayer-demo.mp4'
-            ],
+            urlList: this.nextPlayList,
           },
           download: true
         })

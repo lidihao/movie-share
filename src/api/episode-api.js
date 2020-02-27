@@ -11,8 +11,9 @@ let config = {
 }
 
 let service = new Service(config)
+
 export default {
-  getVideoDetail(videoId){
-    return service.get(`/video/videoDetail`,videoId)
+  listEpisodeByVideoId(videoId){
+    return service.get(`/episode/listEpisode`,videoId)
   }
 }

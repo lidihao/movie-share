@@ -4,8 +4,8 @@
         <h2>选集</h2>
       </div>
       <div class="episode-display-content scroll-up">
-        <div v-for="item in 300" class="episode">
-          <i-button>Default</i-button>
+        <div v-for="(item ,i) in episodeList" class="episode">
+          <Button :long="true" @click="handlePlay(item)" :type="buttonStatus[i]">{{item.episodeName}}</Button>
         </div>
       </div>
     </div>
@@ -13,7 +13,34 @@
 
 <script>
   export default {
-    name: "episode-display"
+    name: "episode-display",
+    props:{
+      episodeList:{
+        required:true
+      }
+    },
+    data(){
+      return {
+        buttonStatus:[]
+      }
+    },
+    watch:{
+      episodeList(){
+        if (this.episodeList){
+          for (let i=0;i<this.episodeList.length;i++){
+            this.buttonStatus.push('default')
+          }
+        }
+      }
+    },
+    methods:{
+      handlePlay(episode){
+        this.buttonStatus.fill('default')
+        let index= this.episodeList.indexOf(episode)
+        this.buttonStatus[index]='default'
+        this.$emit('changePlay',episode)
+      }
+    }
   }
 </script>
 
@@ -27,7 +54,6 @@
     overflow: hidden;
   }
   .episode{
-    display: inline-block;
     color: #464c5b;
     margin: 5px;
   }

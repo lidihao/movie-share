@@ -2,33 +2,32 @@
     <div>
       <div class="video-main">
         <div class="">
-          <h1 class="video-title"><span>西瓜视频</span></h1>
+          <h1 class="video-title"><span>{{videoDetail.title}}</span></h1>
           <div class="video-data">
             <span>类别:</span>
-            <span>时间</span>
+            <span>{{videoDetail.category.categoryName}}</span>
           </div>
           <div class="video-data">
-            <span>类别:</span>
-            <span>时间</span>
+            <span>时间:</span>
+            <span>{{videoDetail.createTime}}</span>
           </div>
         </div><!--视频题目-->
         <div class="video-content">
-          <VideoPlay></VideoPlay>
+          <VideoPlay :episode="playEpisode" :nextPlayList="this.nextPlayList" v-if="refresh"></VideoPlay>
           <div>点赞</div>
         </div><!--播放页面-->
         <div class="video-introduce">
-          <h1 class="video-title">题目</h1>
+          <h1 class="video-title">{{videoDetail.title}}</h1>
           <div>
             <Collapse active-key="1">
               <Panel key="1">
                 简介
-                <p slot="content">史蒂夫·乔布斯（Steve Jobs），1955年2月24日生于美国加利福尼亚州旧金山，美国发明家、企业家、美国苹果公司联合创办人。</p>
+                <p slot="content">{{videoDetail.introduce}}</p>
               </Panel>
             </Collapse>
           </div>
           <div class="video-tag">
-            <Tag v-for="item in count" closable>标签{{ item + 1 }}</Tag>
-            <i-button icon="ios-plus-empty" type="dashed" size="small" @click="count += 1">添加标签</i-button>
+            <Tag v-for="item in videoDetail.tagList">{{item.tagName}}</Tag>
           </div>
         </div><!--视频简介-->
         <div class="video-comment-box">
@@ -37,10 +36,10 @@
       </div>
       <div class="recommend-main">
         <div>
-          <UserCard></UserCard>
+          <UserCard :userVo="this.videoDetail.uploader"></UserCard>
         </div><!--视频上传人-->
         <div class="video-episode-display">
-          <EpisodeDisplay></EpisodeDisplay>
+          <EpisodeDisplay :episodeList="this.episodeList" @changePlay="playVideo"></EpisodeDisplay>
         </div> <!--视频集数-->
         <div class="play-list">
           <PlayList></PlayList>
@@ -55,14 +54,70 @@
   import UserCard from '@/components/user/user-card'
   import EpisodeDisplay from "./episode-display";
   import PlayList from '@/components/video/play-list/play-list-box'
+  import VideoApi from '@/api/video-api'
+  import EpisodeApi from '@/api/episode-api'
+
   export default {
     name: "video-detail",
     data () {
       return {
-        count: 3
+        count: 3,
+        videoId:-1,
+        videoDetail:{},
+        episodeList: [],
+        nextPlayList: [],
+        playEpisode:{},
+        refresh:true
       }
     },
-    components: {EpisodeDisplay, UserCard, VideoPlay,Comment ,PlayList}
+    components: {EpisodeDisplay, UserCard, VideoPlay,Comment ,PlayList},
+    methods:{
+      init(){
+        this.videoId=this.$route.query.videoId
+      },
+      getVideoDetailByVideoId(){
+        VideoApi.getVideoDetail({videoId:this.videoId}).then(
+          (res)=>{
+            if (res.code===200){
+              this.videoDetail=res.result
+            }
+          }
+        )
+      },
+      getEpisodeList(){
+        EpisodeApi.listEpisodeByVideoId({videoId:this.videoId}).then(
+          (res)=>{
+            if (res.code===200){
+              this.episodeList=res.result
+              if (this.episodeList){
+                this.playEpisode = this.episodeList[0]
+                let nextEpisodeList = this.episodeList.slice(1)
+                let list=[]
+                nextEpisodeList.forEach((eps => {list.push('http://localhost:8089'+eps.episodeUrl)}))
+                this.nextPlayList=list
+              }
+            }
+          }
+        )
+      },
+      playVideo(episode){
+        this.playEpisode=episode
+        this.refresh=false;
+        let idx = this.episodeList.indexOf(episode)
+        let nextEpisodeList = this.episodeList.slice(idx+1)
+        let list=[]
+        nextEpisodeList.forEach((eps => {list.push('http://localhost:8089'+eps.episodeUrl)}))
+        this.nextPlayList=list
+        this.$nextTick(()=>{
+          this.refresh=true
+        })
+      }
+    },
+    created() {
+      this.init()
+      this.getVideoDetailByVideoId()
+      this.getEpisodeList()
+    }
   }
 </script>
 
