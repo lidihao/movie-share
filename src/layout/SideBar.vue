@@ -2,7 +2,7 @@
   <aside class="side-menu">
     <Menu active-name="1" theme="dark" width="auto">
       <div class="headSculpture" v-if="isLogin">
-        <img :src="user.avatar ? baseApi + '/avatar/' + user.avatar : Avatar" alt="">
+        <img :src="`http://localhost:8089${user.avatarUrl}`" alt="">
         <p>昵称：{{user.userName}}</p>
       </div>
       <Menu-item name="1" to="/home">

@@ -1,6 +1,7 @@
 <template>
   <div class="comment-send ">
     <div class="textarea-container">
+      <Rate allow-half :value.sync="valueHalf"></Rate>
       <i-input type="textarea" :rows="4" placeholder="请输入..."></i-input>
       <i-button type="primary"style="margin-top: 10px">发表评论</i-button>
     </div>
@@ -10,7 +11,12 @@
 
 <script>
   export default {
-    name: "comment-sender"
+    name: "comment-sender",
+    data(){
+      return{
+        valueHalf:0.0
+      }
+    }
   }
 </script>
 

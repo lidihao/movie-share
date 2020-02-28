@@ -113,6 +113,7 @@ export const setMenuTreeInfo = (res,commit)=>{
 
 export const setUserInfo = (res, commit) => {
   let user = {
+    userId:res.userId,
     userName:res.userName,
     avatarUrl:res.avatarUrl,
     email:res.email

@@ -1,6 +1,6 @@
 <template>
   <div class="common">
-    <div class="b-head"><span class="b-head-t results">1255</span><span class="b-head-t">评论</span></div>
+    <div class="b-head"><span class="b-head-t results">{{totalCommentCount}}</span><span class="b-head-t">评论</span></div>
     <div class="comment" style="position: relative;">
       <div class="bb-comment ">
         <div class="comment-header">
@@ -13,19 +13,17 @@
             </Menu>
           </div>
           <div class="header-page">
-            <Page :total="40" size="small" show-elevator show-sizer></Page>
+            <Page :total="totalCommentCount" size="small" show-elevator show-sizer></Page>
           </div>
         </div>
         <CommentSender></CommentSender>
         <div class="comment-list ">
-          <CommentItem></CommentItem>
-          <CommentItem></CommentItem>
-          <CommentItem></CommentItem>
-          <CommentItem></CommentItem>
-          <CommentItem></CommentItem>
+          <div v-for="comment in videoCommentList">
+            <CommentItem :videoComment="comment"></CommentItem>
+          </div>
         </div>
         <div class="bottom-page paging-box-big">
-          <Page :total="40" show-elevator show-sizer></Page>
+          <Page :total="totalCommentCount" show-elevator show-sizer></Page>
         </div>
         <comment-sender></comment-sender>
       </div>
@@ -36,9 +34,43 @@
 <script>
   import CommentItem from './comment-item'
   import CommentSender from './comment-sender'
+  import VideoCommentApi from '@/api/videoComment-api'
+
   export default {
     name: "comment",
-    components: {CommentItem, CommentSender}
+    props:{
+      videoId:{
+        required:true
+      }
+    },
+    components: {CommentItem, CommentSender},
+    data(){
+      return{
+        videoCommentList:[],
+        totalCommentCount:0,
+        curPageNum:1,
+        curPageSize:10
+      }
+    },
+    methods:{
+      getVideoCommentList(){
+        let params={
+          videoId:this.videoId,
+          pageNum:this.curPageNum,
+          pageSize:this.curPageSize
+        }
+        VideoCommentApi.listVideoCommentByVideoId(params).then((res)=>{
+          if (res.code===200){
+            let data=res.result
+            this.totalCommentCount=data.pageInfo.total
+            this.videoCommentList=data.result
+          }
+        })
+      }
+    },
+    created() {
+      this.getVideoCommentList()
+    }
   }
 </script>
 

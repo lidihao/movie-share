@@ -2,20 +2,20 @@
   <div class="reply-item">
     <div class="user-face">
       <a>
-        <img class="user-face-img" src="../assets/1.png" alt="">
+        <img class="user-face-img" :src="`http://localhost:8089${reply.replyUser.avatarUrl}`" alt="">
       </a>
     </div>
     <div class="reply-con">
       <div class="user">
         <a href="//space.bilibili.com/321872907" target="_blank"
-           data-usercard-mid="321872907" class="name ">陌染闇_96</a>
-        <span class="text-con">看了一下弹幕和评论，有一点想纠正一下：人型、姬雏鸟、琥珀这些歌曲和MV都是建立在HH的世界观里面的，里面讲述的全都是HH自己的故事，与其它vt毫无关系。虽然可能确实歪打正着戳中了某些点，但也请不要在这里刷其他的vt以影响他人观感。</span>
+           data-usercard-mid="321872907" class="name ">{{reply.replyUser.userName}}</a>
+        <span class="text-con">{{reply.replyContent}}</span>
       </div>
     </div>
     <div class="info">
-      <span class="time">2019-12-14 11:37</span>
+      <span class="time">{{reply.createTime}}</span>
       <span class="like "><i></i><span>56</span></span><span class="hate "><i></i></span>
-      <span class="reply">回复</span>
+      <span class="reply" @click="replyTo">回复</span>
       <div class="operation">
         <div class="spot"></div>
         <div class="opera-list" style="display: none;">
@@ -26,12 +26,39 @@
         </div>
       </div>
     </div>
+    <div>
+      <Modal
+        v-model="showSender"
+        title="回复"
+        @on-ok="replyToOthers"
+      >
+        <i-input type="textarea" :rows="4" placeholder="请输入..."></i-input>
+      </Modal>
+    </div>
   </div>
 </template>
 
 <script>
   export default {
-    name: "comment-reply-item"
+    name: "comment-reply-item",
+    props:{
+      reply:{
+        required:true
+      }
+    },
+    data(){
+      return{
+        showSender:false
+      }
+    },
+    methods:{
+      replyTo(){
+        this.showSender=true
+      },
+      replyToOthers(){
+
+      }
+    }
   }
 </script>
 

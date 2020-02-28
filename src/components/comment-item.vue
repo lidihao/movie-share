@@ -3,22 +3,21 @@
     <div class="user-face">
       <a href="//space.bilibili.com/321872907" target="_blank"
          data-usercard-mid="321872907">
-        <img class="user-face-img" src="../assets/1.png" alt="">
+        <img class="user-face-img" :src="`http://localhost:8089${videoComment.commentUser.avatarUrl}`" alt="">
       </a>
     </div>
     <div class="con ">
       <div class="user">
         <a>
-          <h2>李帝豪</h2>
+          <h2>{{videoComment.commentUser.userName}}</h2>
         </a>
       </div>
       <p class="text">
-        人型、姬雏鸟、琥珀的身体，三首歌三种风格，却无一都在讲述着自己对科学家的不满以及两人互相珍惜对方的感情。这首歌比起前面两首有了更多看透尘世的感觉，成熟的两人真的太有魅力了…（虽然真的很想吹爆琥珀但我想不出词了…<br>另外，想翻唱这首歌但日语不是很好的各位可以点进这里<a
-        href="//www.bilibili.com/read/cv4151355/" target="_blank" data-view="4151355">cv4151355</a>，我写了一份注平假名&amp;罗马音的歌词
+        {{videoComment.commentContent}}
       </p>
-      <div class="info"><span class="time">2019-12-13 20:06</span><span
+      <div class="info"><span class="time">{{videoComment.createTime}}</span><span
         class="like "><i></i><span>746</span></span><span class="hate "><i></i></span><span
-        class="reply btn-hover btn-highlight">回复</span>
+        class="reply btn-hover btn-highlight" @click="replyComment">回复</span>
         <div class="operation">
           <div class="spot"></div>
           <div class="opera-list" style="display: none;">
@@ -30,24 +29,89 @@
         </div>
       </div>
       <div class="reply-box">
-        <ReplyItem></ReplyItem>
-        <ReplyItem></ReplyItem>
-        <ReplyItem></ReplyItem>
+        <div v-for="reply in replyList">
+          <ReplyItem :reply="reply"></ReplyItem>
+        </div>
         <div class="view-more">
-          共<b>11</b>条回复,
-          <a class="btn-more" data-pid="2175428370" data-fold="false">点击查看</a>
+          <Page :total="totalReply" show-total size="small"></Page>
         </div>
       </div>
       <div class="paging-box"></div>
+    </div>
+    <div>
+      <Modal
+        v-model="showSender"
+        :title="replyTitle"
+        @on-ok="doReplyComment"
+      >
+        <Input  v-model="replyContent" type="textarea" :rows="4" placeholder="请输入..."></Input>
+      </Modal>
     </div>
   </div>
 </template>
 
 <script>
   import ReplyItem from './comment-reply-item'
+  import {mapGetters} from 'vuex'
+  import VideoCommentApi from '@/api/videoComment-api'
   export default {
     name: "comment-item",
-    components:{ReplyItem}
+    components:{ReplyItem},
+    props:{
+      videoComment:{
+        required:true
+      }
+    },
+    computed:{
+      ...mapGetters(['user'])
+    },
+    data(){
+      return{
+        showSender:false,
+        replyTitle:'回复 @'+this.videoComment.commentUser.userName,
+        replyContent:'',
+        replyList:[],
+        curPageNum:1,
+        curPageSize:10,
+        totalReply:0
+      }
+    },
+    methods:{
+      replyComment(){
+        this.showSender=true
+      },
+      doReplyComment(){
+        let reply={
+          replyContent:this.replyContent,
+          replyUserId:this.user.userId,
+          videoCommentId:this.videoComment.commentId
+        }
+        console.log(reply)
+        VideoCommentApi.replyComment(reply).then((res)=>{
+          if (res.code===200){
+            this.$Message.success('回复成功')
+          }
+        })
+      },
+      getReplyList(){
+        let params={
+          commentId:this.videoComment.commentId,
+          pageNum:this.curPageNum,
+          pageSize:this.curPageSize
+        }
+        VideoCommentApi.listCommentReply(params).then((res)=>{
+          if (res.code===200){
+            let data=res.result
+            this.replyList=data.result
+            this.totalSize=data.pageInfo.total
+          }
+        })
+
+      }
+    },
+    created() {
+      this.getReplyList()
+    }
   }
 </script>
 

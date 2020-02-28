@@ -31,7 +31,7 @@
           </div>
         </div><!--视频简介-->
         <div class="video-comment-box">
-          <Comment></Comment>
+          <Comment :videoId="videoId"></Comment>
         </div><!--评论区-->
       </div>
       <div class="recommend-main">
