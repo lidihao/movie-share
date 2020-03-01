@@ -12,6 +12,9 @@ import VideoApply from '../page/system/video-apply'
 import ApplyDetail from '../page/system/apply-detail'
 import VideoProcess from '../page/video-manager/video-process'
 import VideoEdit from '../page/video-manager/video-edit'
+import Test from '../page/test'
+import Message from '../page/message'
+
 
 const originalPush = Router.prototype.push
 Router.prototype.push = function push(location) {
@@ -85,6 +88,16 @@ export default new Router({
           path:'/system/apply-detail',
           name:'apply-detail',
           component: ApplyDetail
+        },
+        {
+          path:'test',
+          name:'test',
+          component:Test
+        },
+        {
+          path:'message',
+          name:'message',
+          component:Message
         }
       ]
     }

@@ -13,19 +13,19 @@
             </Menu>
           </div>
           <div class="header-page">
-            <Page :total="totalCommentCount" size="small" show-elevator show-sizer></Page>
+            <Page :total="totalCommentCount" size="small" show-total @on-change="changePage"></Page>
           </div>
         </div>
-        <CommentSender></CommentSender>
+        <comment-sender :videoId="this.videoId" @commentSuccess="handleCommentSuccess"></comment-sender>
         <div class="comment-list ">
-          <div v-for="comment in videoCommentList">
+          <div v-for="comment in videoCommentList" v-if="refreshCommentList">
             <CommentItem :videoComment="comment"></CommentItem>
           </div>
         </div>
         <div class="bottom-page paging-box-big">
-          <Page :total="totalCommentCount" show-elevator show-sizer></Page>
+          <Page :total="totalCommentCount" show-total @on-change="changePage"></Page>
         </div>
-        <comment-sender></comment-sender>
+        <comment-sender :videoId="this.videoId" @commentSuccess="handleCommentSuccess"></comment-sender>
       </div>
     </div>
   </div>
@@ -49,6 +49,7 @@
         videoCommentList:[],
         totalCommentCount:0,
         curPageNum:1,
+        refreshCommentList:true,
         curPageSize:10
       }
     },
@@ -66,6 +67,17 @@
             this.videoCommentList=data.result
           }
         })
+      },
+      handleCommentSuccess(){
+        this.refreshCommentList=false
+        this.getVideoCommentList()
+        this.$nextTick(()=>{
+          this.refreshCommentList=true
+        })
+      },
+      changePage(pageNum){
+        this.curPageNum=pageNum
+        this.getVideoCommentList()
       }
     },
     created() {

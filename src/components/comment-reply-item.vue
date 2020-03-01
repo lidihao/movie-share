@@ -1,15 +1,23 @@
 <template>
   <div class="reply-item">
     <div class="user-face">
-      <a>
+      <a @click="toUserSpace(user.userId)">
         <img class="user-face-img" :src="`http://localhost:8089${reply.replyUser.avatarUrl}`" alt="">
       </a>
     </div>
     <div class="reply-con">
       <div class="user">
-        <a href="//space.bilibili.com/321872907" target="_blank"
-           data-usercard-mid="321872907" class="name ">{{reply.replyUser.userName}}</a>
-        <span class="text-con">{{reply.replyContent}}</span>
+        <a data-usercard-mid="321872907" class="name " @click="toUserSpace(user.userId)">{{reply.replyUser.userName}}</a>
+        <span v-if="isReply">回复 @</span>
+        <a v-if="isReply" class="name" @click="toUserSpace(reply.replyUser.userId)">
+          {{reply.replyUser.userName}}
+        </a>
+        <div >
+          <Card :bordered="true" :shadow="true">
+            <p style="word-break:break-all">{{reply.replyContent}}</p>
+          </Card>
+
+        </div>
       </div>
     </div>
     <div class="info">
@@ -29,16 +37,18 @@
     <div>
       <Modal
         v-model="showSender"
-        title="回复"
+        :title="replyTitle"
         @on-ok="replyToOthers"
       >
-        <i-input type="textarea" :rows="4" placeholder="请输入..."></i-input>
+        <Input v-model="replyContent" type="textarea" :rows="4" placeholder="请输入..."></Input>
       </Modal>
     </div>
   </div>
 </template>
 
 <script>
+  import {mapGetters} from 'vuex'
+  import VideoCommentApi from '@/api/videoComment-api'
   export default {
     name: "comment-reply-item",
     props:{
@@ -46,9 +56,20 @@
         required:true
       }
     },
+    computed:{
+      ...mapGetters(['user'])
+    },
     data(){
       return{
-        showSender:false
+        showSender:false,
+        replyTitle:'回复 @'+this.reply.replyUser.userName,
+        replyContent: '',
+        isReply:false
+      }
+    },
+    watch:{
+      reply(){
+        this.isReply=this.reply.replyToComment
       }
     },
     methods:{
@@ -56,8 +77,30 @@
         this.showSender=true
       },
       replyToOthers(){
-
+        let replyComment={
+          replyContent:this.replyContent,
+          replyUserId:this.user.userId,
+          replyToId:this.reply.replyId,
+          videoCommentId:this.reply.videoCommentId
+        }
+        VideoCommentApi.replyComment(replyComment).then((res)=>{
+          if (res.code===200){
+            this.$Message.success('回复成功')
+            this.$emit('replySuccess',res)
+          }
+        })
+      },
+      toUserSpace(userId){
+        this.$router.push({
+          path:'/user/person-space',
+          query:{
+            userId:userId
+          }
+        })
       }
+    },
+    created() {
+      this.isReply=this.reply.replyToComment
     }
   }
 </script>
@@ -76,6 +119,9 @@
   .text-con{
     margin-left: 5px;
   }
+  a.name{
+    font-size: 17px;
+  }
   .time{
     margin-left: 6px;
     margin-right: 16px;
@@ -87,4 +133,7 @@
     cursor: pointer;
   }
 
+  .comment{
+
+  }
 </style>

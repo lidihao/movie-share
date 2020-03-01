@@ -11,10 +11,14 @@ router.beforeEach((to, from, next)=>{
     if(!store.getters.isLogin){
       store.dispatch('GetInfo').then(res => { // 拉取user_info
         console.log(res)
+        next()
       }).catch((err) => {
         removeToken()
       })
+    }else {
+      next()
     }
+  }else {
+    next()
   }
-  next()
 })

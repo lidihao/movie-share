@@ -9,11 +9,13 @@ import store from './store'
 import 'iview/dist/styles/iview.css'
 // 文件上传组件
 import Uploader from 'vue-simple-uploader'
+import VueCropper from 'vue-cropper'
 import './style/common.css'
 
 Vue.config.productionTip = false
 Vue.use(Uploader)
 Vue.use(iView)
+Vue.use(VueCropper)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

@@ -1,14 +1,14 @@
 <template>
   <div class="list-item reply-wrap" data-id="2175428370" data-index="0" scrollshow="true">
     <div class="user-face">
-      <a href="//space.bilibili.com/321872907" target="_blank"
-         data-usercard-mid="321872907">
+      <a target="_blank"
+         data-usercard-mid="321872907" @click="toUserSpace">
         <img class="user-face-img" :src="`http://localhost:8089${videoComment.commentUser.avatarUrl}`" alt="">
       </a>
     </div>
     <div class="con ">
       <div class="user">
-        <a>
+        <a @click="toUserSpace">
           <h2>{{videoComment.commentUser.userName}}</h2>
         </a>
       </div>
@@ -29,11 +29,11 @@
         </div>
       </div>
       <div class="reply-box">
-        <div v-for="reply in replyList">
-          <ReplyItem :reply="reply"></ReplyItem>
+        <div v-for="reply in replyList" v-if="refreshReplyList">
+          <ReplyItem :reply="reply"  @replySuccess="handleReplySuccess"></ReplyItem>
         </div>
         <div class="view-more">
-          <Page :total="totalReply" show-total size="small"></Page>
+          <Page :total="totalReply" show-total size="small" @on-change="pageNumChange"></Page>
         </div>
       </div>
       <div class="paging-box"></div>
@@ -72,8 +72,14 @@
         replyContent:'',
         replyList:[],
         curPageNum:1,
-        curPageSize:10,
-        totalReply:0
+        curPageSize:5,
+        totalReply:0,
+        refreshReplyList:true
+      }
+    },
+    watch:{
+      videoComment(){
+        this.getReplyList()
       }
     },
     methods:{
@@ -90,6 +96,7 @@
         VideoCommentApi.replyComment(reply).then((res)=>{
           if (res.code===200){
             this.$Message.success('回复成功')
+            this.handleReplySuccess()
           }
         })
       },
@@ -103,10 +110,29 @@
           if (res.code===200){
             let data=res.result
             this.replyList=data.result
-            this.totalSize=data.pageInfo.total
+            this.totalReply=data.pageInfo.total
           }
         })
 
+      },
+      handleReplySuccess(){
+        this.refreshReplyList=false
+        this.getReplyList()
+        this.$nextTick(()=>{
+          this.refreshReplyList=true
+        })
+      },
+      pageNumChange(pageNum){
+        this.curPageNum=pageNum
+        this.getReplyList()
+      },
+      toUserSpace(){
+        this.$router.push({
+          path:'/user/person-space',
+          query:{
+            userId:this.user.userId
+          }
+        })
       }
     },
     created() {
