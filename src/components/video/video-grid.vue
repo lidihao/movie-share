@@ -56,7 +56,7 @@
 
 <style scoped>
   .video-item{
-    margin: 20px;
+    margin: 10px;
     display: inline-block;
     overflow: hidden;
     width: 300px;

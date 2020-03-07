@@ -2,6 +2,7 @@
   <div style="display:flex;">
     <modal v-model="showCropper"
            @on-ok="finish"
+           @on-cancel="cancel"
     >
       <vueCropper
         ref="cropper"
@@ -73,11 +74,16 @@
             param.append('fileName','test.jpeg')
             param.append('file',picBlob)
             PictureUpload.uploadPicByManual(param).then((res)=>{
-              console.log(res)
+              if (res.code===200){
+                this.$emit('uploadSuccess',res.result)
+              }
             })
           }
           image.src=data
         })
+      },
+      cancel(){
+        this.$emit('cancel')
       },
       dataURLtoBlob(dataurl) {
         let arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],

@@ -31,5 +31,11 @@ export default {
   },
   logout(){
     return service.post(`/auth/logout`,[],jsonConfig)
+  },
+  activeUser(data){
+    return service.post(`/auth/user/active`,data)
+  },
+  getUserInfoById(params){
+    return service.get(`/auth/getUserInfoById`,params)
   }
 }

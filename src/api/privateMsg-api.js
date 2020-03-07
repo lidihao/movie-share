@@ -1,0 +1,27 @@
+import { Service } from '../service'
+import { jsonConfig } from './axiosConfig'
+
+let config = {
+  url: {
+    development: 'http://localhost:8089',
+    production: 'https://message-platform.huya.com',
+    test: ''
+  }
+}
+
+let service = new Service(config)
+
+export default {
+  getPrivateMsgUserList(params){
+    return service.get(`/privateMsg/userList`,params)
+  },
+  getMessageList(params){
+    return service.get(`/privateMsg/messageList`,params)
+  },
+  sendMessage(message){
+    return service.post(`/privateMsg/sendMessage`,message,jsonConfig)
+  },
+  getUserItemDetail(parmas){
+    return service.get(`/privateMsg/userItemDetail`,parmas)
+  }
+}

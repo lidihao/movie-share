@@ -101,4 +101,9 @@ export class Service {
     let data = await this.axiosInstance.put(url, params, config)
     return data
   }
+  async delete (url, params, customConfig) {
+    let config = mergeConfig(customConfig)
+    let data = await this.axiosInstance.delete(url, params, config)
+    return data
+  }
 }

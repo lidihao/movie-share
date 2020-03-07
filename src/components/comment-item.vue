@@ -130,7 +130,7 @@
         this.$router.push({
           path:'/user/person-space',
           query:{
-            userId:this.user.userId
+            userId:this.videoComment.commentUser.userId
           }
         })
       }

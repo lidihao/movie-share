@@ -1,7 +1,7 @@
 <template>
   <div class="video-box-main">
     <div class="movie-item-contents gradient">
-      <img src="../assets/abcde.jpg" alt="">
+      <img src="../assets/abcde.jpg" alt="" style="height: 100%;width: 100%;">
       <div class="movie-item-content">
         <div class="movie-item-content-center">
           <a href="#/video/videoPlay"><strong><Icon type="ios-play" size="70"></Icon></strong></a>
@@ -11,16 +11,14 @@
             <a href="">Hurry Animate Blue Strack New Movie (2018)</a>
           </div>
           <div class="uper">
-            <Icon type="ios-people" size="30"></Icon>
+            <Icon type="ios-people" size="20"></Icon>
             <span>上传者:</span>
             <a><strong>李帝豪</strong></a>
           </div>
           <div class="movie-item-beta">
             <p class="pull-left">
-              <span class="view-people-count">观看人数:98459w</span>
-              <span class="comment-count">评论数:98459</span>
+              <span class="view-people-count"><Icon type="md-play" />98459w</span>
             </p>
-            <p class="pull-right view-movie">时长:34:00</p>
           </div>
         </div>
       </div>
@@ -36,10 +34,15 @@
 
 <style scoped>
   .video-box-main{
+    border-radius: 14px;
+    margin: 10px;
+    height: 200px;
+    width: 280px;
   }
   .movie-item-contents {
     position: relative;
-    max-height: 300px;
+    height: 200px;
+    width: 280px;
   }
   .gradient{
     position: relative;
@@ -97,6 +100,7 @@
   }
   .pull-left{
     float: left;
+    margin-left: 10px;
   }
 
   .movie-item-content-center {
@@ -127,16 +131,12 @@
   .movie-item-content-buttom {
     position: absolute;
     bottom: 0;
-    width: 100%;
-    height: auto;
-    padding-bottom: 20px;
+    padding-bottom: 5px;
   }
   .movie-item-title {
-    padding: 0 23px;
+    padding: 0 13px;
   }
   .movie-item-beta {
-    margin-top: 16px;
-    padding-top: 16px;
   }
   .comment-count{
     padding: 3px 3px;
@@ -161,7 +161,7 @@
   }
   .uper{
     margin-top: 10px;
-    margin-left: 20px;
+    margin-left: 10px;
     color: white;
   }
 

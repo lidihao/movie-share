@@ -1,6 +1,6 @@
 <template>
   <div class="uploader-main">
-    <a>
+    <a @click="toUserSpace">
       <img :src="`http://localhost:8089${userVo.avatarUrl}`" alt="" class="uploader-img">
     </a>
     <div class="uploader-detail">
@@ -13,7 +13,7 @@
           <Icon type="ios-people" size="15"></Icon>
           <strong>关注用户</strong>
         </i-button>
-        <i-button type="primary">
+        <i-button type="primary" @click="sendMessage">
           <Icon type="ios-people" size="15"></Icon>
           <strong>发送消息</strong>
         </i-button>
@@ -28,6 +28,24 @@
     props:{
       userVo:{
         required:true
+      }
+    },
+    methods:{
+      sendMessage(){
+        this.$router.push({
+          path:'/message-manager/instance-message',
+          query:{
+            recvUserId:this.userVo.userId
+          }
+        })
+      },
+      toUserSpace(){
+        this.$router.push({
+          path:'/user/person-space',
+          query:{
+            userId:this.userVo.userId
+          }
+        })
       }
     }
   }

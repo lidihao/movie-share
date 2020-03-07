@@ -95,7 +95,7 @@ export default new Router({
           component:Test
         },
         {
-          path:'message',
+          path:'/message-manager/instance-message',
           name:'message',
           component:Message
         }
