@@ -13,14 +13,20 @@
             </div>
           </div>
         </div>
+        <div class="h-action">
+          <span class="h-f-btn h-follow" v-if="!showChange"><i class=""></i>关注
+          </span>
+          <a @click="sendMessage" v-if="!showChange" class="h-f-btn h-message">
+            发消息
+          </a>
+        </div>
       </div>
       <div class="space-content">
         <Tabs active-key="key1">
           <Tab-pane label="发布的视频" key="key1">
-            <VideoGrid></VideoGrid>
+            <UploadVideoGrid :userId="this.userId"></UploadVideoGrid>
           </Tab-pane>
           <Tab-pane label="收藏的视频" key="key2">
-            <VideoGrid></VideoGrid>
           </Tab-pane>
           <Tab-pane label="关注" key="key3">
             <UserCardGrid></UserCardGrid>
@@ -50,13 +56,13 @@
             </Upload>
           </div>
         </div>
-        <Cropper :showCropper="showCropper" :imgSrc="imgSrc" @uploadSuccess="uploadSuccess" @cancel="cancel"></Cropper>
+        <Cropper :showCropper="showCropper" :imgSrc="imgSrc" :fixedNumber="[1000,200]"  @uploadSuccess="uploadSuccess" @cancel="cancel" ></Cropper>
       </div>
     </div>
 </template>
 
 <script>
-  import VideoGrid from '../../components/video/video-grid'
+  import  UploadVideoGrid from '@/page/user/upload-video-grid'
   import UserCardGrid from '../../components/user/user-card-grid'
   import LoginApi from '@/api/login'
   import {mapGetters} from 'vuex'
@@ -79,8 +85,8 @@
     },
     components:{
       UserCardGrid,
-      VideoGrid,
-      Cropper
+      Cropper,
+      UploadVideoGrid
     },
     computed:{
       ...mapGetters(['user'])
@@ -142,7 +148,6 @@
         }
         this.showCropper=true
         this.imgSrc=this.getObjectURL(file)
-        console.log(this.imgSrc)
         return false
       },
       getObjectURL(file) {
@@ -193,6 +198,14 @@
           if (res.code===200){
             this.$Message.success('success')
             this.getUserInfo()
+          }
+        })
+      },
+      sendMessage(){
+        this.$router.push({
+          path:'/message-manager/instance-message',
+          query:{
+            recvUserId:this.userVo.userId
           }
         })
       }
@@ -306,5 +319,31 @@
     position:absolute;
     right: 30px;
     bottom: 20px;
+  }
+  .h-f-btn {
+    background: rgba(0,0,0,.45);
+    box-shadow: 0 0 0 2px hsla(0,0%,100%,.3);
+    border-radius: 4px;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    float: left;
+    text-align: center;
+    margin: 0 20px 17px 0;
+    width: 76px;
+    line-height: 30px;
+  }
+  .h-follow {
+    background: #f25d8e;
+    box-shadow: 0 0 0 2px #fff;
+    color: #fff;
+  }
+
+  .h-action {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
   }
 </style>

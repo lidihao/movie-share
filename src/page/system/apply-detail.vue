@@ -193,6 +193,7 @@
 <style scoped>
   .title{
     text-align: center;
+    word-break: break-all;
   }
   .apply-detail{
     padding: 20px 20px;

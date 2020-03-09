@@ -1,12 +1,15 @@
 <template>
   <div class="reply-item">
     <div class="user-face">
-      <a @click="toUserSpace(user.userId)">
+      <a @click="toUserSpace(reply.replyUser.userId)">
         <img class="user-face-img" :src="`http://localhost:8089${reply.replyUser.avatarUrl}`" alt="">
       </a>
     </div>
     <div class="reply-con">
       <div class="user">
+        <span class="uploader" v-if="showUP">
+        UP
+      </span>
         <a data-usercard-mid="321872907" class="name " @click="toUserSpace(user.userId)">{{reply.replyUser.userName}}</a>
         <span v-if="isReply">回复 @</span>
         <a v-if="isReply" class="name" @click="toUserSpace(reply.replyUser.userId)">
@@ -54,6 +57,9 @@
     props:{
       reply:{
         required:true
+      },
+      uploader:{
+        required: true
       }
     },
     computed:{
@@ -64,12 +70,16 @@
         showSender:false,
         replyTitle:'回复 @'+this.reply.replyUser.userName,
         replyContent: '',
-        isReply:false
+        isReply:false,
+        showUP:false
       }
     },
     watch:{
       reply(){
         this.isReply=this.reply.replyToComment
+        if (parseInt(this.uploader.userId)===parseInt(this.reply.replyUser.userId)){
+          this.showUP=true
+        }
       }
     },
     methods:{
@@ -101,6 +111,9 @@
     },
     created() {
       this.isReply=this.reply.replyToComment
+      if (parseInt(this.uploader.userId)===parseInt(this.reply.replyUser.userId)){
+        this.showUP=true
+      }
     }
   }
 </script>
@@ -134,6 +147,54 @@
   }
 
   .comment{
+  }
 
+  .uploader{
+    border-bottom-color:rgb(251, 114, 153);
+    float: left;
+    margin-right: 10px;
+    border-bottom-left-radius:3px;
+    border-bottom-right-radius:3px;
+    border-bottom-style:solid;
+    border-bottom-width:1px;
+    border-image-outset:0px;
+    border-image-repeat:stretch;
+    border-image-slice:100%;
+    border-image-source:none;
+    border-image-width:1;
+    border-left-color:rgb(251, 114, 153);
+    border-left-style:solid;
+    border-left-width:1px;
+    border-right-color:rgb(251, 114, 153);
+    border-right-style:solid;
+    border-right-width:1px;
+    border-top-color:rgb(251, 114, 153);
+    border-top-left-radius:3px;
+    border-top-right-radius:3px;
+    border-top-style:solid;
+    border-top-width:1px;
+    box-sizing:content-box;
+    color:rgb(251, 114, 153);
+    display:inline-block;
+    font-family:"Microsoft YaHei", Arial, Helvetica, sans-serif;
+    font-size:12px;
+    font-style:normal;
+    font-weight:400;
+    height:18px;
+    line-height:18px;
+    margin-bottom:0px;
+    margin-left:0px;
+    margin-top:0px;
+    min-width:30px;
+    overflow-wrap:break-word;
+    padding-bottom:0px;
+    padding-left:0px;
+    padding-right:0px;
+    padding-top:0px;
+    text-align:center;
+    text-size-adjust:100%;
+    vertical-align:middle;
+    width:30px;
+    -webkit-tap-highlight-color:rgba(0, 0, 0, 0);
   }
 </style>

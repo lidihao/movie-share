@@ -1,23 +1,23 @@
 <template>
   <div class="video-box-main">
     <div class="movie-item-contents gradient">
-      <img src="../assets/abcde.jpg" alt="" style="height: 100%;width: 100%;">
+      <img :src="posterUrl" alt="" style="height: 100%;width: 100%;">
       <div class="movie-item-content">
         <div class="movie-item-content-center">
-          <a href="#/video/videoPlay"><strong><Icon type="ios-play" size="70"></Icon></strong></a>
+          <a @click="handleVideoPlay"><strong><Icon type="ios-play" size="70"></Icon></strong></a>
         </div>
         <div class="movie-item-content-buttom">
           <div class="movie-item-title">
-            <a href="">Hurry Animate Blue Strack New Movie (2018)</a>
+            <a @click="handleVideoPlay">{{video.title}}</a>
           </div>
           <div class="uper">
             <Icon type="ios-people" size="20"></Icon>
             <span>上传者:</span>
-            <a><strong>李帝豪</strong></a>
+            <a @click="toUserSpace"><strong>{{video.uploader.userName}}</strong></a>
           </div>
           <div class="movie-item-beta">
             <p class="pull-left">
-              <span class="view-people-count"><Icon type="md-play" />98459w</span>
+              <span class="view-people-count"><Icon type="md-play" />{{video.videoPlayCount}}</span>
             </p>
           </div>
         </div>
@@ -27,8 +27,45 @@
 </template>
 
 <script>
+  import Config from '@/settings'
   export default {
     name: "VideoBox",
+    props:{
+      video:{
+        required:true
+      }
+    },
+    data(){
+      return{
+        posterUrl:''
+      }
+    },
+    watch:{
+      video(){
+        this.posterUrl=Config.server+this.video.posterPicture.url;
+      }
+    },
+    methods:{
+      handleVideoPlay(){
+        this.$router.push({
+          path:'/video/videoPlay',
+          query:{
+            videoId:this.video.videoId
+          }
+        })
+      },
+      toUserSpace(){
+        this.$router.push({
+          path:'/user/person-space',
+          query:{
+            userId:this.video.uploader.userId
+          }
+        })
+      }
+    },
+    mounted() {
+      this.posterUrl=Config.server+this.video.posterPicture.url;
+    }
   }
 </script>
 

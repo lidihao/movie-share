@@ -1,14 +1,7 @@
 import { Service } from '../service'
-import { jsonConfig } from './axiosConfig'
+import {config, jsonConfig } from './axiosConfig'
 import user from "../store/modules/user";
 
-let config = {
-  url: {
-    development: 'http://localhost:8089',
-    production: 'https://message-platform.huya.com',
-    test: ''
-  }
-}
 
 let service = new Service(config)
 
@@ -37,5 +30,9 @@ export default {
   },
   getUserInfoById(params){
     return service.get(`/auth/getUserInfoById`,params)
+  },
+
+  updateAvatarUrl(data){
+    return service.post(`/auth/updateUserAvatarUrl`,data)
   }
 }

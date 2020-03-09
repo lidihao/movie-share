@@ -19,7 +19,7 @@
         <comment-sender :videoId="this.videoId" @commentSuccess="handleCommentSuccess"></comment-sender>
         <div class="comment-list ">
           <div v-for="comment in videoCommentList" v-if="refreshCommentList">
-            <CommentItem :videoComment="comment"></CommentItem>
+            <CommentItem :videoComment="comment" :uploader="uploader"></CommentItem>
           </div>
         </div>
         <div class="bottom-page paging-box-big">
@@ -40,6 +40,9 @@
     name: "comment",
     props:{
       videoId:{
+        required:true
+      },
+      uploader:{
         required:true
       }
     },

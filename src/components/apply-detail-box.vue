@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="item-content">
       <div class="img-style">
         <img :src="`//localhost:8089${item.posterUrl}`" alt="">
         <div class="img-cover">
@@ -7,7 +7,7 @@
         </div>
       </div>
       <div class="info">
-        <h3 class="title">{{item.fileName}}</h3>
+        <p class="title">{{item.fileName}}</p>
         <span class="apply-status">审批结果：<strong>{{item.approvalType}}</strong></span>
       </div>
       <Modal
@@ -42,11 +42,14 @@
 </script>
 
 <style scoped>
+
+  .item-content{
+    width: 250px;
+  }
+
   .img-style{
-    max-width: 160px;
+    width: 160px;
     height: 100px;
-    position: relative;
-    float: left;
     margin-right: 20px;
   }
   .img-style img{
@@ -75,8 +78,10 @@
   }
 
   .title{
-    text-align: left;
     margin: 10px 0;
     padding-top: 10px;
+    word-break: break-all;
+    width: 160px;
+    height: 70px;
   }
 </style>

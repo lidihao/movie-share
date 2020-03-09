@@ -14,6 +14,7 @@ import VideoProcess from '../page/video-manager/video-process'
 import VideoEdit from '../page/video-manager/video-edit'
 import Test from '../page/test'
 import Message from '../page/message'
+import UserInfo from '@/page/user/user-info'
 
 
 const originalPush = Router.prototype.push
@@ -98,6 +99,11 @@ export default new Router({
           path:'/message-manager/instance-message',
           name:'message',
           component:Message
+        },
+        {
+          path:'/user/user-info',
+          name:'user-info',
+          component:UserInfo
         }
       ]
     }

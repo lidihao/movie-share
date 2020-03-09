@@ -2,7 +2,7 @@
   <aside class="side-menu">
     <Menu active-name="1" theme="dark" width="auto">
       <div class="headSculpture" v-if="isLogin">
-        <img :src="`http://localhost:8089${user.avatarUrl}`" alt="">
+        <img :src="avatarUrl" alt="">
         <p>昵称：{{user.userName}}</p>
       </div>
       <Menu-item name="1" to="/home">
@@ -20,6 +20,8 @@
   import {mapGetters} from 'vuex'
   import Avatar from '@/assets/1.png'
   import SidebarItem from "./SidebarItem";
+  import Config from '@/settings'
+
   export default {
     name: "SideBar",
     components:{
@@ -27,7 +29,6 @@
     },
     data(){
       return{
-        Avatar: Avatar,
         menu:
           [
             {
@@ -82,7 +83,10 @@
       }
     },
     computed:{
-      ...mapGetters(['user','isLogin','menuTree'])
+      ...mapGetters(['user','isLogin','menuTree']),
+      avatarUrl(){
+        return this.avatar= Config.server+this.user.avatarUrl
+      }
     },
     methods:{
       logout(){
@@ -94,6 +98,8 @@
           location.reload()
         })
       }
+    },
+    created() {
     }
   }
 </script>

@@ -65,6 +65,7 @@
   import PictureUpload from '@/components/picture-uploader'
   import TagApi from '@/api/tag'
   import CategoryApi from '@/api/category'
+  import Config from '@/settings'
 
   export default {
     name: "upload-item",
@@ -84,9 +85,9 @@
           //上传url
           target:function (file,uploader,isTest) {
             if (isTest){
-              return 'http://localhost:8089/videoUpload/checkUploadChunk'
+              return Config.server+'/videoUpload/checkUploadChunk'
             }else{
-              return 'http://localhost:8089/videoUpload/uploadChunk'
+              return Config.server+'/videoUpload/uploadChunk'
             }
           },
           testChunks:true,

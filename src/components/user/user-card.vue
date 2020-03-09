@@ -1,7 +1,7 @@
 <template>
   <div class="uploader-main">
     <a @click="toUserSpace">
-      <img :src="`http://localhost:8089${userVo.avatarUrl}`" alt="" class="uploader-img">
+      <img :src="userVo.avatarUrl" alt="" class="uploader-img">
     </a>
     <div class="uploader-detail">
       <h2>{{userVo.userName}}</h2>

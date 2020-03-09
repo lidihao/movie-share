@@ -3,11 +3,15 @@
     <div class="user-face">
       <a target="_blank"
          data-usercard-mid="321872907" @click="toUserSpace">
-        <img class="user-face-img" :src="`http://localhost:8089${videoComment.commentUser.avatarUrl}`" alt="">
+        <img class="user-face-img" :src="userAvatar" alt="">
       </a>
+      <Rate allow-half disabled v-model="videoComment.rate" style="float: right"></Rate>
     </div>
     <div class="con ">
       <div class="user">
+        <span class="uploader" v-if="showUP">
+        UP
+      </span>
         <a @click="toUserSpace">
           <h2>{{videoComment.commentUser.userName}}</h2>
         </a>
@@ -30,7 +34,7 @@
       </div>
       <div class="reply-box">
         <div v-for="reply in replyList" v-if="refreshReplyList">
-          <ReplyItem :reply="reply"  @replySuccess="handleReplySuccess"></ReplyItem>
+          <ReplyItem :reply="reply" :uploader="uploader" @replySuccess="handleReplySuccess"></ReplyItem>
         </div>
         <div class="view-more">
           <Page :total="totalReply" show-total size="small" @on-change="pageNumChange"></Page>
@@ -54,11 +58,15 @@
   import ReplyItem from './comment-reply-item'
   import {mapGetters} from 'vuex'
   import VideoCommentApi from '@/api/videoComment-api'
+  import Config from '@/settings'
   export default {
     name: "comment-item",
     components:{ReplyItem},
     props:{
       videoComment:{
+        required:true
+      },
+      uploader:{
         required:true
       }
     },
@@ -74,12 +82,16 @@
         curPageNum:1,
         curPageSize:5,
         totalReply:0,
-        refreshReplyList:true
+        refreshReplyList:true,
+        userAvatar:'',
+        showUP:false
       }
     },
     watch:{
       videoComment(){
         this.getReplyList()
+        this.userAvatar=Config.server+this.videoComment.commentUser.avatarUrl
+        this.showUP=parseInt(this.uploader.userId)===parseInt(this.videoComment.commentUser.userId)
       }
     },
     methods:{
@@ -137,6 +149,8 @@
     },
     created() {
       this.getReplyList()
+      this.userAvatar=Config.server+this.videoComment.commentUser.avatarUrl
+      this.showUP=parseInt(this.uploader.userId)===parseInt(this.videoComment.commentUser.userId)
     }
   }
 </script>
@@ -183,5 +197,53 @@
   }
   .view-more{
     margin: 30px auto;
+  }
+  .uploader{
+    border-bottom-color:rgb(251, 114, 153);
+    float: left;
+    margin-right: 10px;
+    border-bottom-left-radius:3px;
+    border-bottom-right-radius:3px;
+    border-bottom-style:solid;
+    border-bottom-width:1px;
+    border-image-outset:0px;
+    border-image-repeat:stretch;
+    border-image-slice:100%;
+    border-image-source:none;
+    border-image-width:1;
+    border-left-color:rgb(251, 114, 153);
+    border-left-style:solid;
+    border-left-width:1px;
+    border-right-color:rgb(251, 114, 153);
+    border-right-style:solid;
+    border-right-width:1px;
+    border-top-color:rgb(251, 114, 153);
+    border-top-left-radius:3px;
+    border-top-right-radius:3px;
+    border-top-style:solid;
+    border-top-width:1px;
+    box-sizing:content-box;
+    color:rgb(251, 114, 153);
+    display:inline-block;
+    font-family:"Microsoft YaHei", Arial, Helvetica, sans-serif;
+    font-size:12px;
+    font-style:normal;
+    font-weight:400;
+    height:18px;
+    line-height:18px;
+    margin-bottom:0px;
+    margin-left:0px;
+    margin-top:0px;
+    min-width:30px;
+    overflow-wrap:break-word;
+    padding-bottom:0px;
+    padding-left:0px;
+    padding-right:0px;
+    padding-top:0px;
+    text-align:center;
+    text-size-adjust:100%;
+    vertical-align:middle;
+    width:30px;
+    -webkit-tap-highlight-color:rgba(0, 0, 0, 0);
   }
 </style>

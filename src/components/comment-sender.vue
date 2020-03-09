@@ -42,7 +42,8 @@
         let  comment = {
           commentContent:this.commentContent,
           videoId:this.videoId,
-          commentUserId:this.user.userId
+          commentUserId:this.user.userId,
+          rate:this.valueHalf
         }
 
         VideoCommentApi.commentVideo(comment).then((res)=>{

@@ -14,8 +14,18 @@
         </div><!--视频题目-->
         <div class="video-content">
           <VideoPlay :episode="playEpisode" :nextPlayList="this.nextPlayList" v-if="refresh"></VideoPlay>
-          <div>点赞</div>
+          <div class="user-action">
+            <span>
+              <span style="font-size: 16px;margin-right: 10px;margin-top: 10px">收藏</span>
+              <Icon type="md-heart" size="30" :style="collectStyle" class="collect-button"/>
+            </span>
+            <span style="float: right">
+              <span style="font-size: 16px;margin-right: 10px;margin-top: 10px">评分</span>
+              <Rate allow-half disabled v-model="videoDetail.rate"></Rate>
+            </span>
+          </div>
         </div><!--播放页面-->
+        <Divider></Divider>
         <div class="video-introduce">
           <h1 class="video-title">{{videoDetail.title}}</h1>
           <div>
@@ -31,7 +41,7 @@
           </div>
         </div><!--视频简介-->
         <div class="video-comment-box">
-          <Comment :videoId="videoId"></Comment>
+          <Comment :videoId="videoId" :uploader="this.videoDetail.uploader"></Comment>
         </div><!--评论区-->
       </div>
       <div class="recommend-main">
@@ -56,6 +66,7 @@
   import PlayList from '@/components/video/play-list/play-list-box'
   import VideoApi from '@/api/video-api'
   import EpisodeApi from '@/api/episode-api'
+  import Config from '@/settings'
 
   export default {
     name: "video-detail",
@@ -67,7 +78,8 @@
         episodeList: [],
         nextPlayList: [],
         playEpisode:{},
-        refresh:true
+        refresh:true,
+        collectStyle:'color:rgb(0, 161, 214)'
       }
     },
     components: {EpisodeDisplay, UserCard, VideoPlay,Comment ,PlayList},
@@ -80,6 +92,7 @@
           (res)=>{
             if (res.code===200){
               this.videoDetail=res.result
+              this.videoDetail.uploader.avatarUrl=Config.server+this.videoDetail.uploader.avatarUrl
             }
           }
         )
@@ -93,7 +106,7 @@
                 this.playEpisode = this.episodeList[0]
                 let nextEpisodeList = this.episodeList.slice(1)
                 let list=[]
-                nextEpisodeList.forEach((eps => {list.push('http://localhost:8089'+eps.episodeUrl)}))
+                nextEpisodeList.forEach((eps => {list.push(Config.server+eps.episodeUrl)}))
                 this.nextPlayList=list
               }
             }
@@ -111,12 +124,21 @@
         this.$nextTick(()=>{
           this.refresh=true
         })
+      },
+      incrementPlayCount(){
+        let params={
+          videoId:this.videoId
+        }
+        VideoApi.incrementVideoPlayCount(params).then((res)=>{
+
+        })
       }
     },
     created() {
       this.init()
       this.getVideoDetailByVideoId()
       this.getEpisodeList()
+      this.incrementPlayCount()
     }
   }
 </script>
@@ -175,5 +197,13 @@
   }
   .play-list{
     margin-top: 20px;
+  }
+
+  .user-action{
+    margin: 20px 0;
+  }
+
+  .collect-button{
+    cursor: pointer;
   }
 </style>

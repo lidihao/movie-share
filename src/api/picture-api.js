@@ -1,13 +1,7 @@
 import { Service } from '../service'
-import {jsonConfig, multipleConfig} from './axiosConfig'
+import {config,jsonConfig, multipleConfig} from './axiosConfig'
 
-let config = {
-  url: {
-    development: 'http://localhost:8089',
-    production: 'https://message-platform.huya.com',
-    test: ''
-  }
-}
+
 
 let service = new Service(config)
 
