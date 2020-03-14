@@ -3,9 +3,13 @@
     <div class="movie-item-contents gradient">
       <img :src="posterUrl" alt="" style="height: 100%;width: 100%;">
       <div class="movie-item-content">
+
         <div class="movie-item-content-center">
-          <a @click="handleVideoPlay"><strong><Icon type="ios-play" size="70"></Icon></strong></a>
+          <a @click="handleVideoPlay"><strong><Icon type="md-play" size="50" style="color: white"/></strong></a>
         </div>
+        <span class="rate">
+          <span>{{rate}}</span>
+        </span>
         <div class="movie-item-content-buttom">
           <div class="movie-item-title">
             <a @click="handleVideoPlay">{{video.title}}</a>
@@ -45,6 +49,11 @@
         this.posterUrl=Config.server+this.video.posterPicture.url;
       }
     },
+    computed:{
+      rate(){
+        return this.video.rate.toFixed(1)
+      }
+    },
     methods:{
       handleVideoPlay(){
         this.$router.push({
@@ -71,12 +80,13 @@
 
 <style scoped>
   .video-box-main{
-    border-radius: 14px;
+    border-radius: 35px;
     margin: 10px;
     height: 200px;
     width: 280px;
   }
   .movie-item-contents {
+    border-radius: 35px;
     position: relative;
     height: 200px;
     width: 280px;
@@ -168,7 +178,8 @@
   .movie-item-content-buttom {
     position: absolute;
     bottom: 0;
-    padding-bottom: 5px;
+    padding-bottom: 10px;
+    padding-left: 15px;
   }
   .movie-item-title {
     padding: 0 13px;
@@ -200,6 +211,19 @@
     margin-top: 10px;
     margin-left: 10px;
     color: white;
+  }
+
+  .rate{
+    position: absolute;
+    top:20px;
+    left: -10px;
+    padding: 8px 19px;
+    border-radius: 100px;
+    color: #fff;
+    font-weight: bold;
+    border: 1px solid transparent;
+    text-transform: capitalize;
+    background-color: #5AD25A;
   }
 
 </style>

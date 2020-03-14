@@ -2,15 +2,15 @@
     <div class="header1">
           <Menu mode="horizontal" theme="light" active-name="1">
             <Row type="flex" justify="start">
-              <i-col span="5" offset="1">
+              <Col span="5" offset="1">
                 <img src="../assets/logo.png"/>
-              </i-col>
-              <i-col span="6" >
-                <i-input class="search" placeholder="输入关键字搜索">
-                  <i-button slot="append" icon="ios-search" type="primary"></i-button>
-                </i-input>
-              </i-col>
-              <i-col span="8" offset="3">
+              </Col>
+              <Col span="6" >
+                <Input class="search" placeholder="输入关键字搜索" v-model="searchKey">
+                  <Button slot="append" icon="ios-search" type="primary" @click="searVideo"></Button>
+                </Input>
+              </Col>
+              <Col span="8" offset="3">
                 <Menu-item name="index" to="/">
                   首页
                 </Menu-item>
@@ -25,7 +25,7 @@
                   <Button type="primary" @click="showRegisterModal">注册</Button>
                   <Register :show-register="showRegister" @cancel="showRegisterModalCancel" @success="registerSuccess"></Register>
                 </Menu-item>
-              </i-col>
+              </Col>
             </Row>
           </Menu>
     </div>
@@ -44,7 +44,8 @@
     data(){
       return{
         showLogin:false,
-        showRegister:false
+        showRegister:false,
+        searchKey:''
       }
     },
     computed:{
@@ -77,6 +78,14 @@
       },
       loginSuccess(){
         this.showLogin=false
+      },
+      searVideo(){
+        this.$router.push({
+          path:'/search',
+          query:{
+            key:this.searchKey
+          }
+        })
       }
     }
   }

@@ -13,10 +13,9 @@
             </div>
           </div>
         </div>
-        <div class="h-action">
-          <span class="h-f-btn h-follow" v-if="!showChange"><i class=""></i>关注
-          </span>
-          <a @click="sendMessage" v-if="!showChange" class="h-f-btn h-message">
+        <div class="h-action" v-if="!showChange">
+          <span :class="followButType" @click="followUser">{{descFollow}}</span>
+          <a @click="sendMessage" class="h-f-btn h-message">
             发消息
           </a>
         </div>
@@ -27,12 +26,13 @@
             <UploadVideoGrid :userId="this.userId"></UploadVideoGrid>
           </Tab-pane>
           <Tab-pane label="收藏的视频" key="key2">
+            <FavoriteVideoGrid :userId="this.userId"></FavoriteVideoGrid>
           </Tab-pane>
           <Tab-pane label="关注" key="key3">
-            <UserCardGrid></UserCardGrid>
+            <FollowingUserList :userId="this.userId"></FollowingUserList>
           </Tab-pane>
           <Tab-pane label="粉丝" key="key4">
-            <UserCardGrid></UserCardGrid>
+            <FollowedUserList :userId="this.userId" ref="followedList"></FollowedUserList>
           </Tab-pane>
         </Tabs>
       </div>
@@ -63,12 +63,17 @@
 
 <script>
   import  UploadVideoGrid from '@/page/user/upload-video-grid'
-  import UserCardGrid from '../../components/user/user-card-grid'
+  import UserCardGrid from '@/components/user/user-card-grid'
   import LoginApi from '@/api/login'
   import {mapGetters} from 'vuex'
   import Config from '@/settings'
   import Cropper from '@/components/cropper'
   import PictureApi from '@/api/picture-api'
+  import FollowingUserList from '@/page/user/following-user'
+  import FollowedUserList from '@/page/user/followed-user'
+  import FavoriteVideoGrid from '@/page/user/favorite-video-grid'
+  import FollowApi from '@/api/follow-api'
+
   export default {
     name: "user-space",
     data(){
@@ -80,16 +85,37 @@
         userVo:{},
         imgSrc:'',
         showCropper:false,
-        skinList:[]
+        skinList:[],
+        isFollow:false,
+        descFollow:'关注',
+        followCount:100000,
+        followButType:'h-f-btn h-follow'
       }
     },
     components:{
       UserCardGrid,
       Cropper,
-      UploadVideoGrid
+      UploadVideoGrid,
+      FollowingUserList,
+      FollowedUserList,
+      FavoriteVideoGrid
     },
     computed:{
       ...mapGetters(['user'])
+    },
+    watch:{
+      $route: {
+        handler() {
+          this.init()
+          this.getUserInfo()
+          if (this.showChange){
+            this.getSkinList()
+          }else {
+            this.isFollowUser()
+          }
+        },
+        deep: true,
+      }
     },
     methods: {
       init() {
@@ -208,6 +234,44 @@
             recvUserId:this.userVo.userId
           }
         })
+      },
+      isFollowUser(){
+        let data={
+          userId:this.user.userId,
+          followedUserId:this.userId
+        }
+        FollowApi.isFollow(data).then((res)=>{
+          if (res.code===200){
+            if (res.result){
+              this.isFollow=true
+              this.descFollow='已关注'
+              this.followButType='h-f-btn'
+            }else {
+              this.isFollow=false
+              this.descFollow='关注'
+              this.followButType='h-f-btn h-follow'
+            }
+          }
+        })
+      },
+      followUser(){
+        let data={
+          userId:this.user.userId,
+          followedUserId:this.userId
+        }
+        if(this.isFollow){
+          FollowApi.unFollowUser(data).then((res)=>{
+            if (res.code===200){
+              this.isFollowUser()
+            }
+          })
+        }else {
+          FollowApi.followUser(data).then((res) => {
+            if (res.code === 200) {
+              this.isFollowUser()
+            }
+          })
+        }
       }
     },
     created() {
@@ -215,6 +279,8 @@
       this.getUserInfo()
       if (this.showChange){
         this.getSkinList()
+      }else {
+        this.isFollowUser()
       }
     }
   }

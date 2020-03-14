@@ -43,6 +43,9 @@
       },
       created() {
         this.avatarUrl=Config.server+this.msgUserItem.friend.avatarUrl
+        if (this.msgUserItem.lastMsg){
+          this.lastMsg=this.msgUserItem.lastMsg.messageContent
+        }
       }
     }
 </script>

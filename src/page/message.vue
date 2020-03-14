@@ -6,8 +6,8 @@
           <span>近期消息</span>
         </div>
         <div class="list-content ps">
-          <div v-for="item in userList">
-            <PrivateMsgUserListItem :msgUserItem="item" @getMessage="handleGetMessage"></PrivateMsgUserListItem>
+          <div v-for="(item,i) in userList">
+            <PrivateMsgUserListItem :msgUserItem="item" @getMessage="handleGetMessage" :class="buttonStatus[i]"></PrivateMsgUserListItem>
           </div>
         </div>
       </div>
@@ -21,7 +21,7 @@
             <span>查看和他的历史私信消息</span>
           </div>
           <div v-for="message in messageList">
-            <MessageItem :friendVo="friendVo" :userVo="userVo" :message="message"></MessageItem>
+            <MessageItem :friendVo="friendVo" :userVo="userVo" :message="message" ></MessageItem>
           </div>
         </div>
         <div class="send-box">
@@ -57,7 +57,8 @@
           userVo:{},
           messageContent:'',
           sendMessageUserId:-1,
-          curUserListPageNum:1
+          curUserListPageNum:1,
+          buttonStatus:[]
         }
       },
       mounted () {
@@ -163,7 +164,7 @@
         },
         findDuplicateIndex(userId){
           for (let i=0;i<this.userList.length;i++){
-            if (this.userList[0].friend.userId===userId){
+            if (parseInt(this.userList[i].friend.userId)===parseInt(userId)){
               return i;
             }
           }
@@ -174,6 +175,7 @@
             this.messageMap[data.senderId].messagePage.result.push(data)
           }
           let idx = this.findDuplicateIndex(parseInt(data.senderId));
+          this.$Message.info('你有一条消息未查看')
           if (idx===-1){
             let params={
               userId:data.receiverId,
@@ -199,6 +201,22 @@
           }
         },
         handleGetMessage(friendId){
+          if (this.buttonStatus.length===0){
+            this.buttonStatus=this.createClass()
+          }
+          for (let i=0;i<this.buttonStatus.length;i++){
+            this.buttonStatus[i]='unactive'
+          }
+          let idx = -1
+          for(let i=0;i<this.userList.length;i++){
+            if (parseInt(this.userList[i].friend.userId)===parseInt(friendId)){
+              idx=i
+            }
+          }
+
+          this.$set(this.buttonStatus,idx,'active')
+
+
           if(this.messageMap[friendId]){
             let messageData=this.messageMap[friendId]
             this.friendVo=messageData.friend
@@ -216,10 +234,19 @@
             if (res.code===200){
               this.friendVo=res.result.friend;
               this.userVo = res.result.user
-              this.messageList=res.result.messagePage.result
+              this.messageList=res.result.messagePage.result.reverse()
               this.messageMap[this.friendVo.userId]=res.result
             }
           })
+        },
+        createClass(){
+          let arr=[]
+          if (this.userList){
+            for (let i=0;i<this.userList.length;i++){
+              arr.push('unactive')
+            }
+          }
+          return arr
         }
       },
       created() {
@@ -343,7 +370,7 @@
     transition: 300ms;
     color: #999;
   }
-  .list-item:hover{
+  .active{
     color: #999;
     background-color: #e4e5e6;
   }
@@ -446,4 +473,5 @@
     color: #23ade5;
     min-height: 38px;
   }
+  .unactive{}
 </style>

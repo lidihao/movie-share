@@ -1,7 +1,7 @@
 <template>
   <div class="video-box-main">
       <div class="img-style">
-        <img :src="`//localhost:8089${videoApply.posterUrl}`" alt="">
+        <img :src="posterUrl" alt="">
         <div class="img-cover">
           <Icon type="md-arrow-dropright-circle" size="45"/>
         </div>
@@ -25,12 +25,18 @@
 </template>
 
 <script>
+  import Config from '@/settings'
   export default {
     name: "VideoApprovalBox",
     props:{
       videoApply:{
         required:true,
         default:{}
+      }
+    },
+    computed:{
+      posterUrl(){
+        return Config.server+this.videoApply.posterUrl
       }
     },
     methods:{

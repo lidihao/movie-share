@@ -11,7 +11,10 @@
       return {};
     },
     props:{
-      episode:{
+      url:{
+        required:true
+      },
+      poster:{
         required:true
       },
       nextPlayList:{
@@ -22,7 +25,7 @@
       this.initVideo();
     },
     watch:{
-      episode(){
+      url(){
         this.initVideo()
       }
     },
@@ -30,22 +33,21 @@
       initVideo() {
         let player = new Player({
           id: "mse",
-          url: Config.server+this.episode.episodeUrl,
+          url: Config.server+this.url,
           playsinline: true,
           width: 629,
           height: 337.5,
           whitelist: [
             ""
           ],
-          poster: Config.server+this.episode.posterUrl,
+          poster: Config.server+this.poster,
           playbackRate: [
             0.5, 0.75, 1, 1.5, 2
           ],
           volume: 0.1,
           playNext: {
             urlList: this.nextPlayList,
-          },
-          download: true
+          }
         })
       },
       handlePlayNext(){

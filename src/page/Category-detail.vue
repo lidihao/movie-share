@@ -9,18 +9,34 @@
         <Tag v-for="item in 10">标签一</Tag>
       </div>
     </div>
+      <CategoryVideoGrid :categoryName="type"></CategoryVideoGrid>
     <div>
-      <VideoGrid :hasSearch="false"></VideoGrid>
     </div>
   </div>
 </template>
 
 <script>
-  import VideoGrid from '@/components/video/video-grid'
+  import CategoryVideoGrid from '@/page/category/category-video-grid'
   export default {
     name: "Category-detail",
     components:{
-      VideoGrid
+      CategoryVideoGrid
+    },
+    watch:{
+      $route: {
+        handler() {
+          this.type=this.$route.query.type
+        },
+        deep: true,
+      }
+    },
+    data(){
+      return{
+        type:''
+      }
+    },
+    created() {
+      this.type=this.$route.query.type
     }
   }
 </script>

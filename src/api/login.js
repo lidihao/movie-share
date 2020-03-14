@@ -34,5 +34,8 @@ export default {
 
   updateAvatarUrl(data){
     return service.post(`/auth/updateUserAvatarUrl`,data)
+  },
+  searchUser(data){
+    return service.get(`/auth/searchUser`,data)
   }
 }

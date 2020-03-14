@@ -1,7 +1,7 @@
 <template>
     <div class="item-content">
       <div class="img-style">
-        <img :src="`//localhost:8089${item.posterUrl}`" alt="">
+        <img :src="posterUrl" alt="">
         <div class="img-cover">
           <Icon type="md-arrow-dropright-circle" size="45" @click="playVideo"/>
         </div>
@@ -20,6 +20,7 @@
 
 <script>
   import VideoPlay from './video-play'
+  import Config from '@/settings'
   export default {
     name: "apply-detail-box",
     components: {VideoPlay},
@@ -31,6 +32,11 @@
     props:{
       item:{
         require: true
+      }
+    },
+    computed:{
+      posterUrl(){
+        return Config.server+this.item.posterUrl
       }
     },
     methods:{
@@ -51,6 +57,7 @@
     width: 160px;
     height: 100px;
     margin-right: 20px;
+    position: relative;
   }
   .img-style img{
     width: 100%;

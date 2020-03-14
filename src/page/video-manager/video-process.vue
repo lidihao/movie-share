@@ -78,5 +78,6 @@
   }
   .box-item{
     margin: 30px 0;
+    position: relative;
   }
 </style>

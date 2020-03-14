@@ -32,9 +32,15 @@
     },
     methods:{
       handlePlay(episode){
-        this.buttonStatus=this.createClass()
+
+        for (let i=0;i<this.episodeList.length;i++){
+          if (this.buttonStatus[i] === 'active'){
+            this.$set(this.buttonStatus, i, 'visited')
+          }
+        }
+
         let index= this.episodeList.indexOf(episode)
-        this.buttonStatus[index]='active'
+        this.$set(this.buttonStatus, index, 'active')
         this.$emit('changePlay',episode)
       },
       createClass(){
@@ -56,25 +62,26 @@
 
 <style scoped>
   .episode-display-main{
-    padding: 20px;
     background-color: rgb(247, 247, 247);
+    height: 270px;
     overflow: hidden;
   }
   .episode-header{
-    overflow: hidden;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    border-bottom: 1px solid #57A3F3;
   }
   .episode{
     color: #464c5b;
     margin: 5px;
   }
-  .episode-display-content{
-    padding: 0px;
-    overflow: auto;
-  }
   .scroll-up {
-    overflow-y: scroll;
-    max-height: 400px;
-    overflow-x: hidden;
+    overflow: scroll;
+  }
+
+  .episode-display-content{
+    height: 150px;
   }
   .active {
     background-color: #fff;
@@ -82,5 +89,8 @@
   }
   .unactive{
 
+  }
+  .visited{
+    color: darkgray;
   }
 </style>

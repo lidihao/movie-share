@@ -102,7 +102,7 @@
           }
         },
         attrs: {
-          accept: ['.mp4', '.rmvb', '.mkv', '.wmv', '.flv']
+          accept: ['.mp4','.flv']
         },
         formData: {
           category: '',

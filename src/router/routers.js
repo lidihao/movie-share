@@ -15,6 +15,7 @@ import VideoEdit from '../page/video-manager/video-edit'
 import Test from '../page/test'
 import Message from '../page/message'
 import UserInfo from '@/page/user/user-info'
+import Search from '@/page/search'
 
 
 const originalPush = Router.prototype.push
@@ -104,6 +105,11 @@ export default new Router({
           path:'/user/user-info',
           name:'user-info',
           component:UserInfo
+        },
+        {
+          path:'/search',
+          name:'search',
+          component:Search
         }
       ]
     }

@@ -13,5 +13,14 @@ export default {
   },
   incrementVideoPlayCount(data){
     return service.post(`/video/incrementPlayCount`,data)
+  },
+  getFavoriteVideo(data){
+    return service.get(`/favorite/getFavoriteVideoList`,data)
+  },
+  getVideoByCategory(data){
+    return service.get(`/video/getVideoByCategory`,data)
+  },
+  searchVideo(data){
+    return service.get(`/video/searchVideo`,data)
   }
 }

@@ -25,7 +25,7 @@
         :on-exceeded-size="handleMaxSize"
         :before-upload="handleBeforeUpload"
         type="drag"
-        action="//localhost:8089/picUpload"
+        :action="uploadActionUrl"
         style="display: inline-block;width:200px;" v-if="showUpload">
         <div class="img-uploader">
           <Icon type="ios-camera" size="40"/>
@@ -39,6 +39,7 @@
 
 <script>
   import {getToken} from '@/utils/auth'
+  import Config from '@/settings'
   export default {
     name: "picture-uploader",
     data(){
@@ -53,6 +54,11 @@
         imgHeader:{
           Authorization:getToken()
         },
+      }
+    },
+    computed:{
+      uploadActionUrl(){
+        return Config.server+'/picUpload'
       }
     },
     methods:{
@@ -77,7 +83,7 @@
         let data= res.result
         let img = {
           name:data.fileName,
-          url:"//localhost:8089"+data.url,
+          url:Config.server+data.url,
           status:'finished'
         }
         this.uploadList.push(img)

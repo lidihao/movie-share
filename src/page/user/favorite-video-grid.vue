@@ -30,7 +30,7 @@
   import CategoryApi from '@/api/category';
   import VideoApi from '@/api/video-api'
   export default {
-    name: "publish-video",
+    name: "favorite-video",
     props:{
       userId:{
         required:true
@@ -66,13 +66,13 @@
       },
       getUploadVideoList(){
         let condition={
-          uploadUserId:this.userId,
           pageNum:this.curPageNum,
           pageSize:this.curPageSize,
           categoryId:this.categoryId,
-          videoTitle:this.videoTitle
+          videoTitle:this.videoTitle,
+          userId:this.userId
         }
-        VideoApi.getUploadVideo(condition).then((res)=>{
+        VideoApi.getFavoriteVideo(condition).then((res)=>{
           if (res.code===200){
             let data = res.result
             this.total = data.pageInfo.total

@@ -1,18 +1,15 @@
 <template>
   <div class="publish-video-main">
     <div class="search">
-      <Row>
-        <Col span="5">
-          <Input class="search" placeholder="输入关键字搜索" v-model="videoTitle">
-            <Button slot="append" icon="ios-search" @click="getUploadVideoList"></Button>
-          </Input>
-        </Col>
-        <Col span="5" offset="5">
-          <Select clearable v-model="categoryId">
-            <Option v-for="item in categoryList" :value="item.categoryId" :key="item.categoryId">{{ item.categoryName }}</Option>
-          </Select>
-        </Col>
-      </Row>
+      <Select v-model="orderField" @on-change="getUploadVideoList" class="select">
+        <Option value="rate" key="rate">按照评分排序</Option>
+        <Option value="playCount" key="playCount">按照播放数排序</Option>
+        <Option value="time" key="time">按照时间排序</Option>
+      </Select>
+
+      <Select clearable v-model="categoryId" class="select" @on-change="getUploadVideoList">
+        <Option v-for="item in categoryList" :value="item.categoryId" :key="item.categoryId">{{ item.categoryName }}</Option>
+      </Select>
     </div>
     <div class="grid-content">
       <div class="video-item" v-for="item in videoList">
@@ -27,30 +24,30 @@
 
 <script>
   import VideoBox from "@/components/VideoBox";
-  import CategoryApi from '@/api/category';
   import VideoApi from '@/api/video-api'
+  import CategoryApi from '@/api/category';
   export default {
-    name: "publish-video",
+    name: "search-video-grid",
     props:{
-      userId:{
+      searchKey:{
         required:true
       }
     },
     watch:{
-      userId(){
+      searchKey(){
+        this.orderField='rate'
         this.getUploadVideoList()
       }
     },
     data(){
       return{
-        count:12,
-        categoryList:[],
-        videoTitle:'',
+        orderField:'rate',
         total:0,
         curPageNum:1,
-        curPageSize:10,
+        curPageSize:12,
+        videoList:[],
         categoryId:'',
-        videoList:[]
+        categoryList:[],
       }
     },
     components:{
@@ -66,13 +63,13 @@
       },
       getUploadVideoList(){
         let condition={
-          uploadUserId:this.userId,
+          searchKey:this.searchKey,
           pageNum:this.curPageNum,
           pageSize:this.curPageSize,
-          categoryId:this.categoryId,
-          videoTitle:this.videoTitle
+          orderField:this.orderField,
+          categoryId:this.categoryId
         }
-        VideoApi.getUploadVideo(condition).then((res)=>{
+        VideoApi.searchVideo(condition).then((res)=>{
           if (res.code===200){
             let data = res.result
             this.total = data.pageInfo.total
@@ -97,6 +94,11 @@
   }
   .search{
     margin-left: 10px;
+    width: 40%;
+    display: flex;
+  }
+  .select{
+    margin: 10px;
   }
   .grid-content{
     margin: 30px auto;

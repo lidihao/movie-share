@@ -1,6 +1,5 @@
 import { Service } from '../service'
 import {config, jsonConfig } from './axiosConfig'
-import user from "../store/modules/user";
 
 
 

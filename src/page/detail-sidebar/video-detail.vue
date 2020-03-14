@@ -13,15 +13,16 @@
           </div>
         </div><!--视频题目-->
         <div class="video-content">
-          <VideoPlay :episode="playEpisode" :nextPlayList="this.nextPlayList" v-if="refresh"></VideoPlay>
+          <VideoPlay :url="playEpisode.episodeUrl" :poster="playEpisode.posterUrl" :nextPlayList="this.nextPlayList" v-if="refresh"></VideoPlay>
           <div class="user-action">
-            <span>
+            <span style="margin-right: 50px">
               <span style="font-size: 16px;margin-right: 10px;margin-top: 10px">收藏</span>
-              <Icon type="md-heart" size="30" :style="collectStyle" class="collect-button"/>
+              <Icon type="md-heart" size="27" :style="collectStyle" class="collect-button" @click="handleFavorite"/>
+              <span style="font-size: 16px">{{favoriteCount}}</span>
             </span>
-            <span style="float: right">
+            <span>
               <span style="font-size: 16px;margin-right: 10px;margin-top: 10px">评分</span>
-              <Rate allow-half disabled v-model="videoDetail.rate"></Rate>
+              <span class="score">{{rate}}</span>
             </span>
           </div>
         </div><!--播放页面-->
@@ -52,7 +53,6 @@
           <EpisodeDisplay :episodeList="this.episodeList" @changePlay="playVideo"></EpisodeDisplay>
         </div> <!--视频集数-->
         <div class="play-list">
-          <PlayList></PlayList>
         </div><!--相关视频-->
       </div>
     </div>
@@ -67,6 +67,8 @@
   import VideoApi from '@/api/video-api'
   import EpisodeApi from '@/api/episode-api'
   import Config from '@/settings'
+  import FavoriteVideoApi from '@/api/favorite-video-api'
+  import {mapGetters} from 'vuex'
 
   export default {
     name: "video-detail",
@@ -79,7 +81,15 @@
         nextPlayList: [],
         playEpisode:{},
         refresh:true,
-        collectStyle:'color:rgb(0, 161, 214)'
+        favoriteCount:0,
+        collectStyle:'color:rgb(0, 161, 214)',
+        isFavoriteVideo:false
+      }
+    },
+    computed:{
+      ...mapGetters(['user']),
+      rate(){
+        return this.videoDetail.rate.toFixed(1)
       }
     },
     components: {EpisodeDisplay, UserCard, VideoPlay,Comment ,PlayList},
@@ -92,7 +102,6 @@
           (res)=>{
             if (res.code===200){
               this.videoDetail=res.result
-              this.videoDetail.uploader.avatarUrl=Config.server+this.videoDetail.uploader.avatarUrl
             }
           }
         )
@@ -132,6 +141,51 @@
         VideoApi.incrementVideoPlayCount(params).then((res)=>{
 
         })
+      },
+      handleFavorite(){
+        let data={
+          userId:this.user.userId,
+          videoId:this.videoId
+        }
+        if(this.isFavoriteVideo){
+          FavoriteVideoApi.unFavoriteVideo(data).then((res)=>{
+            this.isFavoriteVideo=false
+            this.collectStyle=''
+            this.favoriteCount=this.favoriteCount-1
+          })
+        }else {
+          FavoriteVideoApi.favoriteVideo(data).then((res)=>{
+            this.isFavoriteVideo=true
+            this.collectStyle='color:rgb(0, 161, 214)'
+            this.favoriteCount=this.favoriteCount+1
+          })
+        }
+      },
+      getFavoriteCount(){
+        let data={
+          videoId:this.videoId
+        }
+        FavoriteVideoApi.getFavoriteCount(data).then((res)=>{
+          if (res.code===200){
+            this.favoriteCount=res.result
+          }
+        })
+      },
+      isFavorite(){
+        let data={
+          userId:this.user.userId,
+          videoId:this.videoId
+        }
+        FavoriteVideoApi.isFavorite(data).then((res)=>{
+          if (res.code===200){
+            this.isFavoriteVideo=res.result
+            if (this.isFavoriteVideo){
+              this.collectStyle='color:rgb(0, 161, 214)'
+            }else {
+              this.collectStyle=''
+            }
+          }
+        })
       }
     },
     created() {
@@ -139,6 +193,8 @@
       this.getVideoDetailByVideoId()
       this.getEpisodeList()
       this.incrementPlayCount()
+      this.isFavorite()
+      this.getFavoriteCount()
     }
   }
 </script>
@@ -188,7 +244,7 @@
     float: right;
     width: 27%;
     position: fixed;
-    top: 5%;
+    top: 8%;
     left: 70%;
   }
   .video-episode-display{
@@ -205,5 +261,16 @@
 
   .collect-button{
     cursor: pointer;
+  }
+  .score{
+    height: 24px;
+    line-height: 24px;
+    font-weight: 700;
+    font-size: 24px;
+    color: #ffa726;
+    margin-bottom: 4px;
+    font-family: HelveticaNeue-Bold;
+    padding-right: 14px;
+    display: inline-block;
   }
 </style>

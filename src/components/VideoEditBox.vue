@@ -1,7 +1,7 @@
 <template>
   <div class="video-box-main">
     <div class="img-style">
-      <img :src="`//localhost:8089${videoApply.posterUrl}`" alt="">
+      <img :src="posterUrl" alt="">
       <div class="img-cover">
         <Icon type="md-arrow-dropright-circle" size="45" @click="handleVideoPlay"/>
       </div>
@@ -29,11 +29,17 @@
 </template>
 
 <script>
+  import Config from '@/settings'
     export default {
       name: "VideoEditBox",
       props:{
         videoApply:{
           required:true
+        }
+      },
+      computed:{
+        posterUrl(){
+          return Config.server+this.videoApply.posterUrl;
         }
       },
       methods:{
@@ -52,6 +58,7 @@
             }})
         },
         handleVideoPlay(){
+          console.log('a')
           this.$router.push({
             path:'/video/videoPlay',
             query:{
