@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="category-detail-title">
-      <h1>类别1</h1>
+      <h1>{{type}}</h1>
     </div>
     <div class="category-detail-tags">
       <h1 style="margin-bottom: 20px">热门标签</h1>

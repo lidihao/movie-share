@@ -16,6 +16,8 @@ import Test from '../page/test'
 import Message from '../page/message'
 import UserInfo from '@/page/user/user-info'
 import Search from '@/page/search'
+import RoleManager from '@/page/system/role-manager'
+import MenuManager from '@/page/system/menu-manager'
 
 
 const originalPush = Router.prototype.push
@@ -110,6 +112,16 @@ export default new Router({
           path:'/search',
           name:'search',
           component:Search
+        },
+        {
+          path:'/system/role-manager',
+          name:'role-manager',
+          component:RoleManager
+        },
+        {
+          path:'/system/menu-manager',
+          name:'menu-manager',
+          component:MenuManager
         }
       ]
     }

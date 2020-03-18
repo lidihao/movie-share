@@ -2,6 +2,7 @@
   <div class="publish-video-main">
     <div class="search">
       <Select v-model="orderField" @on-change="getUploadVideoList" class="select">
+        <Option value="default" key="default">综合排序排序</Option>
         <Option value="rate" key="rate">按照评分排序</Option>
         <Option value="playCount" key="playCount">按照播放数排序</Option>
         <Option value="time" key="time">按照时间排序</Option>
@@ -35,13 +36,13 @@
     },
     watch:{
       searchKey(){
-        this.orderField='rate'
+        this.orderField='default'
         this.getUploadVideoList()
       }
     },
     data(){
       return{
-        orderField:'rate',
+        orderField:'default',
         total:0,
         curPageNum:1,
         curPageSize:12,
@@ -71,7 +72,8 @@
         }
         VideoApi.searchVideo(condition).then((res)=>{
           if (res.code===200){
-            let data = res.result
+            console.log(res)
+            let data = res.result.videoList
             this.total = data.pageInfo.total
             this.videoList=data.result
           }

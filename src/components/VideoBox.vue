@@ -12,7 +12,7 @@
         </span>
         <div class="movie-item-content-buttom">
           <div class="movie-item-title">
-            <a @click="handleVideoPlay">{{video.title}}</a>
+            <a @click="handleVideoPlay" v-html="video.title"></a>
           </div>
           <div class="uper">
             <Icon type="ios-people" size="20"></Icon>

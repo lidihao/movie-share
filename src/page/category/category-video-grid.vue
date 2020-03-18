@@ -2,6 +2,7 @@
   <div class="publish-video-main">
     <div class="search">
       <Select v-model="orderField" @on-change="getUploadVideoList">
+        <Option value="default" key="default">综合排序排序</Option>
         <Option value="rate" key="rate">按照评分排序</Option>
         <Option value="playCount" key="playCount">按照播放数排序</Option>
         <Option value="time" key="time">按照时间排序</Option>
@@ -30,13 +31,13 @@
     },
     watch:{
       categoryName(){
-        this.orderField='rate'
+        this.orderField='default'
         this.getUploadVideoList()
       }
     },
     data(){
       return{
-        orderField:'rate',
+        orderField:'default',
         total:0,
         curPageNum:1,
         curPageSize:10,
