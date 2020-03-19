@@ -18,6 +18,7 @@ import UserInfo from '@/page/user/user-info'
 import Search from '@/page/search'
 import RoleManager from '@/page/system/role-manager'
 import MenuManager from '@/page/system/menu-manager'
+import TaskManager from '@/page/system/task-manager'
 
 
 const originalPush = Router.prototype.push
@@ -122,6 +123,11 @@ export default new Router({
           path:'/system/menu-manager',
           name:'menu-manager',
           component:MenuManager
+        },
+        {
+          path:'/system/task-manager',
+          name:'taskManager',
+          component:TaskManager
         }
       ]
     }

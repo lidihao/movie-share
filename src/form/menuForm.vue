@@ -36,7 +36,6 @@
 </template>
 
 <script>
-  import LoginAction from '@/api/login'
   import MenuApi from '@/api/menu-api'
   import TreeSelect from '@riophae/vue-treeselect'
   import '@riophae/vue-treeselect/dist/vue-treeselect.css'
@@ -167,7 +166,6 @@
       }
     },
     created() {
-      this.getCode()
       if (this.type==='edit') {
         this.initData()
       }
