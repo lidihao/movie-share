@@ -112,6 +112,7 @@
     bottom: 0;
     left: 0;
     background: #2b3643;
+    overflow: auto;
   }
   .headSculpture {
     width: 100%;

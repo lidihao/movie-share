@@ -7,14 +7,14 @@
       <Table :columns="columns" :data="taskList">
         <template slot-scope="{ row, index }" slot="action">
               <Button type="primary" size="small" style="margin-right: 5px" @click="show(row,index)">查看</Button>
-              <Button type="info" size="small" @click="startTask(row,index)">调度</Button>
-              <Button type="success" size="small" @click="stopTask(row,index)">停止</Button>
+              <Button type="info" size="small" @click="startTask(row,index)" :disabled = "row.jobStatus!=='pause'">调度</Button>
+              <Button type="success" size="small" @click="stopTask(row,index)" :disabled = "row.jobStatus==='pause'">停止</Button>
               <Button type="error" size="small" @click="removeTask(row,index)">删除</Button>
             </template>
       </Table>
     </div>
     <AddTask :showAdd="showAddTask" type="add" @success="addTaskSuccess" @cancel="addTaskCancel"></AddTask>
-    <AddTask :showAdd="showAddEdit" :item="task" @success="editTaskSuccess" @cancel="editTaskCancel"></AddTask>
+    <AddTask :showAdd="showAddEdit" :item="task" type="edit" @success="editTaskSuccess" @cancel="editTaskCancel"></AddTask>
   </div>
 </template>
 

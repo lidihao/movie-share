@@ -139,8 +139,16 @@
           }
         })
       },
-      updateTask(){
-
+      updateTask(item){
+        this.formValidate.systemTaskId=item.systemTaskId
+        TaskApi.updateTask(this.formValidate).then((res)=>{
+          if (res.code===200){
+            this.$Message.success('success');
+            this.$emit('success')
+          }else {
+            this.$Message.error(res.message)
+          }
+        })
       },
       initData(){
         this.formValidate=this.item

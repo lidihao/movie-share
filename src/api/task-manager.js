@@ -23,5 +23,8 @@ export default{
   },
   deleteTask(taskId){
 	  return service.post(`/task/deleteTask/${taskId}`)
+  },
+  updateTask(data){
+	  return service.post(`/task/updateTask`,data,jsonConfig)
   }
 }
