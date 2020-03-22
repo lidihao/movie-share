@@ -16,10 +16,7 @@
           {{reply.replyUser.userName}}
         </a>
         <div >
-          <Card :bordered="true" :shadow="true">
             <p style="word-break:break-all">{{reply.replyContent}}</p>
-          </Card>
-
         </div>
       </div>
     </div>
@@ -120,14 +117,14 @@
 
 <style scoped>
   .user-face-img{
-    border-radius: 50px;
+    border-radius: 30px;
     margin: 0 auto;
     float: left;
-    width: 50px;
-    height: 50px;
+    width: 30px;
+    height: 30px;
   }
   .reply-con{
-    margin: 30px 80px;
+    margin: 10px 50px;
   }
   .text-con{
     margin-left: 5px;

@@ -31,6 +31,6 @@ export default {
    * @description 请求超时时间，毫秒（默认2分钟）
    */
   timeout: 1200000,
-  server: 'http://localhost:8089',
-  imgUrl:'//localhost:8089'
+  server: 'http://192.168.0.112:8089',
+  imgUrl:'//192.168.0.112:8089'
 }

@@ -42,7 +42,14 @@
           </div>
         </div><!--视频简介-->
         <div class="video-comment-box">
-          <Comment :videoId="videoId" :uploader="this.videoDetail.uploader"></Comment>
+          <Tabs value="name1">
+            <TabPane label="评论" name="name1">
+              <Comment :videoId="videoId" :uploader="this.videoDetail.uploader"></Comment>
+            </TabPane>
+            <TabPane label="视频评分" name="name2">
+              <RateComment :videoId="videoId"></RateComment>
+            </TabPane>
+          </Tabs>
         </div><!--评论区-->
       </div>
       <div class="recommend-main">
@@ -68,6 +75,7 @@
   import EpisodeApi from '@/api/episode-api'
   import Config from '@/settings'
   import FavoriteVideoApi from '@/api/favorite-video-api'
+  import RateComment from '@/components/rate-comment'
   import {mapGetters} from 'vuex'
 
   export default {
@@ -92,7 +100,7 @@
         return this.videoDetail.rate.toFixed(1)
       }
     },
-    components: {EpisodeDisplay, UserCard, VideoPlay,Comment ,PlayList},
+    components: {EpisodeDisplay, UserCard, VideoPlay,Comment ,PlayList,RateComment},
     methods:{
       init(){
         this.videoId=this.$route.query.videoId
@@ -234,7 +242,7 @@
   }
 
   .video-comment-box{
-
+    margin-top: 30px;
   }
   .video-main{
     width: 60%;

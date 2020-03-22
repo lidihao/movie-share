@@ -1,6 +1,7 @@
 <template>
   <div class="comment-send ">
     <div class="textarea-container">
+      <Rate allow-half v-model="valueHalf"></Rate>
       <Input type="textarea" :rows="4" placeholder="请输入..." v-model="commentContent"></Input>
       <Button type="primary"style="margin-top: 10px" @click="commentVideo">发表评论</Button>
     </div>
@@ -20,6 +21,7 @@
     },
     data(){
       return{
+        valueHalf:0.0,
         commentContent:''
       }
     },
@@ -28,6 +30,10 @@
     },
     methods:{
       commentVideo(){
+        if (this.valueHalf===0.0){
+          this.$Message.warning('请给视频评分')
+          return;
+        }
         if (!this.user){
           this.$Message.warning('用户未登录')
           return;
@@ -36,14 +42,18 @@
         let  comment = {
           commentContent:this.commentContent,
           videoId:this.videoId,
-          commentUserId:this.user.userId
+          commentUserId:this.user.userId,
+          rate:this.valueHalf
         }
 
-        VideoCommentApi.commentVideo(comment).then((res)=>{
+        VideoCommentApi.rateVideo(comment).then((res)=>{
           if (res.code===200){
             this.$Message.success('评论成功')
+            this.valueHalf=0.0
             this.commentContent=''
             this.$emit('commentSuccess',res)
+          }else {
+            this.$Message.error(res.message)
           }
         })
       }

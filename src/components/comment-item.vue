@@ -5,7 +5,6 @@
          data-usercard-mid="321872907" @click="toUserSpace">
         <img class="user-face-img" :src="userAvatar" alt="">
       </a>
-      <Rate allow-half disabled v-model="videoComment.rate" style="float: right"></Rate>
     </div>
     <div class="con ">
       <div class="user">
@@ -19,24 +18,17 @@
       <p class="text">
         {{videoComment.commentContent}}
       </p>
-      <div class="info"><span class="time">{{videoComment.createTime}}</span><span
-        class="like "><i></i><span>746</span></span><span class="hate "><i></i></span><span
-        class="reply btn-hover btn-highlight" @click="replyComment">回复</span>
-        <div class="operation">
-          <div class="spot"></div>
-          <div class="opera-list" style="display: none;">
-            <ul>
-              <li class="blacklist">加入黑名单</li>
-              <li class="report">举报</li>
-            </ul>
-          </div>
-        </div>
+      <div class="info">
+        <span class="time">{{videoComment.createTime}}</span>
+        <span class="reply btn-hover btn-highlight" @click="replyComment">回复</span>
       </div>
       <div class="reply-box">
         <div v-for="reply in replyList" v-if="refreshReplyList">
+          <Divider></Divider>
           <ReplyItem :reply="reply" :uploader="uploader" @replySuccess="handleReplySuccess"></ReplyItem>
         </div>
         <div class="view-more">
+          <Divider></Divider>
           <Page :total="totalReply" show-total size="small" @on-change="pageNumChange"></Page>
         </div>
       </div>
@@ -157,12 +149,20 @@
 
 <style scoped>
   .list-item{
-    box-shadow: 1px 1px 10px;
-    padding-top: 30px;
-    margin: 40px auto;
+    border: 1px solid #dcdee2;
+    border-color: #e8eaec;
+    background: #fff;
+    border-radius: 4px;
+    font-size: 14px;
+    position: relative;
+    transition: all .2s ease-in-out;
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-bottom: 0px;
+    margin-top: 20px;
   }
   .reply-box{
-    margin-left: 50px;
+    margin-left: 30px;
   }
   .user-face-img{
     border-radius: 50px;

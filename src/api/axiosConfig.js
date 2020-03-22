@@ -16,7 +16,7 @@ export const multipleConfig = {
 
 export const config = {
   url: {
-    development: 'http://localhost:8089',
+    development: 'http://192.168.0.112:8089',
     production: 'https://message-platform.huya.com',
     test: ''
   }

@@ -17,5 +17,11 @@ export default {
   },
   listCommentReply(params){
     return service.get(`/video/comment/listReply`,params)
+  },
+  rateVideo(data){
+    return service.post(`/video/comment/doRateComment`,data,jsonConfig)
+  },
+  listRateComment(data){
+    return service.get(`/video/comment/listRateComment`,data)
   }
 }

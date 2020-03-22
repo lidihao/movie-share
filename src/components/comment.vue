@@ -1,21 +1,7 @@
 <template>
   <div class="common">
-    <div class="b-head"><span class="b-head-t results">{{totalCommentCount}}</span><span class="b-head-t">评论</span></div>
     <div class="comment" style="position: relative;">
       <div class="bb-comment ">
-        <div class="comment-header">
-          <div class="tabs-order">
-            <Menu mode="horizontal" theme="light" active-name="1">
-              <Menu-item name="1">
-                <Icon type="ios-paper"></Icon>
-                评论内容
-              </Menu-item>
-            </Menu>
-          </div>
-          <div class="header-page">
-            <Page :total="totalCommentCount" size="small" show-total @on-change="changePage"></Page>
-          </div>
-        </div>
         <comment-sender :videoId="this.videoId" @commentSuccess="handleCommentSuccess"></comment-sender>
         <div class="comment-list ">
           <div v-for="comment in videoCommentList" v-if="refreshCommentList">
@@ -108,7 +94,7 @@
   }
   .header-page{
     display: inline-block;
-    margin-left: 200px;
+    margin-left: 100px;
   }
   .bottom-page{
     margin: 40px auto;
