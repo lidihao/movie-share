@@ -1,13 +1,34 @@
 <template>
   <div>
     <div class="home-content">
-      <VideoCategory :id="gernerateId(index)" v-for="(val,index) in data" :key="index"></VideoCategory>
+
+       <VideoCategory id="recommend" title="个性化推荐" 
+      :videoList="userRecommentVideo" v-if="isLogin&&userRecommentVideo"></VideoCategory>
+
+      <VideoCategory id="hot" title="热门推荐"
+      :videoList="recentlyHotVideoList"></VideoCategory>
+
+      <VideoCategory :id="gernerateId(index)" v-for="(val,index) in categoryHotVideo" 
+      :key="index" :title="val.category.categoryName" :videoList="val.videoDetailVoXPage.result">
+      </VideoCategory>
     </div>
     <div class="fix-side-bar">
-        <div  @click.prevent="custormAnchor('box'+index)" v-for="(val,index) in data"
+      <div @click.prevent="custormAnchor('recommend')">
+          <i-button type="text">
+            <span style="color: black">个性化推荐</span>
+          </i-button>
+        </div>
+
+        <div @click.prevent="custormAnchor('hot')">
+          <i-button type="text">
+            <span style="color: black">热门推荐</span>
+          </i-button>
+        </div>
+
+        <div  @click.prevent="custormAnchor('box'+index)" v-for="(val,index) in categoryHotVideo"
             :key="index" class="nav-button">
           <i-button type="text">
-            <span style="color: black">类型</span>
+            <span style="color: black">{{val.category.categoryName}}</span>
           </i-button>
         </div>
     </div>
@@ -15,14 +36,24 @@
 </template>
 
 <script>
+  import RecommendApi from '@/api/recommend-api'
   import VideoCategory from '../components/video-category'
+  import {mapGetters} from 'vuex'
   export default {
     name: 'Home',
     components:{VideoCategory},
     data(){
       return{
-        data:[1,2,3,4,5]
+        data:[1,2,3,4,5],
+        recentlyHotVideoList:[],
+        categoryHotVideo:[],
+        userRecommentVideo:[]
       }
+    },
+    computed:{
+      ...mapGetters([
+        'isLogin'
+      ])
     },
     methods:{
       custormAnchor(anchorName) {
@@ -35,7 +66,45 @@
       },
       gernerateId(index) {
         return "box" + index;
+      },
+      getRecentlyHotVideo(){
+        let params={
+          pageNum:1,
+          pageSize:9
+        }
+        RecommendApi.getRecentlyHotVideo(params).then((res)=>{
+          if (res.code===200) {
+            this.recentlyHotVideoList=res.result.result
+          }
+        })
+      },
+      getCategoryHot(){
+        let params={
+          pageNum:1,
+          pageSize:9
+        }
+        RecommendApi.getCategoryHotVideo(params).then((res)=>{
+          if (res.code===200) {
+            this.categoryHotVideo=res.result
+          }
+        })
+      },
+      getUserVideoList(){
+        let params={
+          pageNum:1,
+          pageSize:9
+        }
+        RecommendApi.getPersonRecommend(params).then((res)=>{
+          if (res.code===200) {
+            this.userRecommentVideo=res.result.result
+          }
+        })
       }
+    },
+    created(){
+      this.getRecentlyHotVideo()
+      this.getCategoryHot()
+      this.getUserVideoList()
     }
   }
 </script>

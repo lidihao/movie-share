@@ -35,7 +35,7 @@
           token:this.token
         }
         LoginApi.activeUser(data).then((res)=>{
-          if (res===200){
+          if (res.code===200){
             this.validate=true
           }else {
             this.$Message.error(res.message)

@@ -22,6 +22,10 @@
           <div class="movie-item-beta">
             <p class="pull-left">
               <span class="view-people-count"><Icon type="md-play" />{{video.videoPlayCount}}</span>
+              <span class="view-people-count" style="margin-left: 3px">
+                <Icon type="md-list-box" />
+                {{video.videoCommentCount}}
+              </span>
             </p>
           </div>
         </div>
