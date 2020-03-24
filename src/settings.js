@@ -18,7 +18,7 @@ export default {
   /**
    * @description 记住密码状态下的密码在Cookie中存储的天数，默认1天s
    */
-  passCookieExpires: 1,
+  passCookieExpires: 10,
   /**
    * @description 是否只保持一个子菜单的展开
    */

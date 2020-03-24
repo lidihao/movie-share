@@ -3,7 +3,7 @@
     <div>
       <Modal
         v-model="showModal"
-        title="登录"
+        title="注册"
         @on-ok="submit"
         @on-cancel="cancel"
         :closable="false"
@@ -27,7 +27,7 @@
             </Input>
           </FormItem>
           <FormItem label="验证码" prop="validCode">
-            <Input v-model="formValidate.validCode" placeholder="验证码" style="width: 63%">
+            <Input v-model="formValidate.validCode" placeholder="验证码" style="width: 63%" @on-focus="getCode">
             </Input>
             <div class="login-code">
               <img :src="codeUrl" @click="getCode">
@@ -154,11 +154,13 @@
     watch:{
       // 这里只能用function函数，不能用箭头函数
       showRegister:function (){
+        if (this.showRegister) {
+          this.getCode()
+        }
         this.showModal=this.showRegister
       }
     },
     created() {
-      this.getCode()
     }
   }
 </script>

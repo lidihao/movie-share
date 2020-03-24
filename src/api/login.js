@@ -36,5 +36,11 @@ export default {
   },
   searchUser(data){
     return service.get(`/auth/searchUser`,data)
+  },
+  sendResetPasswordEmail(data){
+    return service.post(`/auth/sendResetPasswordEmail`,data)
+  },
+  resetPassword(data){
+    return service.post('/auth/resetPassword',data)
   }
 }

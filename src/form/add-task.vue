@@ -9,7 +9,7 @@
         :closable="false"
         :mask-closable="false"
         :loading="loading">
-        <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
+        <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="150">
           <FormItem label="任务名" prop="systemTaskName" style="width:230px">
             <Input v-model="formValidate.systemTaskName" placeholder="任务名" :disabled="type==='edit'"></Input>
           </FormItem>
