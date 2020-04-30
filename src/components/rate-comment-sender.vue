@@ -26,10 +26,14 @@
       }
     },
     computed:{
-      ...mapGetters(['user'])
+      ...mapGetters(['user','isLogin'])
     },
     methods:{
       commentVideo(){
+        if (!this.isLogin) {
+          this.$Message.warning("请先登录")
+          return
+        }
         if (this.valueHalf===0.0){
           this.$Message.warning('请给视频评分')
           return;

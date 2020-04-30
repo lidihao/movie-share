@@ -38,7 +38,7 @@
       }
     },
     computed:{
-      ...mapGetters(['user']),
+      ...mapGetters(['user','isLogin']),
       isShow(){
         return parseInt(this.userVo.userId)===parseInt(this.user.userId)
       },
@@ -56,6 +56,10 @@
     },
     methods:{
       sendMessage(){
+        if (!this.isLogin) {
+          this.$Message.warning("请先登录")
+          return
+        }
         this.$router.push({
           path:'/message-manager/instance-message',
           query:{
@@ -82,6 +86,9 @@
         })
       },
       isFollowUser(){
+        if (!this.isLogin) {
+          return
+        }
         let data={
           userId:this.user.userId,
           followedUserId:this.userVo.userId
@@ -101,6 +108,10 @@
         })
       },
       followUser(){
+        if (!this.isLogin) {
+          this.$Message.warning("请先登录")
+          return
+        }
         let data={
           userId:this.user.userId,
           followedUserId:this.userVo.userId

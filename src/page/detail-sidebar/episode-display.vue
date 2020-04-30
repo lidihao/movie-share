@@ -17,6 +17,9 @@
     props:{
       episodeList:{
         required:true
+      },
+      curEpisode:{
+          required:true
       }
     },
     data(){
@@ -28,6 +31,9 @@
       episodeList(){
         this.buttonStatus=this.createClass()
         this.buttonStatus[0]='active'
+      },
+      curEpisode(){
+        this.handlePlay(this.episodeList[this.curEpisode])
       }
     },
     methods:{
@@ -63,7 +69,7 @@
 <style scoped>
   .episode-display-main{
     background-color: rgb(247, 247, 247);
-    height: 270px;
+    height: 150px;
     overflow: hidden;
   }
   .episode-header{
@@ -81,7 +87,7 @@
   }
 
   .episode-display-content{
-    height: 150px;
+    height: 100px;
   }
   .active {
     background-color: #fff;

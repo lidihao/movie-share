@@ -2,7 +2,7 @@
   <div class="reply-item">
     <div class="user-face">
       <a @click="toUserSpace(reply.replyUser.userId)">
-        <img class="user-face-img" :src="`http://localhost:8089${reply.replyUser.avatarUrl}`" alt="">
+        <img class="user-face-img" :src="this.avatarUrl" alt="">
       </a>
     </div>
     <div class="reply-con">
@@ -49,6 +49,8 @@
 <script>
   import {mapGetters} from 'vuex'
   import VideoCommentApi from '@/api/videoComment-api'
+  import Config from '@/settings'
+
   export default {
     name: "comment-reply-item",
     props:{
@@ -60,7 +62,10 @@
       }
     },
     computed:{
-      ...mapGetters(['user'])
+      ...mapGetters(['user','isLogin']),
+      avatarUrl(){
+        return Config.server+this.reply.replyUser.avatarUrl
+      }
     },
     data(){
       return{
@@ -81,9 +86,19 @@
     },
     methods:{
       replyTo(){
-        this.showSender=true
+        if (!this.isLogin) {
+          this.$Message.warning("请先登录")
+          return
+        }
+        this.showSender=true   
       },
       replyToOthers(){
+
+        if (!this.isLogin) {
+          this.$Message.warning("请先登录")
+          return
+        }
+
         let replyComment={
           replyContent:this.replyContent,
           replyUserId:this.user.userId,

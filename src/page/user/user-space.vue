@@ -101,7 +101,7 @@
       FavoriteVideoGrid
     },
     computed:{
-      ...mapGetters(['user'])
+      ...mapGetters(['user','isLogin'])
     },
     watch:{
       $route: {
@@ -228,6 +228,10 @@
         })
       },
       sendMessage(){
+        if (!this.isLogin) {
+          this.$Message.warning("请先登录")
+          return
+        }
         this.$router.push({
           path:'/message-manager/instance-message',
           query:{
@@ -236,6 +240,9 @@
         })
       },
       isFollowUser(){
+        if (!this.isLogin) {
+          return
+        }
         let data={
           userId:this.user.userId,
           followedUserId:this.userId
@@ -255,6 +262,10 @@
         })
       },
       followUser(){
+        if (!this.isLogin) {
+          this.$Message.warning("请先登录")
+          return
+        }
         let data={
           userId:this.user.userId,
           followedUserId:this.userId

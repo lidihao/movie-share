@@ -1,5 +1,13 @@
 <template>
   <div class="publish-video-main">
+    <div class="category-detail-tags">
+      <h1 style="margin-bottom: 20px">标签筛选</h1>
+      <div>
+          <Badge :count="item.count"  v-for="(item,idx) in hotTags" style="margin-left: 20px">
+            <Tag :color="colorArr[idx]" @click.native="clickTag(idx,item)">{{item.tag}}</Tag>
+          </Badge>
+      </div>
+    </div>
     <div class="search">
       <Select v-model="orderField" @on-change="getUploadVideoList" class="select">
         <Option value="default" key="default">综合排序排序</Option>
@@ -37,6 +45,7 @@
     watch:{
       searchKey(){
         this.orderField='default'
+        this.tagName=''
         this.getUploadVideoList()
       }
     },
@@ -49,6 +58,9 @@
         videoList:[],
         categoryId:'',
         categoryList:[],
+        hotTags:[],
+        colorArr:[],
+        tagName:''
       }
     },
     components:{
@@ -68,7 +80,8 @@
           pageNum:this.curPageNum,
           pageSize:this.curPageSize,
           orderField:this.orderField,
-          categoryId:this.categoryId
+          categoryId:this.categoryId,
+          tagName:this.tagName
         }
         VideoApi.searchVideo(condition).then((res)=>{
           if (res.code===200){
@@ -76,8 +89,36 @@
             let data = res.result.videoList
             this.total = data.pageInfo.total
             this.videoList=data.result
+             if (this.tagName==='') {
+              let tags = res.result.aggregateMap
+              this.hotTags=tags
+              this.colorArr=this.createClass()
+            }
           }
         })
+      },
+      createClass(){
+        let arr=[]
+        if (this.hotTags){
+          for (let i=0;i<this.hotTags.length;i++){
+            arr.push('#657180')
+          }
+        }
+        return arr
+      },
+      clickTag(indx,item){
+        let color = this.colorArr[indx]
+        for(let i=0;i<this.colorArr.length;i++){
+          this.colorArr[i]='#657180'
+        }
+        if (color==='red') {
+          this.tagName=''
+          this.$set(this.colorArr, indx, '#657180')
+        }else{
+          this.tagName=item.tag
+          this.$set(this.colorArr, indx, 'red')
+        }
+        this.getUploadVideoList()
       }
     },
     created() {
@@ -107,5 +148,8 @@
   }
   .page{
     margin-left: 15px;
+  }
+  .category-detail-tags{
+    margin: 20px;
   }
 </style>

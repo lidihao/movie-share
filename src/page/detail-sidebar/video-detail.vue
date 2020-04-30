@@ -13,7 +13,8 @@
           </div>
         </div><!--视频题目-->
         <div class="video-content">
-          <VideoPlay :url="playEpisode.episodeUrl" :poster="playEpisode.posterUrl" :nextPlayList="this.nextPlayList" v-if="refresh"></VideoPlay>
+          <VideoPlay :url="playEpisode.episodeUrl" :poster="playEpisode.posterUrl" :nextPlayList="this.nextPlayList"
+                     v-if="refresh" @playNext="handlePlayNext"></VideoPlay>
           <div class="user-action">
             <span style="margin-right: 50px">
               <span style="font-size: 16px;margin-right: 10px;margin-top: 10px">收藏</span>
@@ -57,9 +58,10 @@
           <UserCard :userVo="this.videoDetail.uploader"></UserCard>
         </div><!--视频上传人-->
         <div class="video-episode-display">
-          <EpisodeDisplay :episodeList="this.episodeList" @changePlay="playVideo"></EpisodeDisplay>
+          <EpisodeDisplay :curEpisode="this.curEpisode" :episodeList="this.episodeList" @changePlay="playVideo"></EpisodeDisplay>
         </div> <!--视频集数-->
         <div class="play-list">
+          <PlayList :videoId="videoId"></PlayList>
         </div><!--相关视频-->
       </div>
     </div>
@@ -90,12 +92,22 @@
         playEpisode:{},
         refresh:true,
         favoriteCount:0,
-        collectStyle:'color:rgb(0, 161, 214)',
+        collectStyle:'',
+        curEpisode:0,
+        curPlayEpisode:0,
         isFavoriteVideo:false
       }
     },
+    watch:{
+      $route: {
+        handler() {
+         location.reload()
+        },
+        deep: true,
+      }
+    },
     computed:{
-      ...mapGetters(['user']),
+      ...mapGetters(['user','isLogin']),
       rate(){
         return this.videoDetail.rate.toFixed(1)
       }
@@ -130,13 +142,17 @@
           }
         )
       },
+      handlePlayNext(index){
+        this.curEpisode=this.curPlayEpisode+index
+      },
       playVideo(episode){
         this.playEpisode=episode
         this.refresh=false;
         let idx = this.episodeList.indexOf(episode)
+        this.curPlayEpisode=idx
         let nextEpisodeList = this.episodeList.slice(idx+1)
         let list=[]
-        nextEpisodeList.forEach((eps => {list.push('http://localhost:8089'+eps.episodeUrl)}))
+        nextEpisodeList.forEach((eps => {list.push(Config.server+eps.episodeUrl)}))
         this.nextPlayList=list
         this.$nextTick(()=>{
           this.refresh=true
@@ -151,6 +167,12 @@
         })
       },
       handleFavorite(){
+
+        if (!this.isLogin) {
+          this.$Message.warning("请先登录")
+          return
+        }
+
         let data={
           userId:this.user.userId,
           videoId:this.videoId
@@ -180,6 +202,9 @@
         })
       },
       isFavorite(){
+        if (!this.isLogin) {
+          return
+        }
         let data={
           userId:this.user.userId,
           videoId:this.videoId
@@ -256,7 +281,7 @@
     left: 70%;
   }
   .video-episode-display{
-    height: 200px;
+    height: 150px;
     overflow: hidden;
   }
   .play-list{

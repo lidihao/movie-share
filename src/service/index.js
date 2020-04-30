@@ -44,6 +44,7 @@ function responseInterceptors (response) {
 // 响应失败拦截器
 function onReject (error) {
   if(error.response&&error.response.status===401){
+    Vue.prototype.$Message.error('登录过期')
     removeToken()
     return Promise.reject(error)
   }

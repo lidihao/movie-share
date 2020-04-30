@@ -20,6 +20,7 @@ import RoleManager from '@/page/system/role-manager'
 import MenuManager from '@/page/system/menu-manager'
 import TaskManager from '@/page/system/task-manager'
 import ResetPassword from '@/page/user/reset-password'
+import TagBrowse from '@/page/tag-browse'
 
 
 const originalPush = Router.prototype.push
@@ -134,6 +135,11 @@ export default new Router({
           path:'/user/resetPassword',
           name:'resetPassword',
           component:ResetPassword
+        },
+        {
+          path:'/video/tag-browse',
+          name:'tagBrowse',
+          component:TagBrowse
         }
       ]
     }

@@ -1,5 +1,5 @@
 <template>
-  <div id="mse" @playerNext=""></div>
+  <div id="mse"></div>
 </template>
 
 <script>
@@ -8,7 +8,9 @@
   export default {
     name: "video-play",
     data() {
-      return {};
+      return {
+        player:{}
+      };
     },
     props:{
       url:{
@@ -31,7 +33,8 @@
     },
     methods: {
       initVideo() {
-        let player = new Player({
+        let _self=this;
+        this.player = new Player({
           id: "mse",
           url: Config.server+this.url,
           playsinline: true,
@@ -40,6 +43,7 @@
           whitelist: [
             ""
           ],
+          autoplay:true,
           poster: Config.server+this.poster,
           playbackRate: [
             0.5, 0.75, 1, 1.5, 2
@@ -49,9 +53,15 @@
             urlList: this.nextPlayList,
           }
         })
+        this.player.on("playerNext",function (index) {
+          console.log(index)
+          _self.$emit("playNext",index)
+        })
+        this.player.on("urlList last",function () {
+          _self.$Message.warning("没有下一集")
+        })
       },
-      handlePlayNext(){
-        console.log('abc')
+      handlePlayNext(index){
       }
     }
   }

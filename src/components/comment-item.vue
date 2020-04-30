@@ -63,7 +63,7 @@
       }
     },
     computed:{
-      ...mapGetters(['user'])
+      ...mapGetters(['user','isLogin'])
     },
     data(){
       return{
@@ -88,9 +88,19 @@
     },
     methods:{
       replyComment(){
+        if (!this.isLogin) {
+          this.$Message.warning("请先登录")
+          return
+        }
         this.showSender=true
       },
       doReplyComment(){
+
+        if (!this.isLogin) {
+          this.$Message.warning("请先登录")
+          return
+        }
+
         let reply={
           replyContent:this.replyContent,
           replyUserId:this.user.userId,

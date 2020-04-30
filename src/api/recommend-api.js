@@ -14,5 +14,8 @@ export default{
 	},
 	getPersonRecommend(params){
 		return service.get('/recommend/getPesonalRecommend',params)
+	},
+	getSimilarVideo(params){
+		return service.get('/recommend/getSimilarVideo',params)
 	}
 }

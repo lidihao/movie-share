@@ -90,6 +90,10 @@
         })
       },
       getUserVideoList(){
+        if (!this.isLogin) {
+          return
+        }
+        
         let params={
           pageNum:1,
           pageSize:9

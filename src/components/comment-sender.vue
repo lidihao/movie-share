@@ -24,11 +24,11 @@
       }
     },
     computed:{
-      ...mapGetters(['user'])
+      ...mapGetters(['user','isLogin'])
     },
     methods:{
       commentVideo(){
-        if (!this.user){
+        if (!this.isLogin){
           this.$Message.warning('用户未登录')
           return;
         }
