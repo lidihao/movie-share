@@ -7,7 +7,7 @@
           <Badge :count="item.count"  v-for="(item,idx) in hotTags" style="margin-right: 20px">
             <Tag :color="colorArr[idx]" @click.native="clickTag(idx,item)">{{item.tag}}</Tag>
           </Badge>
-          
+
       </div>
     </div>
     <div class="search">
@@ -23,7 +23,7 @@
         <VideoBox :video="item"></VideoBox>
       </div>
       <div class="page">
-        <Page :total="total" show-total></Page>
+        <Page :total="total" show-total @on-change="changePage" :page-size="curPageSize"></Page>
       </div>
     </div>
   </div>
@@ -51,7 +51,7 @@
         orderField:'default',
         total:0,
         curPageNum:1,
-        curPageSize:10,
+        curPageSize:12,
         videoList:[],
         hotTags:[],
         colorArr:[],
@@ -104,6 +104,10 @@
           this.tagName=item.tag
           this.$set(this.colorArr, indx, 'red')
         }
+        this.getUploadVideoList()
+      },
+      changePage(pageNum){
+        this.curPageNum=pageNum
         this.getUploadVideoList()
       }
     },

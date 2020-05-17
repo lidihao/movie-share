@@ -21,7 +21,7 @@
       </div>
       <div class="apply">
         <Button type="primary" @click="handleEdit">编辑</Button>
-        <Button type="warning" @click="handleClick">删除</Button>
+        <Button type="warning" @click="handleDelete">删除</Button>
       </div>
       <div></div>
     </div>
@@ -30,6 +30,7 @@
 
 <script>
   import Config from '@/settings'
+  import VideoApply from '@/api/video-apply'
     export default {
       name: "VideoEditBox",
       props:{
@@ -58,11 +59,22 @@
             }})
         },
         handleVideoPlay(){
-          console.log('a')
           this.$router.push({
             path:'/video/videoPlay',
             query:{
               videoId:this.videoApply.videoId
+            }
+          })
+        },
+        handleDelete(){
+          let params = {
+            videoApprovalId:this.videoApply.videoApprovalId
+          }
+          console.log(params)
+          VideoApply.deleteVideoApply(params).then((res)=>{
+            if (res.code===200) {
+              this.$Message.success("成功")
+              this.$emit("refresh")
             }
           })
         }

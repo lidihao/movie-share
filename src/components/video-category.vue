@@ -6,14 +6,14 @@
             <h2>{{title}}</h2>
           </i-col>
           <i-col span="2" offset="17">
-            <a href="#/video/category-detail"><i-button type="primary" class="pull-right">更多</i-button></a>
+            <a><i-button type="primary" class="pull-right" @click="moreVideo">更多</i-button></a>
           </i-col>
         </Row>
       </div>
       <div class="video-category-content">
         <Carousel autoplay autoplay-speed="6000">
           <Carousel-item v-for="(item,index) in i" class="items-main">
-            <VideoBox v-for="(item1,indx) in j" :video="videoList[indx+2*index]" class="item"> 
+            <VideoBox v-for="(item1,indx) in j" :video="videoList[indx+3*index]" class="item">
             </VideoBox>
           </Carousel-item>
         </Carousel>
@@ -36,12 +36,28 @@
       videoList:{
         required:true,
         default:[]
+      },
+      path:{
+        required:true,
+        default:''
+      },
+      params:{
+        required:true,
+        default:{}
       }
     },
     data(){
       return{
-        i:4,
-        j:2
+        i:3,
+        j:3
+      }
+    },
+    methods:{
+      moreVideo(){
+        this.$router.push({
+          path:this.path,
+          query:this.params
+        })
       }
     }
   }
@@ -50,7 +66,7 @@
 <style scoped>
   .main{
     margin: 0px 10px 10px;
-    width: 800px;
+    width: 85%;
   }
   .video-category-header{
     padding-top: 20px;

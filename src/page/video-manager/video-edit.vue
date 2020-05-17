@@ -85,6 +85,7 @@
     import PictureUpload from '@/components/picture-uploader'
     import VideoUpload from '@/api/videoUpload'
     import {getToken} from '@/utils/auth'
+    import Config from '@/settings'
 
     export default {
       name: "video-edit",
@@ -115,9 +116,9 @@
             //上传url
             target:function (file,uploader,isTest) {
               if (isTest){
-                return 'http://localhost:8089/videoUpload/checkUploadChunk'
+                return Config.server+'/videoUpload/checkUploadChunk'
               }else{
-                return 'http://localhost:8089/videoUpload/uploadChunk'
+                return Config.server+'/videoUpload/uploadChunk'
               }
             },
             testChunks:true,
@@ -218,7 +219,7 @@
               this.formData.title=data.title
               this.formData.introduce=data.introduce
               this.formData.tagList=data.tagIdList
-              this.picUrl='//localhost:8089'+data.posterUrl
+              this.picUrl=Config.server+data.posterUrl
               this.remark=data.remark
               let picComponent=this.$refs.picUpload
               picComponent.uploadList=[{

@@ -39,7 +39,7 @@
             </Collapse>
           </div>
           <div class="video-tag">
-            <Tag v-for="item in videoDetail.tagList">{{item.tagName}}</Tag>
+            <Tag v-for="item in videoDetail.tagList" @click.native="searVideo(item.tagName)">{{item.tagName}}</Tag>
           </div>
         </div><!--视频简介-->
         <div class="video-comment-box">
@@ -201,6 +201,14 @@
           }
         })
       },
+      searVideo(tagName){
+        this.$router.push({
+          path:'/search',
+          query:{
+            key:tagName
+          }
+        })
+      },
       isFavorite(){
         if (!this.isLogin) {
           return
@@ -219,6 +227,11 @@
             }
           }
         })
+      },
+      endPlayVideo(){
+        VideoApi.endPlayVideo({videoId:this.videoId}).then((res)=>{
+
+        })
       }
     },
     created() {
@@ -228,6 +241,9 @@
       this.incrementPlayCount()
       this.isFavorite()
       this.getFavoriteCount()
+    },
+    destroyed() {
+      this.endPlayVideo()
     }
   }
 </script>

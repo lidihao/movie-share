@@ -21,7 +21,11 @@ import MenuManager from '@/page/system/menu-manager'
 import TaskManager from '@/page/system/task-manager'
 import ResetPassword from '@/page/user/reset-password'
 import TagBrowse from '@/page/tag-browse'
-
+import TagDetail from '@/page/tag-detail'
+import SystemMessage from '@/page/message/system-message'
+import PersonRecommendBrower from '@/page/person-recommend-brower'
+import HotRecommend from '@/page/hot-recommend'
+import ChangeEmail from '@/page/user/change-email-validate'
 
 const originalPush = Router.prototype.push
 Router.prototype.push = function push(location) {
@@ -140,6 +144,31 @@ export default new Router({
           path:'/video/tag-browse',
           name:'tagBrowse',
           component:TagBrowse
+        },
+        {
+          path:'/video/tag-detail',
+          name:'tagDetail',
+          component:TagDetail
+        },
+        {
+          path: '/message-manager/system-message',
+          name:'system-message',
+          component: SystemMessage
+        },
+        {
+          path: '/person-recommend/brower',
+          name: 'PersonRecommendBrower',
+          component: PersonRecommendBrower
+        },
+        {
+          path: '/hot-recommend',
+          name: 'hot-recommend',
+          component: HotRecommend
+        },
+        {
+          path: '/user/changeEmail',
+          name: 'changeEmail',
+          component: ChangeEmail
         }
       ]
     }

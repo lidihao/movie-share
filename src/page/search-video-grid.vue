@@ -25,7 +25,7 @@
         <VideoBox :video="item"></VideoBox>
       </div>
       <div class="page">
-        <Page :total="total" show-total></Page>
+        <Page :total="total" show-total :page-size="curPageSize" @on-change="changePage"></Page>
       </div>
     </div>
   </div>
@@ -118,6 +118,10 @@
           this.tagName=item.tag
           this.$set(this.colorArr, indx, 'red')
         }
+        this.getUploadVideoList()
+      },
+      changePage(pageNum){
+        this.curPageNum=pageNum
         this.getUploadVideoList()
       }
     },

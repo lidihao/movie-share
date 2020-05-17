@@ -229,5 +229,10 @@
     text-transform: capitalize;
     background-color: #5AD25A;
   }
+  >>> em{
+    color: #00a1d6;
+    margin-right: 5px;
+    margin-left: 3px;
+  }
 
 </style>

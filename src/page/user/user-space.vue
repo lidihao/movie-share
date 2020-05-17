@@ -304,12 +304,14 @@
     position: relative;
     border: 1px solid #555555;
     border-radius: 12px;
+    width: 1000px;
   }
   .space-main{
     width: 95%;
   }
   .space-content{
     padding-top: 30px;
+    width: 1000px;
   }
   .person-int{
     position: absolute;

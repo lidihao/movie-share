@@ -145,8 +145,6 @@
     margin: 10px auto;
     background-color: rgb(247, 247, 247);
     padding: 10px;
-    width: 350px;
-    height: 158px;
     border-radius: 10px;
   }
   .uploader-img {

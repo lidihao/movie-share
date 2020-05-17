@@ -40,7 +40,7 @@
             </label>
           </Form-item>
           <Form-item label="视频标签" prop="tagList">
-            <i-select v-model="formData.tagList" multiple style="width:260px">
+            <i-select v-model="formData.tagList" multiple style="width:260px" filterable>
               <i-option v-for="item in tagList" :value="item.tagId" :key="item.tagId">{{ item.tagName }}</i-option>
             </i-select>
           </Form-item>

@@ -18,6 +18,27 @@
     esutils "^2.0.2"
     js-tokens "^4.0.0"
 
+"@babel/runtime@^7.3.1":
+  version "7.9.6"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.9.6.tgz#a9102eb5cadedf3f31d08a9ecf294af7827ea29f"
+  integrity sha512-64AF1xY3OAkFHqOb9s4jpgk1Mm5vDZ4L3acHvAml+53nO1XbXLuDodsVpO4OIUsmemlUHMxNdYMNJmsvOwLrvQ==
+  dependencies:
+    regenerator-runtime "^0.13.4"
+
+"@riophae/vue-treeselect@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@riophae/vue-treeselect/-/vue-treeselect-0.4.0.tgz#0baed5a794cffc580b63591f35c125e51c0df241"
+  integrity sha512-J4atYmBqXQmiPFK/0B5sXKjtnGc21mBJEiyKIDZwk0Q9XuynVFX6IJ4EpaLmUgL5Tve7HAS7wkiGGSti6Uaxcg==
+  dependencies:
+    "@babel/runtime" "^7.3.1"
+    babel-helper-vue-jsx-merge-props "^2.0.3"
+    easings-css "^1.0.0"
+    fuzzysearch "^1.0.3"
+    is-promise "^2.1.0"
+    lodash "^4.0.0"
+    material-colors "^1.2.6"
+    watch-size "^2.0.0"
+
 "@types/q@^1.5.1":
   version "1.5.2"
   resolved "https://registry.npm.taobao.org/@types/q/download/@types/q-1.5.2.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fq%2Fdownload%2F%40types%2Fq-1.5.2.tgz#690a1475b84f2a884fd07cd797c00f5f31356ea8"
@@ -1937,6 +1958,11 @@ concat-stream@1.6.2, concat-stream@^1.5.0:
     readable-stream "^2.2.2"
     typedarray "^0.0.6"
 
+concat-typed-array@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/concat-typed-array/-/concat-typed-array-1.0.2.tgz#67880c3ce19ecff110c31598b41c7f4739d47ca0"
+  integrity sha1-Z4gMPOGez/EQwxWYtBx/RznUfKA=
+
 condense-newlines@^0.2.1:
   version "0.2.1"
   resolved "https://registry.npm.taobao.org/condense-newlines/download/condense-newlines-0.2.1.tgz#3de985553139475d32502c83b02f60684d24c55f"
@@ -2766,6 +2792,11 @@ duplexify@^3.4.2, duplexify@^3.6.0:
     readable-stream "^2.0.0"
     stream-shift "^1.0.0"
 
+easings-css@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/easings-css/-/easings-css-1.0.0.tgz#dde569003bb7a4a0c0b77878f5db3e0be5679c81"
+  integrity sha512-7Uq7NdazNfVtr0RNmPAys8it0zKCuaqxJStYKEl72D3j4gbvXhhaM7iWNbqhA4C94ygCye6VuyhzBRQC4szeBg==
+
 ecc-jsbn@~0.1.1:
   version "0.1.2"
   resolved "https://registry.npm.taobao.org/ecc-jsbn/download/ecc-jsbn-0.1.2.tgz#3a83a904e54353287874c564b7549386849a98c9"
@@ -3564,6 +3595,11 @@ function-bind@^1.1.1:
   version "1.1.1"
   resolved "https://registry.npm.taobao.org/function-bind/download/function-bind-1.1.1.tgz#a56899d3ea3c9bab874bb9773b7c5ede92f4895d"
   integrity sha1-pWiZ0+o8m6uHS7l3O3xe3pL0iV0=
+
+fuzzysearch@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/fuzzysearch/-/fuzzysearch-1.0.3.tgz#dffc80f6d6b04223f2226aa79dd194231096d008"
+  integrity sha1-3/yA9tawQiPyImqnndGUIxCW0Ag=
 
 gauge@~2.7.3:
   version "2.7.4"
@@ -4470,6 +4506,11 @@ is-primitive@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npm.taobao.org/is-primitive/download/is-primitive-2.0.0.tgz#207bab91638499c07b2adf240a41a87210034575"
   integrity sha1-IHurkWOEmcB7Kt8kCkGochADRXU=
+
+is-promise@^2.1.0:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/is-promise/-/is-promise-2.2.2.tgz#39ab959ccbf9a774cf079f7b40c7a26f763135f1"
+  integrity sha512-+lP4/6lKUBfQjZ2pdxThZvLUAafmZb8OAxFb8XXtiQmS35INgr85hdOGoEs124ez1FCnZJt6jau/T+alh58QFQ==
 
 is-regex@^1.0.4:
   version "1.0.4"
@@ -5424,10 +5465,10 @@ lodash.uniq@^4.5.0:
   resolved "https://registry.npm.taobao.org/lodash.uniq/download/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
   integrity sha1-0CJTc662Uq3BvILklFM5qEJ1R3M=
 
-lodash@^4.17.11, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.3, lodash@^4.17.4:
+lodash@^4.0.0, lodash@^4.17.11, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.3, lodash@^4.17.4:
   version "4.17.15"
-  resolved "https://registry.npm.taobao.org/lodash/download/lodash-4.17.15.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Flodash%2Fdownload%2Flodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
-  integrity sha1-tEf2ZwoEVbv+7dETku/zMOoJdUg=
+  resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
+  integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
 
 log-symbols@^2.1.0:
   version "2.2.0"
@@ -5509,6 +5550,11 @@ map-visit@^1.0.0:
   integrity sha1-7Nyo8TFE5mDxtb1B8S80edmN+48=
   dependencies:
     object-visit "^1.0.0"
+
+material-colors@^1.2.6:
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/material-colors/-/material-colors-1.2.6.tgz#6d1958871126992ceecc72f4bcc4d8f010865f46"
+  integrity sha512-6qE4B9deFBIa9YSpOc9O0Sgc43zTeVYbgDT5veRKSlB2+ZuHNoVVxA1L/ckMUayV9Ay9y7Z/SZCLcGteW9i7bg==
 
 math-expression-evaluator@^1.2.14:
   version "1.2.17"
@@ -7586,6 +7632,11 @@ regenerator-runtime@^0.11.0:
   resolved "https://registry.npm.taobao.org/regenerator-runtime/download/regenerator-runtime-0.11.1.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fregenerator-runtime%2Fdownload%2Fregenerator-runtime-0.11.1.tgz#be05ad7f9bf7d22e056f9726cee5017fbf19e2e9"
   integrity sha1-vgWtf5v30i4Fb5cmzuUBf78Z4uk=
 
+regenerator-runtime@^0.13.4:
+  version "0.13.5"
+  resolved "https://registry.yarnpkg.com/regenerator-runtime/-/regenerator-runtime-0.13.5.tgz#d878a1d094b4306d10b9096484b33ebd55e26697"
+  integrity sha512-ZS5w8CpKFinUzOwW3c83oPeVXoNsrLsaCoLtJvAClH135j/R77RuymhiSErhm2lKcwSCIpmvIWSbDkIfAqKQlA==
+
 regenerator-transform@^0.10.0:
   version "0.10.1"
   resolved "https://registry.npm.taobao.org/regenerator-transform/download/regenerator-transform-0.10.1.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fregenerator-transform%2Fdownload%2Fregenerator-transform-0.10.1.tgz#1e4996837231da8b7f3cf4114d71b5691a0680dd"
@@ -9145,6 +9196,11 @@ walker@~1.0.5:
   dependencies:
     makeerror "1.0.x"
 
+watch-size@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/watch-size/-/watch-size-2.0.0.tgz#096ee28d0365bd7ea03d9c8bf1f2f50a73be1474"
+  integrity sha512-M92R89dNoTPWyCD+HuUEDdhaDnh9jxPGOwlDc0u51jAgmjUvzqaEMynXSr3BaWs+QdHYk4KzibPy1TFtjLmOZQ==
+
 watch@~0.18.0:
   version "0.18.0"
   resolved "https://registry.npm.taobao.org/watch/download/watch-0.18.0.tgz#28095476c6df7c90c963138990c0a5423eb4b986"
@@ -9415,6 +9471,187 @@ ws@^5.2.0:
   integrity sha1-3/7xSGa46NyRM1glFNG++vlumA8=
   dependencies:
     async-limiter "~1.0.0"
+
+xgplayer-flv-live@^2.3.9:
+  version "2.3.9"
+  resolved "https://registry.yarnpkg.com/xgplayer-flv-live/-/xgplayer-flv-live-2.3.9.tgz#33a51a6d531dd6e624191cff43084f9150bb3a46"
+  integrity sha512-4lnqtzV+f055O/KOpM6F6ekbk4hW2vArv9bOgLNFKQLIUvhNEjGM+FYBtz9aQYDJmk3/8NYyiIi+SAJzccYc7w==
+  dependencies:
+    xgplayer-transmuxer-buffer-presource "^2.3.9"
+    xgplayer-transmuxer-buffer-track "^2.3.9"
+    xgplayer-transmuxer-buffer-xgbuffer "^2.3.9"
+    xgplayer-transmuxer-codec-compatibility "^2.3.9"
+    xgplayer-transmuxer-constant-events "^2.3.9"
+    xgplayer-transmuxer-demux-flv "^2.3.9"
+    xgplayer-transmuxer-loader-fetch "^2.3.9"
+    xgplayer-transmuxer-remux-mp4 "^2.3.9"
+    xgplayer-utils-mse "^2.3.9"
+    xgplayer-utils-sniffer "^2.3.9"
+
+xgplayer-flv-vod@^2.3.9:
+  version "2.3.9"
+  resolved "https://registry.yarnpkg.com/xgplayer-flv-vod/-/xgplayer-flv-vod-2.3.9.tgz#62d31cf720550c080d9ed0cbb64e2b391f08ff12"
+  integrity sha512-/lLh7XTqsPqKMJ1OtlMWHqZ5g7Hw3aLTxpiDiwEAGpoSMLlYXdHgOX16vjEz2IIlr/PBp6diFkaOPE9c2q7uQw==
+  dependencies:
+    xgplayer-mobilevideo "^2.3.9"
+    xgplayer-transmuxer-buffer-presource "^2.3.9"
+    xgplayer-transmuxer-buffer-track "^2.3.9"
+    xgplayer-transmuxer-buffer-xgbuffer "^2.3.9"
+    xgplayer-transmuxer-codec-compatibility "^2.3.9"
+    xgplayer-transmuxer-constant-events "^2.3.9"
+    xgplayer-transmuxer-context "^2.3.9"
+    xgplayer-transmuxer-demux-flv "^2.3.9"
+    xgplayer-transmuxer-loader-fetch "^2.3.9"
+    xgplayer-transmuxer-remux-mp4 "^2.3.9"
+    xgplayer-utils-mse "^2.3.9"
+
+xgplayer-flv@^2.3.9:
+  version "2.3.9"
+  resolved "https://registry.yarnpkg.com/xgplayer-flv/-/xgplayer-flv-2.3.9.tgz#d3ba9070097357c5002d9e7f8ca3c9ad01131afb"
+  integrity sha512-KzEjKjU+2o8yGTU4cojJf8LucinCLPPCoWXVX/XbG0Pc6PDgmF53cVeZRb4IuizeaYEkdgyJlhe9aQ6NXKmycw==
+  dependencies:
+    xgplayer-flv-live "^2.3.9"
+    xgplayer-flv-vod "^2.3.9"
+
+xgplayer-mobilevideo@^2.3.9:
+  version "2.3.9"
+  resolved "https://registry.yarnpkg.com/xgplayer-mobilevideo/-/xgplayer-mobilevideo-2.3.9.tgz#f1cb2d651162e36dbaa695f9be511d644d8fbc33"
+  integrity sha512-EDBwUpWcnET02773xLSDY2WTTlvnv8srf4bzCuhdMocV+CCJvLxJECLkAtEAqkArtkELGitEDDLwhPRd7XBQSw==
+  dependencies:
+    xgplayer-transmuxer-buffer-stream "^2.3.9"
+    xgplayer-transmuxer-codec-avc "^2.3.9"
+
+xgplayer-transmuxer-buffer-presource@^2.3.9:
+  version "2.3.9"
+  resolved "https://registry.yarnpkg.com/xgplayer-transmuxer-buffer-presource/-/xgplayer-transmuxer-buffer-presource-2.3.9.tgz#7e0579e2be8d3db1036dec6736adbcdea38c3aab"
+  integrity sha512-jRa2Caz1EKA5qjQJJAK+wR8+syRYmXP7X3XRAmPuIbixzlp/bjMnlF+vnKC9Y24fyUtLURsOj6xpQ6SsDuTzjg==
+
+xgplayer-transmuxer-buffer-stream@^2.3.9:
+  version "2.3.9"
+  resolved "https://registry.yarnpkg.com/xgplayer-transmuxer-buffer-stream/-/xgplayer-transmuxer-buffer-stream-2.3.9.tgz#b186f705bc9212343e5778743c8b53c67cdd8b0c"
+  integrity sha512-V4wPLzzw49y7QRR8oDrTBo6v/xcWUYlnS0FMmlnwJdRsieGRxLbk/FAUfYJnrxSUfVuVviYPbZBLKFmsDkxexw==
+
+xgplayer-transmuxer-buffer-track@^2.3.9:
+  version "2.3.9"
+  resolved "https://registry.yarnpkg.com/xgplayer-transmuxer-buffer-track/-/xgplayer-transmuxer-buffer-track-2.3.9.tgz#65ff1b74e8ea9bff723ed6ee22ceb13a3ad3675a"
+  integrity sha512-bjDWTYtDhQ/S/erBWrifhCMbldM0nH0u/5Mu2W1f8eguB3stZTAIc0b7Tn6d0kLUzmy9OJZXD2cHm0OnQZjmhQ==
+
+xgplayer-transmuxer-buffer-xgbuffer@^2.3.9:
+  version "2.3.9"
+  resolved "https://registry.yarnpkg.com/xgplayer-transmuxer-buffer-xgbuffer/-/xgplayer-transmuxer-buffer-xgbuffer-2.3.9.tgz#8aad9ca834bd7f9736b548dbed2a2ca4cf562601"
+  integrity sha512-f1x3Qa0jZ7u2zUO9mRq0D7e9HtQm25fgqjykz4yDxY//SpwVNhcsC2sRaRJuqyUS2yDLNiqdyDtJb2eAtqSzRg==
+
+xgplayer-transmuxer-codec-aac@^2.3.9:
+  version "2.3.9"
+  resolved "https://registry.yarnpkg.com/xgplayer-transmuxer-codec-aac/-/xgplayer-transmuxer-codec-aac-2.3.9.tgz#711bcea8547d878807bc3cde6db2e30b1ac38cd8"
+  integrity sha512-4EwuophVIit+oVKDjk5eC2S6DHOHOM9ugse9+61VjwteoAoQiSJDl+JDPHDN8GuHvknVSFbdpXGuyjcjP5z2Uw==
+
+xgplayer-transmuxer-codec-avc@^2.3.9:
+  version "2.3.9"
+  resolved "https://registry.yarnpkg.com/xgplayer-transmuxer-codec-avc/-/xgplayer-transmuxer-codec-avc-2.3.9.tgz#ff3868c2b3f3a9b863e5009870585b6f19829ccb"
+  integrity sha512-JmpycVVakI0IbTwp8FVsbo+gXPB4kDG7WjI23Ya9seSWuvsfWq7W6dAJi6U4XRJGQwjJihAmZRAjicmGeDV//A==
+
+xgplayer-transmuxer-codec-compatibility@^2.3.9:
+  version "2.3.9"
+  resolved "https://registry.yarnpkg.com/xgplayer-transmuxer-codec-compatibility/-/xgplayer-transmuxer-codec-compatibility-2.3.9.tgz#7faec30223ec626c9cffd06cd6d5d35c957ea08e"
+  integrity sha512-4d5uZFhfcNg5HbJ4E7O2MgI5EgA7yTTaKAUjDdXJByDvPMmr++hgEASYI2E4USlm+7qO8RdiveNgkpHmJ//gfw==
+  dependencies:
+    xgplayer-transmuxer-codec-aac "^2.3.9"
+    xgplayer-transmuxer-constant-events "^2.3.9"
+    xgplayer-utils "^2.3.9"
+    xgplayer-utils-sniffer "^2.3.9"
+
+xgplayer-transmuxer-codec-hevc@^2.3.9:
+  version "2.3.9"
+  resolved "https://registry.yarnpkg.com/xgplayer-transmuxer-codec-hevc/-/xgplayer-transmuxer-codec-hevc-2.3.9.tgz#5395821c2501586535f3c0f3e7c86af9c8eacb77"
+  integrity sha512-czrb/pxsGDPJAf5HIrTgUtI9CR11rNRAhGFmKzGKylsdmHpG5Kh+1j2kFHajWgKU3hkaRGcd/weAHR3q+kVJzA==
+
+xgplayer-transmuxer-constant-events@^2.3.9:
+  version "2.3.9"
+  resolved "https://registry.yarnpkg.com/xgplayer-transmuxer-constant-events/-/xgplayer-transmuxer-constant-events-2.3.9.tgz#372ada1c76df0c085d29d43db9f3d1e6940ac8c1"
+  integrity sha512-UcDKL80/5AuggmV54AZCz4NNla3XDaGJv7ohLIT+At4emlbUmYOjckrMu2KD/+8iU1YpLCGYDPaEi+e3LCnzIA==
+
+xgplayer-transmuxer-context@^2.3.9:
+  version "2.3.9"
+  resolved "https://registry.yarnpkg.com/xgplayer-transmuxer-context/-/xgplayer-transmuxer-context-2.3.9.tgz#fdbc7a5cf2861087e103774f707854687fb86a96"
+  integrity sha512-HWzJBVxaNeoyZXWCw6He2vnsDKaDfv4eemZ4bIsdGm6g26wGPysphqxBYIQ+SktFGgGRI6G6X8UYTem8rVKGWQ==
+  dependencies:
+    xgplayer-transmuxer-constant-events "^2.3.9"
+    xgplayer-transmuxer-model-mediainfo "^2.3.9"
+
+xgplayer-transmuxer-demux-flv@^2.3.9:
+  version "2.3.9"
+  resolved "https://registry.yarnpkg.com/xgplayer-transmuxer-demux-flv/-/xgplayer-transmuxer-demux-flv-2.3.9.tgz#66c99a8205743c7c68c0085344741c2202eaea6f"
+  integrity sha512-Q8xJttKsQrgXv8+6bzHeUSG0zSirR1Cjq1QkPjcm9mF2RBYnAmZePY2tgMLjPZDlG+DG71iQrWZwqSDAlEWkow==
+  dependencies:
+    xgplayer-transmuxer-buffer-stream "^2.3.9"
+    xgplayer-transmuxer-buffer-track "^2.3.9"
+    xgplayer-transmuxer-codec-avc "^2.3.9"
+    xgplayer-transmuxer-codec-hevc "^2.3.9"
+    xgplayer-transmuxer-constant-events "^2.3.9"
+    xgplayer-transmuxer-context "^2.3.9"
+    xgplayer-transmuxer-model-trackmeta "^2.3.9"
+    xgplayer-utils-sniffer "^2.3.9"
+    xgplayer-utils-utf8 "^2.3.9"
+
+xgplayer-transmuxer-loader-fetch@^2.3.9:
+  version "2.3.9"
+  resolved "https://registry.yarnpkg.com/xgplayer-transmuxer-loader-fetch/-/xgplayer-transmuxer-loader-fetch-2.3.9.tgz#75008f322b4d1971c2b94e25451adeae62de03d9"
+  integrity sha512-fRqd9gaUU4/lYYYfrUC0WzdiZUl7yIUO2UGz0P5cBgEUWgDx96oZPIM6FKFoTMjkvMSTeU3hSO+0+dBHezrZEg==
+  dependencies:
+    xgplayer-transmuxer-constant-events "^2.3.9"
+
+xgplayer-transmuxer-model-mediainfo@^2.3.9:
+  version "2.3.9"
+  resolved "https://registry.yarnpkg.com/xgplayer-transmuxer-model-mediainfo/-/xgplayer-transmuxer-model-mediainfo-2.3.9.tgz#ffbcb3c3efed14bb2850c9c6e5618d7111892e4b"
+  integrity sha512-d8MacxKstEpz62Ijv2G4qsBp8ND8zWw1lTB1I27vAaGM8Ln+KbGQCmBw3oUE8cUNZcecLl3ggFAZGvvlBlixXQ==
+
+xgplayer-transmuxer-model-mediasegmentlist@^2.3.9:
+  version "2.3.9"
+  resolved "https://registry.yarnpkg.com/xgplayer-transmuxer-model-mediasegmentlist/-/xgplayer-transmuxer-model-mediasegmentlist-2.3.9.tgz#0ddd9957009b32c466aaa46db2456f3c1ecfc0a5"
+  integrity sha512-y1bRTQ6UxrlKBsfXTt31rlerp31cmf/jfWW1gyd49GXDF0D5j51y+Bq8h3BVjf6GDZkooyXePynjC8LFh7EWPw==
+
+xgplayer-transmuxer-model-trackmeta@^2.3.9:
+  version "2.3.9"
+  resolved "https://registry.yarnpkg.com/xgplayer-transmuxer-model-trackmeta/-/xgplayer-transmuxer-model-trackmeta-2.3.9.tgz#bc73452a3e0438c5ad355cc2b65a5498599b2683"
+  integrity sha512-/7relnkO7W69kpYcCdNqbwCsSoZLzQ3mt/3Sjgz6Pis01zPfW8hGbcpLbPJpjM7iypakan7xOKbtz5d20m67fw==
+
+xgplayer-transmuxer-remux-mp4@^2.3.9:
+  version "2.3.9"
+  resolved "https://registry.yarnpkg.com/xgplayer-transmuxer-remux-mp4/-/xgplayer-transmuxer-remux-mp4-2.3.9.tgz#f58422821c0fe9c22fb4fabb4bac0cf3acf30daa"
+  integrity sha512-boLg8TLxbcCIrloPCL1Pfvgfx+0M04xag0Wpo0LnmSjsoB29alreNLLKav0CkDjb2H7BxrYRghSOQ3GSXeHPfg==
+  dependencies:
+    concat-typed-array "^1.0.2"
+    xgplayer-transmuxer-constant-events "^2.3.9"
+    xgplayer-transmuxer-model-mediasegmentlist "^2.3.9"
+    xgplayer-utils "^2.3.9"
+    xgplayer-utils-sniffer "^2.3.9"
+
+xgplayer-utils-mse@^2.3.9:
+  version "2.3.9"
+  resolved "https://registry.yarnpkg.com/xgplayer-utils-mse/-/xgplayer-utils-mse-2.3.9.tgz#4b347594a2058d08ee4dac823dfea4d1c0eaf96f"
+  integrity sha512-CdFYeIJLfMLdXJBnEttVQLdlq5h0JR3r+PJxjDvg59R16XKYyU1mxNhjmQhI1ISIwi/398NN9QVcZ5ny9ruG8A==
+  dependencies:
+    xgplayer-transmuxer-constant-events "^2.3.9"
+
+xgplayer-utils-sniffer@^2.3.9:
+  version "2.3.9"
+  resolved "https://registry.yarnpkg.com/xgplayer-utils-sniffer/-/xgplayer-utils-sniffer-2.3.9.tgz#7ef9dc904d672321939d36164064ce6a3f16b4dd"
+  integrity sha512-wjcajlZ9/3XliMoh1gbr+4QOWWUUYcSKR3yjqDICMnKdVQm0hwpB3CygkYXj8ogj0ko1aKz2FN1yVMg2l/PHVw==
+  dependencies:
+    xgplayer-transmuxer-constant-events "^2.3.9"
+
+xgplayer-utils-utf8@^2.3.9:
+  version "2.3.9"
+  resolved "https://registry.yarnpkg.com/xgplayer-utils-utf8/-/xgplayer-utils-utf8-2.3.9.tgz#a1f2e427f7d0ebf14cd7c675e7c6b1eda249ccd0"
+  integrity sha512-7zSyR+Re7nnKGDyjPAvFuu+jHZOSfycH41OTW/p9yP/wqUm3LWKOmbyuJfnfK85WKDW13UlpJnrU9uvglQV3Zw==
+
+xgplayer-utils@^2.3.9:
+  version "2.3.9"
+  resolved "https://registry.yarnpkg.com/xgplayer-utils/-/xgplayer-utils-2.3.9.tgz#83e0ba052a7a0e3bd3bed8664ed670457d2c5639"
+  integrity sha512-q2lGS3cBelwO6sRCj1gnuL4pVBmJqd4rU4KxulhD5s+e0piZ6cBjPqRK7sn8pyyFIzBjzLo1Rk9cKJJnGe4mVg==
+  dependencies:
+    xgplayer-transmuxer-constant-events "^2.3.9"
 
 xgplayer@^2.3.7:
   version "2.3.7"

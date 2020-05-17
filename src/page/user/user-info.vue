@@ -20,14 +20,16 @@
           <li>
             <span>安全设置</span>
             <span class="user-right">
-              <a>修改密码</a>
-              <a>修改邮箱</a>
+              <a @click="changePassword">修改密码</a>
+              <a @click="changeEmail">修改邮箱</a>
             </span>
           </li>
         </ul>
       </Card>
     </div>
     <Cropper :showCropper="showCropper" :imgSrc="imgSrc"  @uploadSuccess="uploadSuccess" @cancel="cancel" ></Cropper>
+    <ChangePassword :showChangePwd="showChangePwd" @cancel="cancelChangePwd" @success="cancelChangePwd"></ChangePassword>
+    <changeEmail :showChangeEmail="showChangeEmail" @cancel="cancelChangeEmail" @success="cancelChangeEmail"></changeEmail>
   </div>
 </template>
 
@@ -36,21 +38,26 @@
   import Config from '@/settings'
   import Cropper from '@/components/cropper'
   import LoginApi from '@/api/login'
-
+  import ChangePassword from '@/form/change-password'
+  import ChangeEmail from '@/form/change-email'
     export default {
       name: "user-info",
       data(){
         return{
           showCropper:false,
           imgSrc:'',
-          avatarUrl:''
+          avatarUrl:'',
+          showChangePwd:false,
+          showChangeEmail:false
         }
       },
       computed:{
         ...mapGetters(['user'])
       },
       components:{
-        Cropper
+        Cropper,
+        ChangePassword,
+        ChangeEmail
       },
       methods:{
         cancel(){
@@ -89,6 +96,27 @@
           this.showCropper=true
           this.imgSrc=this.getObjectURL(file)
           return false
+        },
+        getCode(){
+          LoginApi.getCodeImg().then((res)=>{
+              let data = res.result
+              this.codeUrl = data.img
+              this.formValidate.uuid = data.uuid
+            }
+          )
+        },
+        changePassword(){
+          this.showChangePwd=true
+        },
+        cancelChangePwd(){
+          this.showChangePwd=false
+        },
+        changeEmail(){
+          this.showChangeEmail=true
+        },
+        cancelChangeEmail(){
+          this.showChangeEmail=false
+          location.reload()
         }
       },
       created() {

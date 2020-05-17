@@ -6,7 +6,7 @@
         </Select>
         <div>
           <Divider></Divider>
-          <VideoEditBox class="box-item" v-for="item in videoApplyList" :videoApply="item"></VideoEditBox>
+          <VideoEditBox class="box-item" v-for="item in videoApplyList" :videoApply="item" @refresh="getUploadVideo"></VideoEditBox>
         </div>
         <div>
           <Page :total="this.totalSize" show-sizer @on-change="handlePageNumChange" @on-page-size-change="handlePageSizeChange"/>

@@ -21,5 +21,8 @@ export default {
   },
   searchVideo(data){
     return service.get(`/video/searchVideo`,data)
+  },
+  endPlayVideo(videoId){
+    return service.post('/video/endplayVideo',videoId)
   }
 }

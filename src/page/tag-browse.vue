@@ -5,8 +5,8 @@
     </div>
 
     <div style="margin-right:20px">
-       <Badge :count="item.count"  v-for="item in tagList" style="margin:10px">
-            <Tag>{{item.tagName}}</Tag>
+       <Badge :count="item.count"  v-for="item in tagList" style="margin:10px" >
+            <Tag @click.native="searVideo(item.tagName)">{{item.tagName}}</Tag>
           </Badge>
     </div>
   </div>
@@ -26,6 +26,14 @@
         TagApi.getTagCountList().then(res=>{
           if (res.code===200) {
             this.tagList=res.result
+          }
+        })
+      },
+      searVideo(tagName){
+        this.$router.push({
+          path:'/search',
+          query:{
+            key:tagName
           }
         })
       }

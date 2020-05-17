@@ -26,5 +26,8 @@ export default {
   },
   updateVideoApply(params){
     return service.put(`/videoApply/update`,params,jsonConfig)
+  },
+  deleteVideoApply(params){
+    return service.post(`/videoApply/delete`,params)
   }
 }

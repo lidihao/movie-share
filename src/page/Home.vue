@@ -2,18 +2,19 @@
   <div>
     <div class="home-content">
 
-       <VideoCategory id="recommend" title="个性化推荐" 
-      :videoList="userRecommentVideo" v-if="isLogin&&userRecommentVideo"></VideoCategory>
+       <VideoCategory id="recommend" title="个性化推荐"
+      :videoList="userRecommentVideo" v-if="isLogin&&showPersonRecommend" path="/person-recommend/brower"></VideoCategory>
 
       <VideoCategory id="hot" title="热门推荐"
-      :videoList="recentlyHotVideoList"></VideoCategory>
+      :videoList="recentlyHotVideoList" path="/hot-recommend"></VideoCategory>
 
-      <VideoCategory :id="gernerateId(index)" v-for="(val,index) in categoryHotVideo" 
-      :key="index" :title="val.category.categoryName" :videoList="val.videoDetailVoXPage.result">
+      <VideoCategory :id="gernerateId(index)" v-for="(val,index) in categoryHotVideo"
+      :key="index" :title="val.category.categoryName" :videoList="val.videoDetailVoXPage.result"
+                     :params="{type:val.category.categoryName}" path="/video/category-detail">
       </VideoCategory>
     </div>
     <div class="fix-side-bar">
-      <div @click.prevent="custormAnchor('recommend')">
+      <div @click.prevent="custormAnchor('recommend')" v-if="isLogin&&showPersonRecommend">
           <i-button type="text">
             <span style="color: black">个性化推荐</span>
           </i-button>
@@ -47,7 +48,8 @@
         data:[1,2,3,4,5],
         recentlyHotVideoList:[],
         categoryHotVideo:[],
-        userRecommentVideo:[]
+        userRecommentVideo:[],
+        showPersonRecommend:false
       }
     },
     computed:{
@@ -93,7 +95,7 @@
         if (!this.isLogin) {
           return
         }
-        
+
         let params={
           pageNum:1,
           pageSize:9
@@ -101,6 +103,9 @@
         RecommendApi.getPersonRecommend(params).then((res)=>{
           if (res.code===200) {
             this.userRecommentVideo=res.result.result
+            if (this.userRecommentVideo.length>0){
+              this.showPersonRecommend=true
+            }
           }
         })
       }

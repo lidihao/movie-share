@@ -68,6 +68,7 @@
   import TagApi from '@/api/tag'
   import CategoryApi from '@/api/category'
   import VideoApplyApi from '@/api/video-apply'
+  import Config from '@/settings'
 
   export default {
     name: "apply-detail",
@@ -119,7 +120,7 @@
             this.formData.title=data.title
             this.formData.introduce=data.introduce
             this.formData.tagList=data.tagIdList
-            this.picUrl='//localhost:8089'+data.posterUrl
+            this.picUrl=Config.server+data.posterUrl
           }
         })
       },

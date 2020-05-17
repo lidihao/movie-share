@@ -42,5 +42,14 @@ export default {
   },
   resetPassword(data){
     return service.post('/auth/resetPassword',data)
-  }
+  },
+  changePassword(data){
+    return service.post(`/auth/changePwd`,data,jsonConfig)
+  },
+  sendChangeEmail(data){
+    return service.post('/auth/sendChangeEmail',data)
+  },
+  doChangeEmail(data){
+    return service.post(`/auth/doChangeEmail`,data)
+  },
 }

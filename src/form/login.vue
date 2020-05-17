@@ -146,6 +146,7 @@
             }
             this.$store.dispatch('Login', user).then(() => {
               this.$Message.success("登录成功")
+              location.reload()
               this.$emit("success")
             }).catch((error) => {
               console.log(error)
