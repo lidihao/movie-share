@@ -36,9 +36,6 @@
       },
       methods:{
         getUserVideoList(){
-          if (!this.isLogin) {
-            return
-          }
 
           let params={
             pageNum:this.curPageNum,

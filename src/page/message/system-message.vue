@@ -26,7 +26,7 @@
         </div>
       </div>
       <div>
-        <Page :total="total" show-total @on-change="changePage"/>
+        <Page :total="total" show-total @on-change="changePage" :page-size="curPageSize"/>
       </div>
     </div>
   </div>

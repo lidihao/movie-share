@@ -26,6 +26,7 @@ import SystemMessage from '@/page/message/system-message'
 import PersonRecommendBrower from '@/page/person-recommend-brower'
 import HotRecommend from '@/page/hot-recommend'
 import ChangeEmail from '@/page/user/change-email-validate'
+import UserManager from '@/page/system/user-manager'
 
 const originalPush = Router.prototype.push
 Router.prototype.push = function push(location) {
@@ -169,6 +170,11 @@ export default new Router({
           path: '/user/changeEmail',
           name: 'changeEmail',
           component: ChangeEmail
+        },
+        {
+          path: '/system/user-manager',
+          name: 'UserManager',
+          component: UserManager
         }
       ]
     }

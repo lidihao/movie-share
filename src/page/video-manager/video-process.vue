@@ -9,7 +9,7 @@
           <VideoEditBox class="box-item" v-for="item in videoApplyList" :videoApply="item" @refresh="getUploadVideo"></VideoEditBox>
         </div>
         <div>
-          <Page :total="this.totalSize" show-sizer @on-change="handlePageNumChange" @on-page-size-change="handlePageSizeChange"/>
+          <Page :total="this.totalSize" show-total @on-change="handlePageNumChange" @on-page-size-change="handlePageSizeChange"/>
         </div>
       </div>
     </div>
@@ -57,7 +57,7 @@
         VideoApplyApi.listUploadVideo(params).then((res)=>{
           if (res.code===200){
             this.videoApplyList=res.result.result
-            this.totalSize=res.pageInfo.total
+            this.totalSize=res.result.pageInfo.total
           }
         })
       }

@@ -9,8 +9,8 @@
           <p slot="title">角色列表</p>
           <Table :columns="columns1" :data="roleList" :highlight-row="true" @on-current-change="roleColumChange">
             <template slot-scope="{ row, index }" slot="action">
-              <Button type="primary" size="small" style="margin-right: 5px" @click="show(index)">View</Button>
-              <Button type="error" size="small" @click="remove(index)">Delete</Button>
+              <Button type="primary" size="small" style="margin-right: 5px" @click="show(index)">编辑</Button>
+              <Button type="error" size="small" @click="remove(index)">删除</Button>
             </template>
           </Table>
         </Card>
@@ -25,14 +25,20 @@
         </Card>
       </div>
     </div>
+    <RoleAdd :showEdit="showAdd" @cancel="cancelAdd" @success="cancelAdd"></RoleAdd>
+    <RoleAdd :showEdit="showEdit" type="edit" :item="roleItem" @cancel="cancelEdit" @success="cancelEdit"></RoleAdd>
   </div>
 </template>
 
 <script>
   import MenuApi from '@/api/menu-api'
   import RoleApi from '@/api/role-api'
+  import RoleAdd from '@/form/add-role'
     export default {
-        name: "role-manager",
+      name: "role-manager",
+      components:{
+          RoleAdd
+      },
       data () {
         return {
           columns1: [
@@ -68,7 +74,10 @@
           treeSelectData: [],
           disableSave:true,
           curRoleMenuTree:[],
-          roleId:-1
+          roleId:-1,
+          showAdd:false,
+          roleItem:{},
+          showEdit:false
         }
       },
       methods:{
@@ -112,7 +121,6 @@
         getRoleList(){
           RoleApi.getAllRoleList().then((res)=>{
             if (res.code===200){
-              console.log(res)
               this.roleList=res.result
             }
           })
@@ -146,7 +154,6 @@
             roleId:roleId,
             menuTree:menuIdSet
           }
-          console.log(data)
           RoleApi.updateMenuTree(data).then((res)=>{
             if (res.code===200){
               this.$Message.success('success')
@@ -167,6 +174,33 @@
               }
             })
           }
+        },
+        handleAdd(){
+          this.showAdd=true
+        },
+        show(index){
+          this.roleItem=this.roleList[index]
+          this.showEdit=true
+        },
+        cancelEdit(){
+          this.showEdit=false
+        },
+        cancelAdd(){
+          this.showAdd=false
+        },
+        remove(index){
+          let item = this.roleList[index]
+          let data={
+            roleId:item.roleId
+          }
+          RoleApi.deleteRole(data).then((res)=>{
+            if (res.code===200){
+              this.$Message.success('成功删除角色')
+              this.getMenuList()
+            }else {
+
+            }
+          })
         }
       },
       created() {

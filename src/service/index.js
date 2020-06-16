@@ -48,6 +48,11 @@ function onReject (error) {
     removeToken()
     return Promise.reject(error)
   }
+  if(error.response&&error.response.status===403){
+    Vue.prototype.$Message.error('权限不足')
+    removeToken()
+    return Promise.reject(error)
+  }
   if (error.response && error.response.status === 601) {
     return Promise.reject(error)
   }

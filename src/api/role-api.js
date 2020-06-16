@@ -13,5 +13,14 @@ export default {
   },
   updateMenuTree(data){
     return service.post(`/role/updateMenuTree`,data)
+  },
+  addRole(data){
+    return service.post('/role/addRole',data,jsonConfig)
+  },
+  updateRole(data){
+    return service.post(`/role/updateRole`,data,jsonConfig)
+  },
+  deleteRole(data){
+    return service.post(`/role/deleteRole`,data)
   }
 }

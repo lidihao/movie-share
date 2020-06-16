@@ -48,7 +48,7 @@
           playbackRate: [
             0.5, 0.75, 1, 1.5, 2
           ],
-          volume: 0.1,
+          volume: 0.0,
           playNext: {
             urlList: this.nextPlayList,
           }

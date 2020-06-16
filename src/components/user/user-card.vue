@@ -9,7 +9,7 @@
         {{userVo.introduce}}
       </p>
     </div>
-    <div class="add-button" v-if="!isShow">
+    <div class="add-button">
       <span :class="followButType" @click="followUser">{{descFollow}}<span style="margin-left: 6px;margin-right: 4px">{{followCount}}</span></span>
       <a class="h-f-btn h-message" @click="sendMessage">
         发消息
@@ -59,6 +59,10 @@
         if (!this.isLogin) {
           this.$Message.warning("请先登录")
           return
+        }
+        if (this.isShow){
+          this.$Message.warning("不能发送消息给自己")
+          return;
         }
         this.$router.push({
           path:'/message-manager/instance-message',
@@ -111,6 +115,10 @@
         if (!this.isLogin) {
           this.$Message.warning("请先登录")
           return
+        }
+        if (this.isShow){
+          this.$Message.warning("不能关注自己")
+          return;
         }
         let data={
           userId:this.user.userId,

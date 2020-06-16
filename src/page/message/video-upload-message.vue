@@ -63,6 +63,12 @@
           LoginApi.getUserInfoById(params).then((res) => {
             if (res.code === 200) {
               this.userVo = res.result
+              if (!this.userVo){
+                this.userVo={
+                  userId:this.params.uploadUserId,
+                  userName:this.params.userName
+                }
+              }
               this.userAvatar=Config.server+this.userVo.avatarUrl
             }
           })
@@ -74,6 +80,12 @@
           VideoApi.getVideoDetail(params).then((res)=>{
             if (res.code===200){
               this.video=res.result
+              if (!this.video){
+                this.video={
+                  videoId:this.params.videoId,
+                  title:this.params.videoTitle
+                }
+              }
             }
           })
         },

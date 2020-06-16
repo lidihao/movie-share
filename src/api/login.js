@@ -52,4 +52,13 @@ export default {
   doChangeEmail(data){
     return service.post(`/auth/doChangeEmail`,data)
   },
+  searchUserForManager(data){
+    return service.get(`/auth/userManager/searchUser`,data)
+  },
+  updateRoleList(data){
+    return service.post(`/auth/userManager/updateRoleList`,data,jsonConfig)
+  },
+  createUserFromManager(data){
+    return service.post(`/auth/userManager/addUser`,data,jsonConfig)
+  }
 }

@@ -29,6 +29,12 @@
           VideoApplyApi.getVideoApplyDetail(this.params.videoApprovalId).then((res)=>{
             if (res.code===200){
               this.videoApply=res.result
+              if (!this.videoApply){
+                this.videoApply={
+                  videoApprovalId:this.params.videoApprovalId,
+                  title:this.params.videoTitle
+                }
+              }
             }
           })
         },
@@ -42,7 +48,10 @@
       },
       created() {
         this.params=JSON.parse(this.message.systemMessageParams)
-        this.getVideoApplyDetail()
+        this.videoApply={
+          videoApprovalId:this.params.videoApprovalId,
+          title:this.params.videoTitle
+        }
       }
     }
 </script>

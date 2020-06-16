@@ -16,10 +16,6 @@
           <span>{{friendVo.userName}}</span>
         </div>
         <div class="message-list">
-          <div class="msg-more">
-            <Icon type="ios-arrow-dropup" size="15"/>
-            <span>查看和他的历史私信消息</span>
-          </div>
           <div v-for="message in messageList">
             <MessageItem :friendVo="friendVo" :userVo="userVo" :message="message" ></MessageItem>
           </div>
@@ -34,226 +30,222 @@
 </template>
 
 <script>
-    import {getToken} from '@/utils/auth'
-    import PrivateMsgUserListItem from '@/components/PrivateMsgUserListItem'
-    import PrivateMsgApi from '@/api/privateMsg-api'
-    import {mapGetters} from 'vuex'
-    import MessageItem from '@/components/message-item'
-    export default {
-      name: "message",
-      components:{
-        PrivateMsgUserListItem,
-        MessageItem
+  import {getToken} from '@/utils/auth'
+  import PrivateMsgUserListItem from '@/components/PrivateMsgUserListItem'
+  import PrivateMsgApi from '@/api/privateMsg-api'
+  import {mapGetters} from 'vuex'
+  import MessageItem from '@/components/message-item'
+  export default {
+    name: "message",
+    components:{
+      PrivateMsgUserListItem,
+      MessageItem
+    },
+    computed:{
+      ...mapGetters(['user'])
+    },
+    data(){
+      return {
+        userList:[],
+        messageList:[],
+        messageMap:{},
+        friendVo:{},
+        userVo:{},
+        messageContent:'',
+        sendMessageUserId:-1,
+        curUserListPageNum:1,
+        buttonStatus:[]
+      }
+    },
+    mounted () {
+      // WebSocket
+      if ('WebSocket' in window) {
+        let token=getToken()
+        this.websocket = new WebSocket(`ws://localhost:8089/websocket/${this.user.userId}?Authorization=${token}`)
+        this.initWebSocket()
+      } else {
+        alert('当前浏览器 Not support websocket')
+      }
+    },
+    beforeDestroy () {
+      this.onbeforeunload()
+    },
+    methods: {
+      initWebSocket () {
+        // 连接错误
+        this.websocket.onerror = this.setErrorMessage
+        // 连接成功
+        this.websocket.onopen = this.setOnopenMessage
+        // 收到消息的回调
+        this.websocket.onmessage = this.setOnmessageMessage
+        // 连接关闭的回调
+        this.websocket.onclose = this.setOncloseMessage
+        // 监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
+        window.onbeforeunload = this.onbeforeunload
       },
-      computed:{
-        ...mapGetters(['user'])
+      setErrorMessage () {
+        console.log('WebSocket连接发生错误   状态码：' + this.websocket.readyState)
       },
-      data(){
-        return {
-          userList:[],
-          messageList:[],
-          messageMap:{},
-          friendVo:{},
-          userVo:{},
-          messageContent:'',
-          sendMessageUserId:-1,
-          curUserListPageNum:1,
-          buttonStatus:[]
+      setOnopenMessage () {
+        console.log('WebSocket连接成功    状态码：' + this.websocket.readyState)
+      },
+      setOnmessageMessage (event) {
+        // 根据服务器推送的消息做自己的业务处理
+        let data= JSON.parse(event.data)
+        this.handleReceiverMessage(data)
+      },
+      setOncloseMessage () {
+        console.log('WebSocket连接关闭    状态码：' + this.websocket.readyState)
+      },
+      onbeforeunload () {
+        this.closeWebSocket()
+      },
+      closeWebSocket () {
+        this.websocket.close()
+      },
+      sendMsg(){
+        let data={
+          messageContent: this.messageContent,
+          senderId:this.userVo.userId,
+          receiverId:this.friendVo.userId
         }
+        PrivateMsgApi.sendMessage(data).then((res)=>{
+          if (res.code===200){
+            let messsage = res.result
+            this.messageList.push(messsage)
+          }
+        })
       },
-      mounted () {
-        // WebSocket
-        if ('WebSocket' in window) {
-          let token=getToken()
-          this.websocket = new WebSocket(`ws://localhost:8089/websocket/${this.user.userId}?Authorization=${token}`)
-          this.initWebSocket()
-        } else {
-          alert('当前浏览器 Not support websocket')
+      getUserList(){
+        let requestParams={
+          userId:this.user.userId,
+          pageNum:this.curUserListPageNum,
+          pageSize:10
         }
-      },
-      beforeDestroy () {
-        this.onbeforeunload()
-      },
-      methods: {
-        initWebSocket () {
-          // 连接错误
-          this.websocket.onerror = this.setErrorMessage
-
-          // 连接成功
-          this.websocket.onopen = this.setOnopenMessage
-
-          // 收到消息的回调
-          this.websocket.onmessage = this.setOnmessageMessage
-
-          // 连接关闭的回调
-          this.websocket.onclose = this.setOncloseMessage
-
-
-          // 监听窗口关闭事件，当窗口关闭时，主动去关闭websocket连接，防止连接还没断开就关闭窗口，server端会抛异常。
-          window.onbeforeunload = this.onbeforeunload
-        },
-        setErrorMessage () {
-          console.log('WebSocket连接发生错误   状态码：' + this.websocket.readyState)
-        },
-        setOnopenMessage () {
-          console.log('WebSocket连接成功    状态码：' + this.websocket.readyState)
-        },
-        setOnmessageMessage (event) {
-          // 根据服务器推送的消息做自己的业务处理
-          let data= JSON.parse(event.data)
-          this.handleReceiverMessage(data)
-        },
-        setOncloseMessage () {
-          console.log('WebSocket连接关闭    状态码：' + this.websocket.readyState)
-        },
-        onbeforeunload () {
-          this.closeWebSocket()
-        },
-        closeWebSocket () {
-          this.websocket.close()
-        },
-        sendMsg(){
-          let data={
-            messageContent: this.messageContent,
-            senderId:this.userVo.userId,
-            receiverId:this.friendVo.userId
-          }
-          PrivateMsgApi.sendMessage(data).then((res)=>{
-            if (res.code===200){
-              let messsage = res.result
-              this.messageList.push(messsage)
-            }
-          })
-        },
-        getUserList(){
-          let requestParams={
-            userId:this.user.userId,
-            pageNum:this.curUserListPageNum,
-            pageSize:10
-          }
-          PrivateMsgApi.getPrivateMsgUserList(requestParams).then((res)=>{
-            if (res.code===200){
-              let data =res.result.result
-              data.forEach((item)=>{
-                this.userList.push(item)
-              })
-              if (this.sendMessageUserId!==-1){
-                let idx = this.findDuplicateIndex(parseInt(this.sendMessageUserId));
-                if (idx===-1){
-                  let params={
-                    userId:this.user.userId,
-                    friendId:this.sendMessageUserId
-                  }
-                  PrivateMsgApi.getUserItemDetail(params).then((res)=>{
-                    if (res.code===200){
-                      let itemDetail = res.result
-                      this.userList.splice(0,0,itemDetail)
-                    }
-                  })
-                }else {
-                  let item = this.userList[idx]
-                  this.userList.splice(idx,1)
-                  this.userList.splice(0,0,item)
+        PrivateMsgApi.getPrivateMsgUserList(requestParams).then((res)=>{
+          if (res.code===200){
+            let data =res.result.result
+            data.forEach((item)=>{
+              this.userList.push(item)
+            })
+            if (this.sendMessageUserId!==-1){
+              let idx = this.findDuplicateIndex(parseInt(this.sendMessageUserId));
+              if (idx===-1){
+                let params={
+                  userId:this.user.userId,
+                  friendId:this.sendMessageUserId
                 }
-              }
-              if (this.userList){
-                this.handleGetMessage(this.userList[0].friend.userId)
-              }
-            }
-          })
-        },
-        findDuplicateIndex(userId){
-          for (let i=0;i<this.userList.length;i++){
-            if (parseInt(this.userList[i].friend.userId)===parseInt(userId)){
-              return i;
-            }
-          }
-          return -1;
-        },
-        handleReceiverMessage(data){
-          if (this.messageMap[data.senderId]){
-            this.messageMap[data.senderId].messagePage.result.push(data)
-          }
-          let idx = this.findDuplicateIndex(parseInt(data.senderId));
-          this.$Message.info('你有一条消息未查看')
-          if (idx===-1){
-            let params={
-              userId:data.receiverId,
-              friendId:data.senderId
-            }
-            PrivateMsgApi.getUserItemDetail(params).then((res)=>{
-              if (res.code===200){
-                let itemDetail = res.result
-                this.userList.splice(0,0,itemDetail)
-                let requestParams={
-                  userId:data.receiverId,
-                  friendId:data.senderId,
-                  pageNum:0,
-                  pageSize:10
-                }
-                PrivateMsgApi.getMessageList(requestParams).then((res)=>{
+                PrivateMsgApi.getUserItemDetail(params).then((res)=>{
                   if (res.code===200){
-                    this.messageMap[data.senderId]=res.result
+                    let itemDetail = res.result
+                    this.userList.splice(0,0,itemDetail)
+                    this.handleGetMessage(this.sendMessageUserId)
                   }
                 })
+              }else {
+                let item = this.userList[idx]
+                this.userList.splice(idx,1)
+                this.userList.splice(0,0,item)
+                if (this.userList){
+                  this.handleGetMessage(this.userList[0].friend.userId)
+                }
               }
-            })
-          }
-        },
-        handleGetMessage(friendId){
-          if (this.buttonStatus.length===0){
-            this.buttonStatus=this.createClass()
-          }
-          for (let i=0;i<this.buttonStatus.length;i++){
-            this.buttonStatus[i]='unactive'
-          }
-          let idx = -1
-          for(let i=0;i<this.userList.length;i++){
-            if (parseInt(this.userList[i].friend.userId)===parseInt(friendId)){
-              idx=i
             }
           }
-
-          this.$set(this.buttonStatus,idx,'active')
-
-
-          if(this.messageMap[friendId]){
-            let messageData=this.messageMap[friendId]
-            this.friendVo=messageData.friend
-            this.userVo=messageData.user
-            this.messageList=messageData.messagePage.result
-            return
+        })
+      },
+      findDuplicateIndex(userId){
+        for (let i=0;i<this.userList.length;i++){
+          if (parseInt(this.userList[i].friend.userId)===parseInt(userId)){
+            return i;
           }
-          let requestParams={
-            userId:this.user.userId,
-            friendId:friendId,
-            pageNum:0,
-            pageSize:10
+        }
+        return -1;
+      },
+      handleReceiverMessage(data){
+        if (this.messageMap[data.senderId]){
+          this.messageMap[data.senderId].messagePage.push(data)
+        }
+        let idx = this.findDuplicateIndex(parseInt(data.senderId));
+        this.$Message.info('你有一条消息未查看')
+        if (idx===-1){
+          let params={
+            userId:data.receiverId,
+            friendId:data.senderId
           }
-          PrivateMsgApi.getMessageList(requestParams).then((res)=>{
+          PrivateMsgApi.getUserItemDetail(params).then((res)=>{
             if (res.code===200){
-              this.friendVo=res.result.friend;
-              this.userVo = res.result.user
-              this.messageList=res.result.messagePage.result.reverse()
-              this.messageMap[this.friendVo.userId]=res.result
+              let itemDetail = res.result
+              this.userList.splice(0,0,itemDetail)
+              let requestParams={
+                userId:data.receiverId,
+                friendId:data.senderId,
+                pageNum:0,
+                pageSize:10
+              }
+              PrivateMsgApi.getMessageList(requestParams).then((res)=>{
+                if (res.code===200){
+                  this.friendVo=res.result.friend;
+                  this.userVo = res.result.user
+                  this.messageList=res.result.messagePage.reverse()
+                  this.messageMap[this.friendVo.userId]=res.result
+                }
+              })
             }
           })
-        },
-        createClass(){
-          let arr=[]
-          if (this.userList){
-            for (let i=0;i<this.userList.length;i++){
-              arr.push('unactive')
-            }
-          }
-          return arr
         }
       },
-      created() {
-        this.sendMessageUserId=this.$route.query.recvUserId
-        this.getUserList()
+      handleGetMessage(friendId){
+        if (this.buttonStatus.length===0){
+          this.buttonStatus=this.createClass()
+        }
+        for (let i=0;i<this.buttonStatus.length;i++){
+          this.buttonStatus[i]='unactive'
+        }
+        let idx = -1
+        for(let i=0;i<this.userList.length;i++){
+          if (parseInt(this.userList[i].friend.userId)===parseInt(friendId)){
+            idx=i
+          }
+        }
+        this.$set(this.buttonStatus,idx,'active')
+        if(this.messageMap[friendId]){
+          let messageData=this.messageMap[friendId]
+          this.friendVo=messageData.friend
+          this.userVo=messageData.user
+          this.messageList=messageData.messagePage
+          return
+        }
+        let requestParams={
+          userId:this.user.userId,
+          friendId:friendId,
+          pageNum:0,
+          pageSize:10
+        }
+        PrivateMsgApi.getMessageList(requestParams).then((res)=>{
+          if (res.code===200){
+            this.friendVo=res.result.friend;
+            this.userVo = res.result.user
+            this.messageList=res.result.messagePage.reverse()
+            this.messageMap[this.friendVo.userId]=res.result
+          }
+        })
+      },
+      createClass(){
+        let arr=[]
+        if (this.userList){
+          for (let i=0;i<this.userList.length;i++){
+            arr.push('unactive')
+          }
+        }
+        return arr
       }
+    },
+    created() {
+      this.sendMessageUserId=this.$route.query.recvUserId
+      this.getUserList()
     }
+  }
 </script>
 
 <style scoped>
@@ -465,7 +457,6 @@
     position: relative;
     z-index: 2;
   }
-
   .msg-more {
     cursor: pointer;
     padding: 16px 0 0;
